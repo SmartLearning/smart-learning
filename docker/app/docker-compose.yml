@@ -1,0 +1,19 @@
+version: '2'
+services:
+
+    app:
+        extends:
+            file: ./config/node.yml
+            service: base
+        ports:
+            - 8080:8080
+            - 5005:5005
+        volumes:
+            - ../../app:/home/docker/project:rw
+        env_file:
+            - ./config/env-variables/app.env
+
+    mongo-db:
+        image: mongo:3.5.9
+        ports:
+          - "27017:27017"

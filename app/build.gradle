@@ -1,0 +1,261 @@
+import org.gradle.internal.os.OperatingSystem
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url "http://repo.spring.io/plugins-release" }
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath group: 'net.ltgt.gradle', name: 'gradle-apt-plugin', version: "${gradle_plugin_apt_version}"
+        classpath group: 'com.moowork.gradle', name: 'gradle-node-plugin', version: "${gradle_plugin_node_version}"
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${spring_boot_version}"
+        classpath group: 'org.springframework.build.gradle', name: 'propdeps-plugin', version: "${gradle_plugin_propdeps_version}"
+        classpath group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: "${gradle_plugin_sonar_version}"
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'jacoco'
+apply plugin: 'propdeps'
+apply plugin: 'net.ltgt.apt'
+apply plugin: "org.sonarqube"
+apply plugin: 'com.moowork.node'
+apply plugin: 'org.springframework.boot'
+
+version = '1.0.0'
+sourceCompatibility = 1.8
+
+defaultTasks 'bootRun'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile group: 'javax.cache', name: 'cache-api'
+    compile group: 'commons-codec', name: 'commons-codec'
+    compile group: 'com.jayway.jsonpath', name: 'json-path'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: "${jjwt_version}"
+    compile group: 'com.google.guava', name: 'guava', version: "${guava_version}"
+    compile group: 'javax.inject', name: 'javax.inject', version: "${inject_version}"
+    compile group: 'com.github.mongobee', name: 'mongobee', version: "${mongobee_version}"
+    compile group: 'org.mapstruct', name: 'mapstruct-processor', version: "${mapstruct_version}"
+    compile group: 'io.springfox', name: 'springfox-bean-validators', version: "${spring_fox_version}"
+    compile group: 'commons-io', name: 'commons-io', version: "${commons_io_version}"
+    compile group: 'org.apache.commons', name: 'commons-text', version: "${commons_text_version}"
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: "${commons_lang3_version}"
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: "${commons_collections4_version}"
+
+    compile(group: 'io.springfox', name: 'springfox-swagger2', version: "${spring_fox_version}") {
+        exclude group: 'mapstruct', module: 'org.mapstruct'
+    }
+    compile(group: 'com.ryantenney.metrics', name: 'metrics-spring', version: "${metrics_version}") {
+        exclude group: 'metrics-core', module: 'com.codahale.metrics'
+        exclude group: 'metrics-annotation', module: 'com.codahale.metrics'
+        exclude group: 'metrics-healthchecks', module: 'com.codahale.metrics'
+    }
+    compile(group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: "${logstash_logback_encoder_version}") {
+        exclude(group: 'ch.qos.logback')
+    }
+
+    compile group: 'io.prometheus', name: 'simpleclient', version: "${prometheus_simpleclient_version}"
+    compile group: 'io.prometheus', name: 'simpleclient_servlet', version: "${prometheus_simpleclient_version}"
+    compile group: 'io.prometheus', name: 'simpleclient_dropwizard', version: "${prometheus_simpleclient_version}"
+
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hppc'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-afterburner'
+
+    compile group: 'com.hazelcast', name: 'hazelcast'
+    compile group: 'com.hazelcast', name: 'hazelcast-spring'
+    compile group: 'com.hazelcast', name: 'hazelcast-wm', version: "${hazelcast_wm_version}"
+
+    compile group: 'io.dropwizard.metrics', name: 'metrics-core'
+    compile group: 'com.ryantenney.metrics', name: 'metrics-spring', version: "${metrics_spring_version}"
+    compile group: 'io.dropwizard.metrics', name: 'metrics-healthchecks', version: "${dropwizard_metrics_version}"
+    compile group: 'io.dropwizard.metrics', name: 'metrics-json', version: "${dropwizard_metrics_version}"
+    compile group: 'io.dropwizard.metrics', name: 'metrics-jvm', version: "${dropwizard_metrics_version}"
+    compile group: 'io.dropwizard.metrics', name: 'metrics-servlet', version: "${dropwizard_metrics_version}"
+    compile(group: 'io.dropwizard.metrics', name: 'metrics-servlets') {
+        exclude(module: 'metrics-healthchecks')
+    }
+
+    compile group: 'io.dropwizard.metrics', name: 'metrics-graphite'
+    compile group: 'org.springframework.retry', name: 'spring-retry'
+    compile group: 'org.springframework', name: 'spring-context-support'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-spectator'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    compile group: 'org.springframework.boot', name: 'spring-boot-actuator-docs'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow'
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
+        exclude group: 'spring-boot-starter-tomcat', module: 'org.springframework.boot'
+    }
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.security', name: 'spring-security-config'
+    compile group: 'org.springframework.security', name: 'spring-security-data'
+    compile group: 'org.springframework.security', name: 'spring-security-web'
+
+    optional(group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "${spring_boot_version}") {
+        exclude group: 'com.vaadin.external.google', module: 'android-json'
+    }
+
+    testCompile group: 'junit', name: 'junit'
+    testCompile group: 'com.h2database', name: 'h2'
+    testCompile group: 'org.mockito', name: 'mockito-core'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-test'
+    testCompile group: 'org.springframework.security', name: 'spring-security-test'
+    testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
+    testCompile group: 'info.cukes', name: 'cucumber-junit', version: "${cucumber_version}"
+    testCompile group: 'info.cukes', name: 'cucumber-spring', version: "${cucumber_version}"
+    testCompile group: 'org.awaitility', name: 'awaitility', version: "${awaitility_version}"
+    testCompile group: 'org.assertj', name: 'assertj-core', version: "${assertj_core_version}"
+    testCompile group: 'org.assertj', name: 'assertj-core-java8', version: "${assertj_core_java8_version}"
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
+        exclude group: 'com.vaadin.external.google', module: 'android-json'
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${spring_cloud_version}"
+    }
+}
+
+if (project.hasProperty('prod')) {
+    apply from: 'gradle/profile_prod.gradle'
+} else {
+    apply from: 'gradle/profile_dev.gradle'
+}
+
+bootRepackage {
+    mainClass = 'com.smart.learning.LearningApplication'
+}
+
+springBoot {
+    mainClass = 'com.smart.learning.LearningApplication'
+    executable = true
+    buildInfo()
+}
+
+if (OperatingSystem.current().isWindows()) {
+    task pathingJar(type: Jar) {
+        dependsOn configurations.runtime
+        appendix = 'pathing'
+
+        doFirst {
+            manifest {
+                attributes 'Class-Path': configurations.runtime.files.collect {
+                    it.toURL().toString().replaceFirst(/file:\/+/, '/').replaceAll(' ', '%20')
+                }.join(' ')
+            }
+        }
+    }
+
+    bootRun {
+        addResources = true
+        project.hasProperty("debugging") ? jvmArgs(project.property("debugging")) : ''
+        dependsOn pathingJar
+        doFirst {
+            classpath = files("$buildDir/classes/main", "$buildDir/resources/main", pathingJar.archivePath)
+        }
+    }
+} else {
+    bootRun {
+        addResources = true
+        project.hasProperty("debugging") ? jvmArgs(project.property("debugging")) : ''
+    }
+}
+
+jacoco {
+    toolVersion = "${jacoco_version}"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+task cucumberTest(type: Test) {
+    include '**/CucumberTest*'
+
+    // uncomment if the tests reports are not generated
+    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
+    // ignoreFailures true
+    reports.html.enabled = false
+}
+
+test.finalizedBy(cucumberTest)
+
+test {
+    include '**/*UnitTest*'
+    include '**/*IntTest*'
+
+    ignoreFailures true
+    reports.html.enabled = false
+}
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/tests")
+    reportOn test
+    reportOn cucumberTest
+}
+
+cucumberTest.finalizedBy(testReport)
+
+configurations {
+    providedRuntime
+    compile.exclude module: "spring-boot-starter-tomcat"
+    // netty's native is pulled by spring-cloud-starter-ribbon, but is useless unless you explicitly add the native binary dependency.
+    // Having it in the classpath without the binary can cause warnings
+    all*.exclude group: 'io.netty', module: 'netty-transport-native-epoll'
+}
+
+clean {
+    delete 'target'
+}
+
+task cleanResources(type: Delete) {
+    delete 'build/resources'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
+
+task stage(dependsOn: 'bootRepackage') {
+}
+
+if (project.hasProperty('nodeInstall')) {
+    node {
+        version = "${node_version}"
+        npmVersion = "${npm_version}"
+        yarnVersion = "${yarn_version}"
+        download = true
+    }
+}
+
+compileJava.dependsOn processResources
+processResources.dependsOn cleanResources, bootBuildInfo
+bootBuildInfo.mustRunAfter cleanResources

@@ -1,0 +1,15 @@
+version: '2'
+services:
+    base:
+        build: ./
+        command: /home/docker/app.sh
+        user: docker
+        stdin_open: true
+        tty: true
+        volumes:
+            - ~/.m2:/home/docker/.m2
+            - ./bash/app.sh:/home/docker/app.sh:ro
+        env_file:
+            - ./env-variables/commons.env
+        external_links:
+            - mongo-db:mongodb
