@@ -16,21 +16,23 @@ if (!fs.existsSync(ddlPath)) {
     execSync('webpack --config webpack/webpack.vendor.js');
 }
 
-module.exports = webpackMerge(commonConfig({ env: ENV }), {
+module.exports = webpackMerge(commonConfig({env: ENV}), {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './build/www',
-        proxy: [{
-            context: [
-                '/api',
-                '/management',
-                '/swagger-resources',
-                '/v2/api-docs',
-                '/h2-console'
-            ],
-            target: 'http://127.0.0.1:8080',
-            secure: false
-        }]
+        proxy: [
+            {
+                context: [
+                    '/api',
+                    '/management',
+                    '/swagger-resources',
+                    '/v2/api-docs',
+                    '/h2-console'
+                ],
+                target: 'http://127.0.0.1:8080',
+                secure: false
+            }
+        ]
     },
     output: {
         path: path.resolve('build/www'),
@@ -38,13 +40,18 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
         chunkFilename: 'app/[id].chunk.js'
     },
     module: {
-        rules: [{
-            test: /\.ts$/,
-            loaders: [
-                'tslint-loader'
-            ],
-            exclude: ['node_modules', new RegExp('reflect-metadata\\' + path.sep + 'Reflect\\.ts')]
-        }]
+        rules: [
+            {
+                test: /\.ts$/,
+                loaders: [
+                    'tslint-loader'
+                ],
+                exclude: [
+                    'node_modules',
+                    new RegExp('reflect-metadata\\' + path.sep + 'Reflect\\.ts')
+                ]
+            }
+        ]
     },
     plugins: [
         new BrowserSyncPlugin({
@@ -61,7 +68,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
         new webpack.NamedModulesPlugin(),
         new writeFilePlugin(),
         new webpack.WatchIgnorePlugin([
-            path.resolve('./src/test'),
+            path.resolve('./src/test')
         ])
     ]
 });
