@@ -1,6 +1,7 @@
 package com.smart.learning.repository.mongo.extended;
 
 import com.smart.learning.config.AuditEventConverter;
+import com.smart.learning.config.Constants;
 import com.smart.learning.domain.PersistentAuditEvent;
 import com.smart.learning.repository.mongo.PersistenceAuditEventRepository;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +35,13 @@ public class CustomAuditEventRepository implements AuditEventRepository {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void add(AuditEvent event) {
-        if (!AUTHORIZATION_FAILURE.equals(event.getType())) {
+        if (!AUTHORIZATION_FAILURE.equals(event.getType()) &&
+            !Constants.ANONYMOUS_USER.equals(event.getPrincipal())) {
+
             PersistentAuditEvent persistentAuditEvent = new PersistentAuditEvent();
             persistentAuditEvent.setPrincipal(event.getPrincipal());
             persistentAuditEvent.setAuditEventType(event.getType());
-            Instant instant = Instant.ofEpochMilli(event.getTimestamp().getTime());
-            persistentAuditEvent.setAuditEventDate(instant);
+            persistentAuditEvent.setAuditEventDate(event.getTimestamp().toInstant());
             persistentAuditEvent.setData(auditEventConverter.convertDataToStrings(event.getData()));
             persistenceAuditEventRepository.save(persistentAuditEvent);
         }

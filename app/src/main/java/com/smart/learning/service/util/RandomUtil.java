@@ -1,13 +1,13 @@
 package com.smart.learning.service.util;
 
+import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.rng.simple.RandomSource;
 import org.apache.commons.text.RandomStringGenerator;
 
 /**
  * Utility class for generating random Strings.
  */
 public final class RandomUtil {
-
-    private static final int DEF_COUNT = 20;
 
     private RandomUtil() {
     }
@@ -18,7 +18,10 @@ public final class RandomUtil {
      * @return the generated activation key
      */
     public static String generateActivationKey() {
-        return new RandomStringGenerator.Builder().build().generate(DEF_COUNT);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+            .withinRange('a', 'z')
+            .build();
+        return generator.generate(20);
     }
 
     /**
@@ -27,7 +30,12 @@ public final class RandomUtil {
      * @return the generated password
      */
     public static String generatePassword() {
-        return new RandomStringGenerator.Builder().build().generate(DEF_COUNT);
+        UniformRandomProvider rng = RandomSource.create(RandomSource.WELL_19937_A);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+            .withinRange('a', 'z')
+            .usingRandom(rng::nextInt) // uses Java 8 syntax
+            .build();
+        return generator.generate(60);
     }
 
     /**
@@ -36,6 +44,9 @@ public final class RandomUtil {
      * @return the generated reset key
      */
     public static String generateResetKey() {
-        return new RandomStringGenerator.Builder().build().generate(DEF_COUNT);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+            .withinRange('a', 'z')
+            .build();
+        return generator.generate(20);
     }
 }

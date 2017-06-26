@@ -122,16 +122,20 @@ public class HeaderUtil {
     public static Map<String, Object> fetchParams(HttpHeaders headers) {
         if (headers.containsKey(HEADER_PARAMS)) {
             String params = headers.getFirst(HEADER_PARAMS);
-            TypeReference<Map<String, Object>> reference = new TypeReference<Map<String, Object>>() {
-            };
-            try {
-                return new ObjectMapper().readValue(params, reference);
-            } catch (Exception e) {
-                logger.error("Unable to convert headers to Map class type due to: {}", e);
-                return new HashMap<>();
-            }
+            return toMap(params);
         }
 
         return new HashMap<>();
+    }
+
+    public static Map<String, Object> toMap(String headers) {
+        TypeReference<Map<String, Object>> reference = new TypeReference<Map<String, Object>>() {
+        };
+        try {
+            return new ObjectMapper().readValue(headers, reference);
+        } catch (Exception e) {
+            logger.error("Unable to convert headers to Map class type due to: {}", e);
+            return new HashMap<>();
+        }
     }
 }

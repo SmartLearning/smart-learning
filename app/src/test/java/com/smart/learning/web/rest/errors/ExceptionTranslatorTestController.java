@@ -1,5 +1,6 @@
 package com.smart.learning.web.rest.errors;
 
+import com.smart.learning.service.errors.ClientSideException;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,9 +14,24 @@ import java.util.Map;
 @RestController
 public class ExceptionTranslatorTestController {
 
+    @GetMapping("/test/access-denied")
+    public void accessdenied() {
+        throw new AccessDeniedException("test access denied!");
+    }
+
     @GetMapping("/test/concurrency-failure")
     public void concurrencyFailure() {
         throw new ConcurrencyFailureException("test concurrency failure");
+    }
+
+    @GetMapping("/test/response-status")
+    public void exceptionWithResponseStatus() {
+        throw new TestResponseStatusException();
+    }
+
+    @GetMapping("/test/internal-server-error")
+    public void internalServerError() {
+        throw new RuntimeException();
     }
 
     @PostMapping("/test/method-argument")
@@ -24,7 +40,10 @@ public class ExceptionTranslatorTestController {
 
     @GetMapping("/test/parameterized-error")
     public void parameterizedError() {
-        throw new CustomParameterizedException("test parameterized error", "param0_value", "param1_value");
+        Map<String, String> params = new HashMap<>();
+        params.put("param0", "param0_value");
+        params.put("param1", "param1_value");
+        throw new ClientSideException("test parameterized error", params, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/test/parameterized-error2")
@@ -32,22 +51,7 @@ public class ExceptionTranslatorTestController {
         Map<String, String> params = new HashMap<>();
         params.put("foo", "foo_value");
         params.put("bar", "bar_value");
-        throw new CustomParameterizedException("test parameterized error", params);
-    }
-
-    @GetMapping("/test/access-denied")
-    public void accessdenied() {
-        throw new AccessDeniedException("test access denied!");
-    }
-
-    @GetMapping("/test/response-status")
-    public void exceptionWithReponseStatus() {
-        throw new TestResponseStatusException();
-    }
-
-    @GetMapping("/test/internal-server-error")
-    public void internalServerError() {
-        throw new RuntimeException();
+        throw new ClientSideException("test parameterized error", params, HttpStatus.BAD_REQUEST);
     }
 
     public static class TestDTO {
@@ -64,9 +68,10 @@ public class ExceptionTranslatorTestController {
         }
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "test response status")
     @SuppressWarnings("serial")
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "test response status")
     public static class TestResponseStatusException extends RuntimeException {
+
     }
 
 }

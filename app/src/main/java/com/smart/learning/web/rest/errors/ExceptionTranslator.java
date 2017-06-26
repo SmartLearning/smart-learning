@@ -137,7 +137,10 @@ public class ExceptionTranslator {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorVM> processRuntimeException(Exception ex) {
-        String message = "Internal server error";
+        String message = ex.getMessage();
+        if (StringUtils.isEmpty(ex.getMessage())) {
+            message = "Internal server error";
+        }
         if (ConstraintViolationException.class.isAssignableFrom(ex.getClass())) {
             ConstraintViolationException exception = (ConstraintViolationException) ex;
             Set<ConstraintViolation<?>> violations = exception.getConstraintViolations();
@@ -151,13 +154,13 @@ public class ExceptionTranslator {
         BodyBuilder builder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
         String title = ErrorConstants.ERR_INTERNAL_SERVER_ERROR;
 
-        HttpHeaders headers = HeaderUtil.createFailureAlert(ex.getMessage());
         ResponseStatus responseStatus = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
         if (responseStatus != null) {
             builder = ResponseEntity.status(responseStatus.value());
             title = "error." + responseStatus.value().value();
             message = responseStatus.reason();
         }
+        HttpHeaders headers = HeaderUtil.createFailureAlert(message);
         return builder.headers(headers).body(new ErrorVM(title, message));
     }
 

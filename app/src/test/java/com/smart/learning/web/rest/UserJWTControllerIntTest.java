@@ -61,27 +61,27 @@ public class UserJWTControllerIntTest {
 
         userRepository.save(user);
 
-        LoginVM login = new LoginVM();
-        login.setUsername("user-jwt-controller");
-        login.setPassword("test");
+        LoginVM username = new LoginVM();
+        username.setUsername("user-jwt-controller");
+        username.setPassword("test");
         mockMvc.perform(post("/api/authenticate")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(login)))
+            .content(TestUtil.convertObjectToJsonBytes(username)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id_token").isString())
-            .andExpect(jsonPath("$.id_token").isNotEmpty());
+            .andExpect(jsonPath("$.token").isString())
+            .andExpect(jsonPath("$.token").isNotEmpty());
     }
 
     @Test
     public void testAuthorizeFails() throws Exception {
-        LoginVM login = new LoginVM();
-        login.setUsername("wrong-user");
-        login.setPassword("wrong password");
+        LoginVM username = new LoginVM();
+        username.setUsername("wrong-user");
+        username.setPassword("wrong password");
         mockMvc.perform(post("/api/authenticate")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(login)))
+            .content(TestUtil.convertObjectToJsonBytes(username)))
             .andExpect(status().isUnauthorized())
-            .andExpect(jsonPath("$.id_token").doesNotExist());
+            .andExpect(jsonPath("$.token").doesNotExist());
     }
 
     @Test
@@ -94,15 +94,15 @@ public class UserJWTControllerIntTest {
 
         userRepository.save(user);
 
-        LoginVM login = new LoginVM();
-        login.setUsername("user-jwt-controller-remember-me");
-        login.setPassword("test");
-        login.setRememberMe(true);
+        LoginVM username = new LoginVM();
+        username.setUsername("user-jwt-controller-remember-me");
+        username.setPassword("test");
+        username.setRememberMe(true);
         mockMvc.perform(post("/api/authenticate")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(login)))
+            .content(TestUtil.convertObjectToJsonBytes(username)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id_token").isString())
-            .andExpect(jsonPath("$.id_token").isNotEmpty());
+            .andExpect(jsonPath("$.token").isString())
+            .andExpect(jsonPath("$.token").isNotEmpty());
     }
 }

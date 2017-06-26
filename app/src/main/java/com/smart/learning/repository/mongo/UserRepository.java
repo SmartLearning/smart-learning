@@ -16,7 +16,7 @@ public interface UserRepository extends BaseMongoDBRepository<User, String> {
 
     List<User> findAllByActivatedIsFalseAndCreatedAtBefore(Instant dateTime);
 
-    Page<User> findAllByUsernameNot(Pageable pageable, String login);
+    Page<User> findAllByUsernameNot(Pageable pageable, String username);
 
     Optional<User> findOneByActivationKey(String activationKey);
 
@@ -24,5 +24,5 @@ public interface UserRepository extends BaseMongoDBRepository<User, String> {
 
     Optional<User> findOneByResetKey(String resetKey);
 
-    Optional<User> findOneByUsername(String login);
+    Optional<User> findOneByUsername(String username);
 }

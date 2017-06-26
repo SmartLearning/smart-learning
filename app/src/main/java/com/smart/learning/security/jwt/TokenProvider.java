@@ -22,7 +22,7 @@ public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
 
-    private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final AppProperties properties;
 
@@ -37,8 +37,7 @@ public class TokenProvider {
     }
 
     public String createToken(Authentication authentication, Boolean rememberMe) {
-        String authorities = authentication.getAuthorities()
-            .stream()
+        String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
 
@@ -64,20 +63,25 @@ public class TokenProvider {
             .parseClaimsJws(token)
             .getBody();
 
-        Collection<? extends GrantedAuthority> authorities = Arrays
-            .stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+        Collection<? extends GrantedAuthority> authorities =
+            Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
 
         User principal = new User(claims.getSubject(), "", authorities);
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
     @PostConstruct
     public void init() {
-        this.secretKey = properties.getSecurity().getAuthentication().getJwt().getSecret();
-        this.tokenValidityInMilliseconds = 1000 * properties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
-        this.tokenValidityInMillisecondsForRememberMe = 1000 * properties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
+        this.secretKey =
+            properties.getSecurity().getAuthentication().getJwt().getSecret();
+
+        this.tokenValidityInMilliseconds =
+            1000 * properties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
+        this.tokenValidityInMillisecondsForRememberMe =
+            1000 * properties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
     }
 
     public boolean validateToken(String authToken) {
@@ -85,20 +89,20 @@ public class TokenProvider {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
-            logger.info("Invalid JWT signature.");
-            logger.trace("Invalid JWT signature trace: {}", e);
+            log.info("Invalid JWT signature.");
+            log.trace("Invalid JWT signature trace: {}", e);
         } catch (MalformedJwtException e) {
-            logger.info("Invalid JWT token.");
-            logger.trace("Invalid JWT token trace: {}", e);
+            log.info("Invalid JWT token.");
+            log.trace("Invalid JWT token trace: {}", e);
         } catch (ExpiredJwtException e) {
-            logger.info("Expired JWT token.");
-            logger.trace("Expired JWT token trace: {}", e);
+            log.info("Expired JWT token.");
+            log.trace("Expired JWT token trace: {}", e);
         } catch (UnsupportedJwtException e) {
-            logger.info("Unsupported JWT token.");
-            logger.trace("Unsupported JWT token trace: {}", e);
+            log.info("Unsupported JWT token.");
+            log.trace("Unsupported JWT token trace: {}", e);
         } catch (IllegalArgumentException e) {
-            logger.info("JWT token compact of handler are invalid.");
-            logger.trace("JWT token compact of handler are invalid trace: {}", e);
+            log.info("JWT token compact of handler are invalid.");
+            log.trace("JWT token compact of handler are invalid trace: {}", e);
         }
         return false;
     }

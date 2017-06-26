@@ -32,7 +32,7 @@ public class AccountResource {
 
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+    private final Logger logger = LoggerFactory.getLogger(AccountResource.class);
 
     private final MailService mailService;
 
@@ -95,15 +95,15 @@ public class AccountResource {
     }
 
     /**
-     * GET  /authenticate : check if the user is authenticated, and return its login.
+     * GET  /authenticate : check if the user is authenticated, and return its username.
      *
      * @param request the HTTP request
-     * @return the login if the user is authenticated
+     * @return the username if the user is authenticated
      */
     @Timed
     @GetMapping("/authenticate")
     public String isAuthenticated(HttpServletRequest request) {
-        log.debug("REST request to check if the current user is authenticated");
+        logger.debug("REST request to check if the current user is authenticated");
         return request.getRemoteUser();
     }
 
@@ -111,7 +111,7 @@ public class AccountResource {
      * POST  /register : register the user.
      *
      * @param managedUserVM the managed user View Model
-     * @return the ResponseEntity with status 201 (Created) if the user is registered or 400 (Bad Request) if the login or email is already in use
+     * @return the ResponseEntity with status 201 (Created) if the user is registered or 400 (Bad Request) if the username or email is already in use
      */
     @Timed
     @PostMapping(path = "/register", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
@@ -123,7 +123,7 @@ public class AccountResource {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
         return userRepository.findOneByUsername(managedUserVM.getUsername().toLowerCase())
-            .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+            .map(user -> new ResponseEntity<>("username already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
                 .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
@@ -165,13 +165,13 @@ public class AccountResource {
     @Timed
     @PostMapping("/account")
     public ResponseEntity saveAccount(@Valid @RequestBody UserDTO userDTO) {
-        final String userLogin = SecurityUtils.getCurrentUsername();
+        final String userUsername = SecurityUtils.getCurrentUsername();
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
-        if (existingUser.isPresent() && (!existingUser.get().getUsername().equalsIgnoreCase(userLogin))) {
+        if (existingUser.isPresent() && (!existingUser.get().getUsername().equalsIgnoreCase(userUsername))) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body(null);
         }
         return userRepository
-            .findOneByUsername(userLogin)
+            .findOneByUsername(userUsername)
             .map(u -> {
                 userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
                     userDTO.getLangKey(), userDTO.getImageUrl());

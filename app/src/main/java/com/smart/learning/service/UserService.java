@@ -82,14 +82,14 @@ public class UserService {
             });
     }
 
-    public User createUser(String login, String password, String firstName, String lastName, String email,
+    public User createUser(String username, String password, String firstName, String lastName, String email,
                            String imageUrl, String langKey) {
 
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
-        newUser.setUsername(login);
+        newUser.setUsername(username);
         // new user gets initially a generated password
         newUser.setPassword(encryptedPassword);
         newUser.setFirstName(firstName);
@@ -137,8 +137,8 @@ public class UserService {
         return user;
     }
 
-    public void deleteUser(String login) {
-        userRepository.findOneByUsername(login).ifPresent(user -> {
+    public void deleteUser(String username) {
+        userRepository.findOneByUsername(username).ifPresent(user -> {
             userRepository.delete(user);
             log.debug("Deleted User: {}", user);
         });

@@ -13,17 +13,17 @@ import java.time.Instant;
 /**
  * Developed by Navid Ghahremani (ghahramani.navid@gmail.com)
  */
-@JsonIgnoreProperties(value = {"createdAt", "modifiedAt"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"createdAt", "modifiedAt", "createdBy", "modifiedBy"}, allowGetters = true)
 public abstract class BaseDateModel implements Serializable {
 
     @CreatedDate
-    private transient Instant createdAt;
+    private transient Instant createdAt = Instant.now();
 
     @CreatedBy
     private String createdBy;
 
     @LastModifiedDate
-    private transient Instant modifiedAt;
+    private transient Instant modifiedAt = Instant.now();
 
     @LastModifiedBy
     private String modifiedBy;

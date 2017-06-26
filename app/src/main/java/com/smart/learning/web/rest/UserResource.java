@@ -76,12 +76,12 @@ public class UserResource {
     /**
      * POST  /users  : Creates a new user.
      * <p>
-     * Creates a new user if the login and email are not already used, and sends an
+     * Creates a new user if the username and email are not already used, and sends an
      * mail with an activation link.
      * The user needs to be activated on creation.
      *
      * @param managedUserVM the user to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
+     * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the username or email is already in use
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @Timed
@@ -94,10 +94,10 @@ public class UserResource {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new user cannot already have an ID"))
                 .body(null);
-            // Lowercase the user login before comparing with database
+            // Lowercase the user username before comparing with database
         } else if (userRepository.findOneByUsername(managedUserVM.getUsername().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Username already in use"))
                 .body(null);
         } else if (userRepository.findOneByEmail(managedUserVM.getEmail()).isPresent()) {
             return ResponseEntity.badRequest()
@@ -113,18 +113,18 @@ public class UserResource {
     }
 
     /**
-     * DELETE /users/:login : delete the "login" User.
+     * DELETE /users/:username : delete the "username" User.
      *
-     * @param login the login of the user to delete
+     * @param username the username of the user to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/users/{login:" + Constants.USERNAME_PATTERN + "}")
+    @DeleteMapping("/users/{username:" + Constants.USERNAME_PATTERN + "}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteUser(@PathVariable String login) {
-        log.debug("REST request to delete User: {}", login);
-        userService.deleteUser(login);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert("userManagement.deleted", login)).build();
+    public ResponseEntity<Void> deleteUser(@PathVariable String username) {
+        log.debug("REST request to delete User: {}", username);
+        userService.deleteUser(username);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("userManagement.deleted", username)).build();
     }
 
     /**
@@ -142,17 +142,17 @@ public class UserResource {
     }
 
     /**
-     * GET  /users/:login : get the "login" user.
+     * GET  /users/:username : get the "username" user.
      *
-     * @param login the login of the user to find
-     * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
+     * @param username the username of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body the "username" user, or with status 404 (Not Found)
      */
-    @GetMapping("/users/{login:" + Constants.USERNAME_PATTERN + "}")
+    @GetMapping("/users/{username:" + Constants.USERNAME_PATTERN + "}")
     @Timed
-    public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
-        log.debug("REST request to get User : {}", login);
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
+        log.debug("REST request to get User : {}", username);
         return ResponseUtil.wrapOrNotFound(
-            userService.getUserWithAuthoritiesByUsername(login)
+            userService.getUserWithAuthoritiesByUsername(username)
                 .map(UserDTO::new));
     }
 
@@ -161,7 +161,7 @@ public class UserResource {
      *
      * @param managedUserVM the user to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated user,
-     * or with status 400 (Bad Request) if the login or email is already in use,
+     * or with status 400 (Bad Request) if the username or email is already in use,
      * or with status 500 (Internal Server Error) if the user couldn't be updated
      */
     @PutMapping("/users")
@@ -175,7 +175,7 @@ public class UserResource {
         }
         existingUser = userRepository.findOneByUsername(managedUserVM.getUsername().toLowerCase());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserVM.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Username already in use")).body(null);
         }
         Optional<UserDTO> updatedUser = userService.updateUser(managedUserVM);
 

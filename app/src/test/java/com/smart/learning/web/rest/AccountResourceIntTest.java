@@ -277,7 +277,7 @@ public class AccountResourceIntTest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.login").value("test"))
+            .andExpect(jsonPath("$.username").value("test"))
             .andExpect(jsonPath("$.firstName").value("john"))
             .andExpect(jsonPath("$.lastName").value("doe"))
             .andExpect(jsonPath("$.email").value("john.doe@app.com"))
@@ -307,7 +307,7 @@ public class AccountResourceIntTest {
     public void testRegisterAdminIsIgnored() throws Exception {
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
-            "badguy",               // login
+            "badguy",               // username
             "password",             // password
             "Bad",                  // firstName
             "Guy",                  // lastName
@@ -338,7 +338,7 @@ public class AccountResourceIntTest {
         // Good
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
-            "john",                 // login
+            "john",                 // username
             "password",             // password
             "John",                 // firstName
             "Doe",                  // lastName
@@ -352,7 +352,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
 
-        // Duplicate email, different login
+        // Duplicate email, different username
         ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getUsername(), validUser.getLastName(),
             validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedAt(), validUser.getModifiedBy(), validUser.getModifiedAt(), validUser.getAuthorities());
 
@@ -375,11 +375,11 @@ public class AccountResourceIntTest {
     }
 
     @Test
-    public void testRegisterDuplicateLogin() throws Exception {
+    public void testRegisterDuplicateUsername() throws Exception {
         // Good
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
-            "alice",                // login
+            "alice",                // username
             "password",             // password
             "Alice",                // firstName
             "Something",            // lastName
@@ -393,7 +393,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
 
-        // Duplicate login, different email
+        // Duplicate username, different email
         ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getUsername(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
             "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedAt(), validUser.getModifiedBy(), validUser.getModifiedAt(), validUser.getAuthorities());
 
@@ -404,7 +404,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(validUser)))
             .andExpect(status().isCreated());
 
-        // Duplicate login
+        // Duplicate username
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -419,7 +419,7 @@ public class AccountResourceIntTest {
     public void testRegisterInvalidEmail() throws Exception {
         ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
-            "bob",              // login
+            "bob",              // username
             "password",         // password
             "Bob",              // firstName
             "Green",            // lastName
@@ -444,38 +444,10 @@ public class AccountResourceIntTest {
     }
 
     @Test
-    public void testRegisterInvalidLogin() throws Exception {
-        ManagedUserVM invalidUser = new ManagedUserVM(
-            null,                   // id
-            "funky-log!n",          // login <-- invalid
-            "password",             // password
-            "Funky",                // firstName
-            "One",                  // lastName
-            "funky@example.com",    // email
-            true,                   // activated
-            "http://placehold.it/50x50", //imageUrl
-            "en",                   // langKey
-            null,                   // createdBy
-            null,                   // createdDate
-            null,                   // lastModifiedBy
-            null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
-
-        restUserMockMvc.perform(
-            post("/api/register")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-            .andExpect(status().isBadRequest());
-
-        Optional<User> user = userRepository.findOneByEmail("funky@example.com");
-        assertThat(user.isPresent()).isFalse();
-    }
-
-    @Test
     public void testRegisterInvalidPassword() throws Exception {
         ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
-            "bob",              // login
+            "bob",              // username
             "123",              // password with only 3 digits
             "Bob",              // firstName
             "Green",            // lastName
@@ -500,10 +472,38 @@ public class AccountResourceIntTest {
     }
 
     @Test
+    public void testRegisterInvalidUsername() throws Exception {
+        ManagedUserVM invalidUser = new ManagedUserVM(
+            null,                   // id
+            "funky-log!n",          // username <-- invalid
+            "password",             // password
+            "Funky",                // firstName
+            "One",                  // lastName
+            "funky@example.com",    // email
+            true,                   // activated
+            "http://placehold.it/50x50", //imageUrl
+            "en",                   // langKey
+            null,                   // createdBy
+            null,                   // createdDate
+            null,                   // lastModifiedBy
+            null,                   // lastModifiedDate
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+
+        restUserMockMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .andExpect(status().isBadRequest());
+
+        Optional<User> user = userRepository.findOneByEmail("funky@example.com");
+        assertThat(user.isPresent()).isFalse();
+    }
+
+    @Test
     public void testRegisterNullPassword() throws Exception {
         ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
-            "bob",              // login
+            "bob",              // username
             null,               // invalid null password
             "Bob",              // firstName
             "Green",            // lastName
@@ -531,7 +531,7 @@ public class AccountResourceIntTest {
     public void testRegisterValid() throws Exception {
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
-            "joe",                  // login
+            "joe",                  // username
             "password",             // password
             "Joe",                  // firstName
             "Shmoe",                // lastName
@@ -590,7 +590,7 @@ public class AccountResourceIntTest {
 
         UserDTO userDTO = new UserDTO(
             null,                   // id
-            "not-used",          // login
+            "not-used",          // username
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-account@example.com",    // email
@@ -642,7 +642,7 @@ public class AccountResourceIntTest {
 
         UserDTO userDTO = new UserDTO(
             null,                   // id
-            "not-used",          // login
+            "not-used",          // username
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-existing-email2@example.com",    // email
@@ -667,11 +667,11 @@ public class AccountResourceIntTest {
     }
 
     @Test
-    @WithMockUser("save-existing-email-and-login")
-    public void testSaveExistingEmailAndLogin() throws Exception {
+    @WithMockUser("save-existing-email-and-username")
+    public void testSaveExistingEmailAndUsername() throws Exception {
         User user = new User();
-        user.setUsername("save-existing-email-and-login");
-        user.setEmail("save-existing-email-and-login@example.com");
+        user.setUsername("save-existing-email-and-username");
+        user.setEmail("save-existing-email-and-username@example.com");
         user.setPassword(RandomUtil.generatePassword());
         user.setActivated(true);
 
@@ -679,10 +679,10 @@ public class AccountResourceIntTest {
 
         UserDTO userDTO = new UserDTO(
             null,                   // id
-            "not-used",          // login
+            "not-used",          // username
             "firstname",                // firstName
             "lastname",                  // lastName
-            "save-existing-email-and-login@example.com",    // email
+            "save-existing-email-and-username@example.com",    // email
             false,                   // activated
             "http://placehold.it/50x50", //imageUrl
             "en",                   // langKey
@@ -699,8 +699,8 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(userDTO)))
             .andExpect(status().isOk());
 
-        User updatedUser = userRepository.findOneByUsername("save-existing-email-and-login").orElse(null);
-        assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
+        User updatedUser = userRepository.findOneByUsername("save-existing-email-and-username").orElse(null);
+        assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-username@example.com");
     }
 
     @Test
@@ -716,7 +716,7 @@ public class AccountResourceIntTest {
 
         UserDTO userDTO = new UserDTO(
             null,                   // id
-            "not-used",          // login
+            "not-used",          // username
             "firstname",                // firstName
             "lastname",                  // lastName
             "invalid email",    // email

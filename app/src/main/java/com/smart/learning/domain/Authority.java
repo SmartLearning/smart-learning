@@ -2,7 +2,6 @@ package com.smart.learning.domain;
 
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -43,9 +42,7 @@ public class Authority implements Serializable {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(name)
-            .toHashCode();
+        return name != null ? name.hashCode() : 0;
     }
 
     @Override

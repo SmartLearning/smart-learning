@@ -3,6 +3,8 @@ package com.smart.learning.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smart.learning.config.Constants;
 import com.smart.learning.domain.util.StringBaseDateModel;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -37,8 +39,8 @@ public class User extends StringBaseDateModel {
     private Set<Authority> authorities = new HashSet<>();
 
     @Email
-    @Size(min = 5, max = 100)
     @Indexed
+    @Size(min = 5, max = 100)
     private String email;
 
     @Size(max = 50)
@@ -66,9 +68,49 @@ public class User extends StringBaseDateModel {
 
     @NotNull
     @Indexed
-    @Size(min = USERNAME_MIN_LENGTH, max = USERNAME_MAX_LENGTH)
     @Pattern(regexp = Constants.USERNAME_PATTERN)
+    @Size(min = USERNAME_MIN_LENGTH, max = USERNAME_MAX_LENGTH)
     private String username;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        User user = (User) o;
+
+        return new EqualsBuilder()
+            .append(activated, user.activated)
+            .append(authorities, user.authorities)
+            .append(email, user.email)
+            .append(firstName, user.firstName)
+            .append(imageUrl, user.imageUrl)
+            .append(langKey, user.langKey)
+            .append(lastName, user.lastName)
+            .append(password, user.password)
+            .append(username, user.username)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .append(activated)
+            .append(authorities)
+            .append(email)
+            .append(firstName)
+            .append(imageUrl)
+            .append(langKey)
+            .append(lastName)
+            .append(password)
+            .append(username)
+            .toHashCode();
+    }
 
     @Override
     public String toString() {
