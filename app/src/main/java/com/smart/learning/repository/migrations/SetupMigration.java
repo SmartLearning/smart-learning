@@ -38,6 +38,7 @@ public class SetupMigration {
         adminUser.setUsername("admin");
         adminUser.setPassword("$2a$10$igKgV9LaKsSuREyLgmyef.dG2r2QSW0CoPHEque54SCaGwDSRB/LC");
         adminUser.setLangKey("en");
+        adminUser.setActivated(true);
         adminUser.setCreatedBy("system");
         adminUser.setCreatedAt(Instant.now());
         adminUser.getAuthorities().add(adminAuthority);
@@ -48,6 +49,7 @@ public class SetupMigration {
         userUser.setId("user-2");
         userUser.setUsername("user");
         userUser.setPassword("$2a$10$4NHWANsnOMd39vw0kcnMG.TAZpwlRsiHWm.7ddPjDtsRl4wvcfaU.");
+        userUser.setActivated(true);
         userUser.setLangKey("en");
         userUser.setCreatedBy("system");
         userUser.setCreatedAt(Instant.now());
