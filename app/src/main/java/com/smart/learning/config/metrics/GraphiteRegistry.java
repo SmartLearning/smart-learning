@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +37,12 @@ import java.util.concurrent.TimeUnit;
 @ConditionalOnClass(Graphite.class)
 public class GraphiteRegistry {
 
-    public GraphiteRegistry(MetricRegistry metricRegistry, AppProperties properties) {
+    private AppProperties properties;
+
+    private MetricRegistry registry;
+
+    @PostConstruct
+    private void setup() {
         if (properties.getMetrics().getGraphite().isEnabled()) {
             Logger log = LoggerFactory.getLogger(GraphiteRegistry.class);
             log.info("Initializing Metrics Graphite reporting");
@@ -43,12 +50,22 @@ public class GraphiteRegistry {
             Integer graphitePort = properties.getMetrics().getGraphite().getPort();
             String graphitePrefix = properties.getMetrics().getGraphite().getPrefix();
             Graphite graphite = new Graphite(new InetSocketAddress(graphiteHost, graphitePort));
-            GraphiteReporter graphiteReporter = GraphiteReporter.forRegistry(metricRegistry)
+            GraphiteReporter graphiteReporter = GraphiteReporter.forRegistry(registry)
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .prefixedWith(graphitePrefix)
                 .build(graphite);
             graphiteReporter.start(1, TimeUnit.MINUTES);
         }
+    }
+
+    @Inject
+    public void setProperties(AppProperties properties) {
+        this.properties = properties;
+    }
+
+    @Inject
+    public void setRegistry(MetricRegistry registry) {
+        this.registry = registry;
     }
 }

@@ -1,19 +1,3 @@
-/*
- * Copyright 2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.smart.learning.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -163,6 +147,8 @@ public class AppProperties {
 
             private int backupCount = 1;
 
+            private String localAddress;
+
             private int timeToLiveSeconds = 3600;
 
             public int getBackupCount() {
@@ -171,6 +157,15 @@ public class AppProperties {
 
             public void setBackupCount(int backupCount) {
                 this.backupCount = backupCount;
+            }
+
+            public String getLocalAddress() {
+                return localAddress;
+            }
+
+            public Hazelcast setLocalAddress(String localAddress) {
+                this.localAddress = localAddress;
+                return this;
             }
 
             public int getTimeToLiveSeconds() {
@@ -279,27 +274,7 @@ public class AppProperties {
 
             }
 
-            public static class Replicated {
-
-                private long maxEntries = 100;
-
-                private long timeToLiveSeconds = 60;
-
-                public long getMaxEntries() {
-                    return maxEntries;
-                }
-
-                public void setMaxEntries(long maxEntries) {
-                    this.maxEntries = maxEntries;
-                }
-
-                public long getTimeToLiveSeconds() {
-                    return timeToLiveSeconds;
-                }
-
-                public void setTimeToLiveSeconds(long timeToLiveSeconds) {
-                    this.timeToLiveSeconds = timeToLiveSeconds;
-                }
+            public static class Replicated extends Local {
 
             }
         }
@@ -640,7 +615,7 @@ public class AppProperties {
 
         private String title = "Application API";
 
-        private String version = "0.0.1";
+        private String version = "1.0.0";
 
         public String getContactEmail() {
             return contactEmail;

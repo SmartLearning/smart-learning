@@ -15,11 +15,6 @@ spring:
             write_dates_as_timestamps: false
     cache:
         type: none
-    data:
-        mongodb:
-            host: localhost
-            port: 27117
-            database: app
     mail:
         host: localhost
     messages:
@@ -29,6 +24,10 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+    data:
+        mongodb:
+            uri: mongodb://localhost:27017
+            database: app_test
 
 liquibase:
     contexts: test
