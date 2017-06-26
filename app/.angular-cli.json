@@ -3,27 +3,29 @@
         "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
         "name": "app"
     },
-    "apps": [{
-        "root": "src/main/webapp/",
-        "outDir": "build/www/app",
-        "assets": [
-            "content",
-            "i18n",
-            "favicon.ico"
-        ],
-        "index": "index.html",
-        "main": "app/app.main.ts",
-        "polyfills": "app/polyfills.ts",
-        "test": "",
-        "tsconfig": "../../../tsconfig.json",
-        "prefix": "jhi",
-        "mobile": false,
-        "styles": [
-            "content/scss/vendor.scss",
-            "content/scss/global.scss"
-        ],
-        "scripts": []
-    }],
+    "apps": [
+        {
+            "root": "src/main/webapp/",
+            "outDir": "build/www/app",
+            "assets": [
+                "content",
+                "i18n",
+                "favicon.ico"
+            ],
+            "index": "index.html",
+            "main": "app/app.main.ts",
+            "polyfills": "app/polyfills.ts",
+            "test": "",
+            "tsconfig": "../../../tsconfig.json",
+            "prefix": "jhi",
+            "mobile": false,
+            "styles": [
+                "content/scss/vendor.scss",
+                "content/scss/global.scss"
+            ],
+            "scripts": []
+        }
+    ],
     "addons": [],
     "packages": [],
     "e2e": {
@@ -31,7 +33,8 @@
             "config": "src/test/javascript/protractor.conf.js"
         }
     },
-    "lint": [{
+    "lint": [
+        {
             "project": "../../../tsconfig.json"
         },
         {

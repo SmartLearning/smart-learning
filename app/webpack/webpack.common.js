@@ -80,53 +80,53 @@ module.exports = (options) =;> {
                         replacements: [{
                             pattern: /\/\* @toreplace (\w*?) \*\//ig,
                             replacement: (match, p1, offset, string) => `_${p1} = ${DATAS[p1]};`
-                        }]
-                    };)
-                }
-            ]
-        },
-        [
-            new CommonsChunkPlugin({
-                names: ['manifest', 'polyfills'].reverse()
-            }),
-            new webpack.DllReferencePlugin({
-                context: './',
-                manifest: require(path.resolve('./build/www/vendor.json'))
-            }),
-            new CopyWebpackPlugin([
-                { from: './node_modules/core-js/client/shim.min.js', to: 'core-js-shim.min.js' },
-                { from: './node_modules/swagger-ui/dist', to: 'swagger-ui/dist' },
-                { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
-                { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
-                { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
-                // { from: './src/main/webapp/sw.js', to: 'sw.js' },
-                { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
-            ]),
-            new webpack.ProvidePlugin({
-                $: "jquery",
-                jQuery: "jquery"
-            }),
-            new MergeJsonWebpackPlugin({
-                output: {
-                    groupBy: [
-                        { pattern: "./src/main/webapp/i18n/en/*.json", fileName: "./build/www/i18n/en.json" }
-                        // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
-                    ]
-                }
-            }),
-            new HtmlWebpackPlugin({
-                template: './src/main/webapp/index.html',
-                chunksSortMode: 'dependency',
-                inject: 'body'
-            }),
-            new AddAssetHtmlPlugin([
-                { filepath: path.resolve('./build/www/vendor.dll.js'), includeSourcemap: false }
-            ]),
-            new StringReplacePlugin(),
-            new WebpackNotifierPlugin({
-                title: 'JHipster',
-                contentImage: path.join(__dirname, 'logo-jhipster.png')
-            })
-        ]
+                    }]
+        };)
+}
+]
+},
+    [
+        new CommonsChunkPlugin({
+            names: ['manifest', 'polyfills'].reverse()
+        }),
+        new webpack.DllReferencePlugin({
+            context: './',
+            manifest: require(path.resolve('./build/www/vendor.json'))
+        }),
+        new CopyWebpackPlugin([
+            { from: './node_modules/core-js/client/shim.min.js', to: 'core-js-shim.min.js' },
+            { from: './node_modules/swagger-ui/dist', to: 'swagger-ui/dist' },
+            { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
+            { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
+            { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
+            // { from: './src/main/webapp/sw.js', to: 'sw.js' },
+            { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
+        ]),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
+        new MergeJsonWebpackPlugin({
+            output: {
+                groupBy: [
+                    { pattern: "./src/main/webapp/i18n/en/*.json", fileName: "./build/www/i18n/en.json" }
+                    // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
+                ]
+            }
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/main/webapp/index.html',
+            chunksSortMode: 'dependency',
+            inject: 'body'
+        }),
+        new AddAssetHtmlPlugin([
+            { filepath: path.resolve('./build/www/vendor.dll.js'), includeSourcemap: false }
+        ]),
+        new StringReplacePlugin(),
+        new WebpackNotifierPlugin({
+            title: 'JHipster',
+            contentImage: path.join(__dirname, 'logo-jhipster.png')
+        })
+    ]
 }
 }
