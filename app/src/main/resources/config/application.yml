@@ -1,6 +1,4 @@
 # ===================================================================
-# Spring Boot configuration for the "dev" profile.
-#
 # This configuration overrides the application.yml file.
 # ===================================================================
 
@@ -34,6 +32,10 @@ spring:
         multipart:
             max-file-size: 128MB
             max-request-size: 128MB
+    data:
+        mongodb:
+            uri: mongodb://mongodb:27017
+            database: app
 
 security:
     basic:
@@ -62,6 +64,10 @@ application:
         hazelcast: # Hazelcast distributed cache
             time-to-live-seconds: 3600
             backup-count: 1
+            local-address: 127.0.0.1
+    mail:
+        from: app@localhost
+        base-url: http://127.0.0.1:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx:
             enabled: true

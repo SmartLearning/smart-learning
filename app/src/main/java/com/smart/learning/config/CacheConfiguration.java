@@ -50,8 +50,7 @@ public class CacheConfiguration {
     @Bean
     public CacheManager cacheManager(HazelcastInstance hazelcastInstance) {
         log.debug("Starting HazelcastCacheManager");
-        CacheManager cacheManager = new com.hazelcast.spring.cache.HazelcastCacheManager(hazelcastInstance);
-        return cacheManager;
+        return new com.hazelcast.spring.cache.HazelcastCacheManager(hazelcastInstance);
     }
 
     @PreDestroy
@@ -79,15 +78,15 @@ public class CacheConfiguration {
             log.debug("Configuring Hazelcast clustering for instanceId: {}", serviceId);
             // In development, everything goes through 127.0.0.1, with a different port
             if (env.acceptsProfiles(Constants.Profile.SPRING_PROFILE_DEVELOPMENT)) {
-                log.debug("Application is running with the \"dev\" profile, Hazelcast " +
-                    "cluster will only work with localhost instances");
+                log.debug("Application is running with the \"dev\" profile, Hazelcast cluster will only work with localhost instances");
 
-                System.setProperty("hazelcast.local.localAddress", "127.0.0.1");
+                String localAddress = properties.getCache().getHazelcast().getLocalAddress();
+                System.setProperty("hazelcast.local.localAddress", localAddress);
                 config.getNetworkConfig().setPort(serverProperties.getPort() + 5701);
                 config.getNetworkConfig().getJoin().getTcpIpConfig().setEnabled(true);
                 for (ServiceInstance instance : discoveryClient.getInstances(serviceId)) {
-                    String clusterMember = "127.0.0.1:" + (instance.getPort() + 5701);
-                    log.debug("Adding Hazelcast (dev) cluster member " + clusterMember);
+                    String clusterMember = localAddress + ":" + (instance.getPort() + 5701);
+                    log.debug("Adding Hazelcast (dev) cluster member {}", clusterMember);
                     config.getNetworkConfig().getJoin().getTcpIpConfig().addMember(clusterMember);
                 }
             } else { // Production configuration, one host per instance all using port 5701
@@ -95,7 +94,7 @@ public class CacheConfiguration {
                 config.getNetworkConfig().getJoin().getTcpIpConfig().setEnabled(true);
                 for (ServiceInstance instance : discoveryClient.getInstances(serviceId)) {
                     String clusterMember = instance.getHost() + ":5701";
-                    log.debug("Adding Hazelcast (prod) cluster member " + clusterMember);
+                    log.debug("Adding Hazelcast (prod) cluster member {}", clusterMember);
                     config.getNetworkConfig().getJoin().getTcpIpConfig().addMember(clusterMember);
                 }
             }

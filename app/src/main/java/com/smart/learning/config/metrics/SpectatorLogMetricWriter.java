@@ -55,19 +55,19 @@ public class SpectatorLogMetricWriter implements MetricWriter {
         String metricName = metricContent;
 
         // format different types of hystrix metrics
-        if (metricSplit[2].equals("RibbonCommand")) {
+        if ("RibbonCommand".equals(metricSplit[2])) {
             hystrixType = "hystrix.HystrixCommand.RibbonCommand";
             serviceName = metricSplit[3];
             // remove prefix
             metricName = metricContent.substring(37);
         } else {
-            if (metricSplit[1].equals("HystrixCommand")) {
+            if ("HystrixCommand".equals(metricSplit[1])) {
                 hystrixType = "hystrix.HystrixCommand";
                 serviceName = metricSplit[2];
                 methodName = metricSplit[3];
                 metricName = metricContent.substring(23);
             }
-            if (metricSplit[1].equals("HystrixThreadPool")) {
+            if ("HystrixThreadPool".equals(metricSplit[1])) {
                 hystrixType = "hystrix.HystrixThreadPool";
                 serviceName = metricSplit[2];
                 methodName = metricSplit[3];
@@ -75,7 +75,13 @@ public class SpectatorLogMetricWriter implements MetricWriter {
             }
         }
 
-        log.info("type=GAUGE, hystrix_type={}, service={}, method={}, name={}, value={}", hystrixType, serviceName,
-            methodName, metricName, metric.getValue());
+        log.info(
+            "type=GAUGE, hystrix_type={}, service={}, method={}, name={}, value={}",
+            hystrixType,
+            serviceName,
+            methodName,
+            metricName,
+            metric.getValue()
+        );
     }
 }

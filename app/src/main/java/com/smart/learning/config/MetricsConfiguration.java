@@ -53,7 +53,7 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
     @Bean
     @ExportMetricReader
     @ConditionalOnProperty("application.logging.spectator-metrics.enabled")
-    public SpectatorMetricReader SpectatorMetricReader(Registry registry) {
+    public SpectatorMetricReader spectatorMetricReader(Registry registry) {
         log.info("Initializing Spectator Metrics Log reporting");
         return new SpectatorMetricReader(registry);
     }

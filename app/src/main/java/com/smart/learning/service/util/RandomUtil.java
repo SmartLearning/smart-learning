@@ -3,6 +3,7 @@ package com.smart.learning.service.util;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.apache.commons.text.RandomStringGenerator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Utility class for generating random Strings.
@@ -35,7 +36,8 @@ public final class RandomUtil {
             .withinRange('a', 'z')
             .usingRandom(rng::nextInt) // uses Java 8 syntax
             .build();
-        return generator.generate(60);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(generator.generate(60));
     }
 
     /**

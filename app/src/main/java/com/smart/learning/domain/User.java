@@ -60,7 +60,7 @@ public class User extends StringBaseDateModel {
     @Size(min = 60, max = 60)
     private String password;
 
-    private Instant resetDate = null;
+    private transient Instant resetDate = null;
 
     @JsonIgnore
     @Size(max = 20)

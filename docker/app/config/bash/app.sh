@@ -2,4 +2,4 @@
 #/bin/sh
 pwd
 whoami
-cd ~/project/ && pwd && ./gradlew clean && ./gradlew
+cd ~/project/ && pwd && ./gradlew clean test && ./gradlew
