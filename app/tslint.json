@@ -1,4 +1,7 @@
 {
+    "extends": [
+        "codelyzer"
+    ],
     "rulesDirectory": [
         "node_modules/codelyzer"
     ],
@@ -75,7 +78,7 @@
             true,
             {
                 "call-signature": "nospace",
-                "index-signature": "nospace",
+                "index  -signature": "nospace",
                 "parameter": "nospace",
                 "property-declaration": "nospace",
                 "variable-declaration": "nospace"
@@ -109,13 +112,13 @@
         "directive-selector": [
             true,
             "attribute",
-            "jhi",
+            "smart",
             "camelCase"
         ],
         "component-selector": [
             true,
             "element",
-            "jhi",
+            "smart",
             "kebab-case"
         ],
         "use-input-property-decorator": true,
@@ -125,10 +128,26 @@
         "no-output-rename": true,
         "use-life-cycle-interface": true,
         "use-pipe-transform-interface": false,
-        "component-class-suffix": true,
-        "directive-class-suffix": true,
+        "component-class-suffix": [true, "Component"],
+        "directive-class-suffix": [true, "Directive"],
         "no-access-missing-member": true,
         "templates-use-public": true,
-        "invoke-injectable": true
+        "invoke-injectable": true,
+        "angular-whitespace": [
+            true,
+            "check-interpolation",
+            "check-pipe"
+        ],
+        "banana-in-box": true,
+        "templates-no-negated-async": true,
+        "use-view-encapsulation": true,
+        "no-attribute-parameter-decorator": true,
+        "no-forward-ref": true,
+        "pipe-naming": [
+            true,
+            "camelCase",
+            "smart"
+        ],
+        "template-to-ng-template": true
     }
 }
