@@ -1,5 +1,5 @@
-var dataCacheName = '"App-v1';
-var cacheName = '"App-1';
+var dataCacheName = '"smartApp-v1';
+var cacheName = '"smartApp-1';
 var filesToCache = [
     '/',
     '/index.html'

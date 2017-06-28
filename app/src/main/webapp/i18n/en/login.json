@@ -1,19 +1,23 @@
 {
     "login": {
-        "title": "Sign in",
-        "form": {
-            "password": "Password",
-            "password.placeholder": "Your password",
-            "rememberme": "Remember me",
-            "button": "Sign in"
+        "title": "Log in to your account",
+        "remember_me": "Remember me",
+        "button": "Sign in",
+        "password": {
+            "title": "Password",
+            "placeholder": "Your password"
         },
-        "messages": {
-            "error": {
-                "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
-            }
+        "email": {
+            "title": "Email",
+            "placeholder": "Your email address"
         },
-        "password" : {
-            "forgot": "Did you forget your password?"
+        "username": {
+            "title": "Username",
+            "placeholder": "Your username"
+        },
+        "errors": {
+            "authentication": "<strong>Failed to sign in!</strong>&nbsp;Please check your credentials and try again.",
+            "email_pattern": "Email must be a valid e-mail address"
         }
     }
 }

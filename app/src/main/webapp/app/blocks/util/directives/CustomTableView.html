@@ -1,0 +1,154 @@
+<div layout="column" flex>
+    <div>
+        <div layout-padding ng-if="vm.searchBox">
+            <form flex name="customDataTable.search.form" ng-submit="vm.onSearch(vm.searchForm.searchText)">
+                <div layout-gt-xs="row" layout-align="center center">
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label translate>global.customDataTable.input.search</label>
+                        <input ng-model="vm.searchForm.searchText" type="text">
+                    </md-input-container>
+                    <md-button ng-click="vm.searchForm.searchText = ''; vm.onSearch(vm.searchForm.searchText)">
+                        <md-icon>clear</md-icon>
+                        <span translate>global.customDataTable.button.clear</span>
+                    </md-button>
+                    <md-button ng-click="vm.onSearch(vm.searchForm.searchText)" class="md-raised md-primary">
+                        <md-icon>search</md-icon>
+                        <span translate>global.customDataTable.button.search</span>
+                    </md-button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <ng-transclude></ng-transclude>
+
+    <div flex class="menus" layout-wrap layout="row" layout-align="end center" ng-if="vm.showHideColumns">
+        <div layout-align="center center" layout="column" ng-transclude="leftShowHideMenu"></div>
+        <span flex></span>
+        <md-menu ng-if="vm.showHideColumns">
+            <md-button ng-click="$mdOpenMenu()">
+                <md-icon>visibility</md-icon>
+                <span translate>global.customDataTable.button.showHide</span>
+            </md-button>
+            <md-menu-content width="10" layout-padding>
+                <md-menu-item ng-repeat="header in vm.tHeaders" ng-if="header.showHide" style="padding: 2px 0;">
+                    <md-checkbox ng-model="header.visible">
+                        <span translate>{{header.text}}</span>
+                    </md-checkbox>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+
+    <md-divider></md-divider>
+    <div layout="row">
+        <md-button ng-click="vm.onToggleSelectAll()" ng-if="vm.enableSelectAll" class="no-margin-left">
+            <md-icon>select_all</md-icon>
+            <label ng-if="!vm.selectedAll" data-translate>global.buttons.select_all</label>
+            <label ng-if="vm.selectedAll" translate-interpolation="messageformat" data-translate
+                   translate-values="{count:vm.getSelectedCount()}">global.buttons.clear_all_item</label>
+        </md-button>
+        <div layout-align="center center" layout="column" ng-transclude="leftPaginationMenu"></div>
+        <md-table-pagination md-label="{{vm.pagination.label}}"
+                             ng-show="!vm.hidePager" flex
+                             md-boundary-links="true"
+                             md-on-paginate="vm.paginate"
+                             md-total="{{vm.total}}"
+                             md-page="vm.pagination.page"
+                             md-limit="vm.pagination.size"
+                             md-limit-options="vm.pagination.options"
+                             md-page-select></md-table-pagination>
+    </div>
+    <md-table-container infinite-scroll='vm.increaseTotalDisplayed()'
+                        infinite-scroll-distance='3'
+                        infinite-scroll-listen-for-event='page-data:updated'>
+        <table md-table
+               ng-class="{'controllable-table': vm.selectable && vm.keyControlled && !vm.controllKeyPressed}"
+               ng-attr-md-row-select="vm.selectable"
+               ng-attr-multiple="{{vm.selectable && vm.selectable == 'multiple' || undefined}}"
+               ng-model="vm.selected">
+            <thead md-head md-order="vm.order" md-on-reorder="vm.reorder" fix-head>
+            <tr md-row>
+                <th ng-repeat="header in vm.tHeaders" md-column md-numeric="header.numeric"
+                    ng-attr-flex="{{header.flex ? header.flex : ''}}"
+                    ng-attr-md-order-by="{{header.orderBy ? header.orderBy : ''}}"
+                    ng-attr-md-desc="{{header.desc ? 'true' : 'false'}}"
+                    ng-hide="vm.showHideColumns && !header.visible">
+                    <md-tooltip class="tt-multiline" md-direction="bottom" ng-if="header.tooltip">
+                        <span data-translate>{{header.tooltip}}</span>
+                    </md-tooltip>
+                    <span data-translate flex>{{header.text}}</span>
+                    <md-button ng-if="header.edit && header.edit.enabled !== false"
+                               ng-click="vm.onEdit(header)" class="md-icon-button">
+                        <md-icon class="table-header-icon">edit</md-icon>
+                    </md-button>
+                    <md-button ng-if="header.search && header.search.enabled !== false"
+                               ng-click="vm.onSearchFilter(header)" class="md-icon-button">
+                        <md-icon class="table-header-icon">search</md-icon>
+                    </md-button>
+                </th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr ng-if="vm.isEmptyData">
+                <td colspan="{{vm.selectable ? (vm.keyControlled ? vm.tHeaders.length : vm.tHeaders.length + 1) : vm.tHeaders.length}}">
+                    <div layout="column" flex layout-align="center center">
+                        <span translate>global.messages.no_data_added</span>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="!vm.isEmptyData" md-row md-auto-select="vm.rowSelectable"
+                md-on-deselect="vm.onRowDeselect"
+                ng-class="{'md-selected': model.selected}"
+                md-on-select="vm.onRowSelect"
+                ng-dblclick="vm.onDblRowSelect(model)"
+                md-select="model" ng-repeat="model in vm.displayedData" md-select-id="id">
+                <td md-cell ng-repeat="header in vm.tHeaders"
+                    data-header-text="{{header.text | translate}}"
+                    ng-click="vm.onCellClick($event, model, header)"
+                    ng-dblclick="vm.onCellDblClick($event, model, header)"
+                    ng-keypress="vm.onCellEnterPress($event, model, header)"
+                    ng-hide="vm.showHideColumns && !header.visible"
+                    ng-class="[{'no-padding': header.cellTemplateUrl}, vm.getCellClass(header, model)]"
+                    show-custom-validation="vm.getValue(model, header.validations)">
+                    <div ng-if="header.cellTemplateUrl"
+                         dynamic-controller="header.controller"
+                         controller-as="vm"
+                         controller-data="vm.getSuitableData(model, header)"
+                         template-url="header.cellTemplateUrl">
+                    </div>
+                    <!-- default for other types -->
+                    <div class="{{header.classes}}" ng-if="!header.cellTemplateUrl">
+                        <md-button ng-if="header.onClick" ng-click="vm.callFunction(header.onClick, model, header)">
+                            <label translate translate-values="{{vm.getSuitableDataParams(model, header)}}">
+                                {{vm.getCorrectValue(model, header)}}
+                            </label>
+                        </md-button>
+                        <span ng-if="!header.onClick" ng-switch on="header.type">
+                            <span ng-switch-when="text" translate
+                                  translate-values="{{vm.getSuitableDataParams(model, header)}}">
+                                {{vm.getLimitedAndEscapedData(model, header)}}
+                            </span>
+                            <span ng-switch-default translate
+                                  translate-values="{{vm.getSuitableDataParams(model, header)}}">
+                                {{vm.getSuitableData(model, header)}}
+                            </span>
+                        </span>
+                    </div>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+    <md-divider></md-divider>
+    <md-table-pagination md-label="{{vm.pagination.label}}"
+                         ng-show="!vm.hidePager"
+                         md-boundary-links="true"
+                         md-on-paginate="vm.paginate"
+                         md-total="{{vm.total}}"
+                         md-page="vm.pagination.page"
+                         md-limit="vm.pagination.size"
+                         md-limit-options="vm.pagination.options"
+                         md-page-select></md-table-pagination>
+</div>

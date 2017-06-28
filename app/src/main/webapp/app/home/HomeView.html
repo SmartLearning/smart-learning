@@ -1,0 +1,99 @@
+<div class="landing-text-color" layout="column" layout-align="space-around stretch">
+    <v-accordion id="my-accordion" multiple control="accordion" class="vAccordion--default">
+        <v-pane id="paneId" expanded>
+            <v-pane-header>
+                <h3>{{'home.title.hey'| translate}} <strong> {{vm.merchantName}} </strong> !</h3>
+            </v-pane-header>
+            <v-pane-content style="">
+                <h4 translate>home.title.companyText</h4>
+                <div>
+                    <h4 translate>home.title.landingmotto</h4>
+                    <ul style="list-style-type:disc">
+                        <li translate>
+                            home.title.item1
+                        </li>
+                        <li translate>
+                            home.title.item2
+                        </li>
+                        <li translate>
+                            home.title.item3
+                        </li>
+                        <li translate>
+                            home.title.item4
+                        </li>
+                        <li translate>
+                            home.title.item5
+                        </li>
+                        <li translate>
+                            home.title.item6
+                        </li>
+                    </ul>
+                </div>
+            </v-pane-content>
+        </v-pane>
+    </v-accordion>
+</div>
+
+<div style="margin-top: 8px;" class="landing-text-color" layout="row" layout-align="space-around stretch">
+    <div class="upload-card" layout="row" layout-align="space-around center" flex="30">
+        <i class="material-icons big-icon-size">search</i>
+        <div layout="column" layout-align="space-around stretch">
+            <h3 translate>home.title.fastlingTitle</h3>
+            <span translate>home.title.fastlistingText</span>
+            <div layout="row" layout-align="space-around stretch" style="margin-top: 5%;">
+                <md-button class="md-primary md-raised" type="submit" ng-click="vm.fastlistingOpenNewTab()">
+                    <label translate>home.title.fastlistingSingleButton</label>
+                </md-button>
+                <md-button class="md-primary md-raised" type="submit" ng-click="vm.fastlistingMultipleRedirect()">
+                    <label translate>home.title.fastlistingMultipleButton</label>
+                </md-button>
+            </div>
+        </div>
+    </div>
+    <div class="upload-card" layout="row" layout-align="space-around center" flex="30">
+        <i class="material-icons big-icon-size">group</i>
+        <div layout="column" layout-align="space-around stretch">
+            <h3 translate>home.title.uploadTitle</h3>
+            <span translate>home.title.uploadText</span>
+            <div layout="row" layout-align="space-around stretch" style="margin-top: 5%;">
+                <md-button class="md-primary md-raised" type="submit"
+                           ng-click="vm.uploadSingleRedirect()">
+                    <label translate>home.title.uploadSingleButton</label>
+                </md-button>
+                <md-button class="md-primary md-raised" type="submit" ng-click="vm.uploadMultipleRedirect()">
+                    <label translate>home.title.uploadMultipleButton</label>
+                </md-button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="landing-text-color" style="padding-top: 25px;" layout="column" layout-align="space-around stretch">
+    <div style="width: 100%;min-height: 5px;background-color: #e5e5e5;border-radius: 6px;"></div>
+</div>
+<div class="landing-text-color" layout="column" layout-align="space-around stretch">
+    <if-merchant-selected ng-if="vm.isAuthenticated">
+        <div layout="row" layout-xs="column" layout-align="space-around end" layout-wrap ng-if="vm.isAuthenticated">
+            <dashboard-box ng-repeat="item in vm.data"
+                           flex="500"
+                           has-header="false"
+                           total-count="{{vm.totalCount}}"
+                           ng-show="{{item.isDisplay}}"
+                           base-text="{{item.value}}"
+                           footer="{{item.text}}"
+                           type="{{item.type}}"
+                           class="dashboard-box"
+                           description="{{item.description}}"
+                           on-link-click="vm.onLickClickCallback(item)">
+            </dashboard-box>
+        </div>
+
+        <div layout="row" layout-xs="column">
+            <md-list flex="100">
+                <md-subheader class="md-no-sticky">{{'home.title.faq'|translate}}</md-subheader>
+                <md-list-item ng-repeat="faq in vm.faqs" class="secondary-button-padding">
+                    <a target="_blank" ng-href="{{faq.answer}}">{{$index+1}}. {{faq.question}}</a>
+                </md-list-item>
+            </md-list>
+        </div>
+    </if-merchant-selected>
+</div>

@@ -1,0 +1,33 @@
+<md-dialog flex="50" ng-cloak aria-label="{{'process.has_error.title' | translate}}">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 translate>process.has_error.title</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content fill-layout class="errors-container">
+            <div class="md-dialog-content" infinite-scroll="vm.nextPage()"
+                 infinite-scroll-disabled="vm.busy"
+                 infinite-scroll-container='".errors-container"'
+                 infinite-scroll-distance="1">
+                <md-card ng-repeat="error in vm.errors">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span translate translate-values="{{error.params}}">{{error.message}}</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <small>
+                            <time-ago from-time="{{error.untouchedCreatedAt}}"></time-ago>
+                            <md-tooltip md-direction="left">{{error.createdAt}}</md-tooltip>
+                        </small>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

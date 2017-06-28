@@ -1,0 +1,16 @@
+{
+    "user": {
+        "title": "User Management",
+        "created": "A new user is created with identifier {{ param }}",
+        "updated": "An user is updated with identifier {{ param }}",
+        "deleted": "An user is deleted with identifier {{ param }}",
+        "login": "Login",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "activated": "Activated",
+        "deactivated": "Deactivated",
+        "profiles": "Profiles",
+        "lang_key": "Language"
+    }
+}

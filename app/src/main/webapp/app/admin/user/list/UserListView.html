@@ -1,0 +1,73 @@
+<div>
+    <h2 translate>user.home.title</h2>
+    <alert></alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="user.detail({'id':''})">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate>user.home.createLabel</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate>global.field.id</th>
+                <th translate>user.login</th>
+                <th translate>user.email</th>
+                <th></th>
+                <th translate>user.langKey</th>
+                <th translate>user.profiles</th>
+                <th translate>user.createdDate</th>
+                <th translate>user.lastModifiedBy</th>
+                <th translate>user.lastModifiedDate</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in vm.users track by user.id">
+                <td><a ui-sref="user.detail({id:user.id})">{{user.id}}</a></td>
+                <td>{{user.login}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <span class="label label-danger" ng-click="vm.setActive(user, true)" ng-show="!user.activated"
+                          translate>user.deactivated" style="cursor: pointer;</span>
+                    <span class="label label-success" ng-click="vm.setActive(user, false)" ng-show="user.activated"
+                          style="cursor: pointer;" translate>user.activated</span>
+                </td>
+                <td>{{user.langKey}}</td>
+                <td>
+                    <div ng-repeat="authority in user.authorities">
+                        <span class="label label-info">{{authority}}</span>
+                    </div>
+                </td>
+                <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{user.lastModifiedBy}}</td>
+                <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                ui-sref="user.detail({id:user.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="hidden-xs hidden-sm" translate>entity.action.edit</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="user.delete({id:user.id})"
+                                class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.id==user.id">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                            <span class="hidden-xs hidden-sm" translate>entity.action.delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                        ng-change="vm.loadAll()"></uib-pagination>
+    </div>
+</div>
