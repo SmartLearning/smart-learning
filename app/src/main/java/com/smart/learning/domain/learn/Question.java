@@ -1,42 +1,39 @@
 package com.smart.learning.domain.learn;
 
+import com.smart.learning.domain.util.StringBaseDateModel;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 import java.util.Set;
 
-public class Question {
+@Document(collection = "users")
+public class Question extends StringBaseDateModel {
 
-    private String text;
-
-    private Set<Tag> tags;
+    private String question;
 
     //the order is the same as teacher's inserted
-    private List<String> options;
+    private List<String> choices;
 
-    //answer is included in the options list
+    //answer is one of the choices
     private String answer;
 
-    public String getText() {
-        return text;
+    //the areas this question is related to
+    private Set<Tag> tags;
+
+    public String getQuestion() {
+        return question;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public List<String> getChoices() {
+        return choices;
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public List<String> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<String> options) {
-        this.options = options;
+    public void setChoices(List<String> choices) {
+        this.choices = choices;
     }
 
     public String getAnswer() {
@@ -45,5 +42,13 @@ public class Question {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }
