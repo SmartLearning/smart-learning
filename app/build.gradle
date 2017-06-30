@@ -21,7 +21,6 @@ buildscript {
 apply plugin: 'war'
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'jacoco'
 apply plugin: 'propdeps'
 apply plugin: 'net.ltgt.apt'
 apply plugin: 'com.moowork.node'
@@ -189,15 +188,6 @@ if (OperatingSystem.current().isWindows()) {
     }
 }
 
-jacoco {
-    toolVersion = "${jacoco_version}"
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-    }
-}
 
 task cucumberTest(type: Test) {
     include '**/CucumberTest*'
