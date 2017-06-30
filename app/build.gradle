@@ -198,15 +198,6 @@ if (OperatingSystem.current().isWindows()) {
     }
 }
 
-jacoco {
-    toolVersion = "${jacoco_version}"
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-    }
-}
 
 task cucumberTest(type: Test) {
     include '**/CucumberTest*'
