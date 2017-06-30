@@ -24,7 +24,6 @@ apply plugin: 'maven'
 apply plugin: 'jacoco'
 apply plugin: 'propdeps'
 apply plugin: 'net.ltgt.apt'
-apply plugin: "org.sonarqube"
 apply plugin: 'com.moowork.node'
 apply plugin: 'org.springframework.boot'
 
