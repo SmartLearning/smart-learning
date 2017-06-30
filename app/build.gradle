@@ -1,5 +1,3 @@
-import org.gradle.internal.os.OperatingSystem
-
 buildscript {
     repositories {
         mavenLocal()
@@ -21,17 +19,15 @@ buildscript {
 apply plugin: 'war'
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'jacoco'
 apply plugin: 'propdeps'
 apply plugin: 'net.ltgt.apt'
 apply plugin: "org.sonarqube"
 apply plugin: 'com.moowork.node'
 apply plugin: 'org.springframework.boot'
 
-version = '1.0.0'
+version = '0.1.0'
 sourceCompatibility = 1.8
-
-defaultTasks 'bootRun'
+targetCompatibility = 1.8
 
 repositories {
     mavenLocal()
@@ -161,71 +157,11 @@ springBoot {
     buildInfo()
 }
 
-if (OperatingSystem.current().isWindows()) {
-    task pathingJar(type: Jar) {
-        dependsOn configurations.runtime
-        appendix = 'pathing'
-
-        doFirst {
-            manifest {
-                attributes 'Class-Path': configurations.runtime.files.collect {
-                    it.toURL().toString().replaceFirst(/file:\/+/, '/').replaceAll(' ', '%20')
-                }.join(' ')
-            }
-        }
-    }
-
-    bootRun {
-        addResources = true
-        project.hasProperty("debugging") ? jvmArgs(project.property("debugging")) : ''
-        dependsOn pathingJar
-        doFirst {
-            classpath = files("$buildDir/classes/main", "$buildDir/resources/main", pathingJar.archivePath)
-        }
-    }
-} else {
-    bootRun {
-        addResources = true
-        project.hasProperty("debugging") ? jvmArgs(project.property("debugging")) : ''
-    }
+bootRun {
+    addResources = true
+    project.hasProperty("debugging") ? jvmArgs(project.property("debugging")) : ''
 }
 
-jacoco {
-    toolVersion = "${jacoco_version}"
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-    }
-}
-
-task cucumberTest(type: Test) {
-    include '**/CucumberTest*'
-
-    // uncomment if the tests reports are not generated
-    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
-    // ignoreFailures true
-    reports.html.enabled = false
-}
-
-test.finalizedBy(cucumberTest)
-
-test {
-    include '**/*UnitTest*'
-    include '**/*IntTest*'
-
-    ignoreFailures true
-    reports.html.enabled = false
-}
-
-task testReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
-    reportOn test
-    reportOn cucumberTest
-}
-
-cucumberTest.finalizedBy(testReport)
 
 configurations {
     providedRuntime
@@ -233,21 +169,6 @@ configurations {
     // netty's native is pulled by spring-cloud-starter-ribbon, but is useless unless you explicitly add the native binary dependency.
     // Having it in the classpath without the binary can cause warnings
     all*.exclude group: 'io.netty', module: 'netty-transport-native-epoll'
-}
-
-clean {
-    delete 'target'
-}
-
-task cleanResources(type: Delete) {
-    delete 'build/resources'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.0'
-}
-
-task stage(dependsOn: 'bootRepackage') {
 }
 
 if (project.hasProperty('nodeInstall')) {
