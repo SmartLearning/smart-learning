@@ -1,3 +1,5 @@
+
+![Foo](https://travis-ci.org/farhadkzm/smartlearning.svg?branch=develop)
 ## Requirements
 
 - Yarn
