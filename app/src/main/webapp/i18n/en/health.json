@@ -4,6 +4,7 @@
         "refresh.button": "Refresh",
         "stacktrace": "Stacktrace",
         "details": {
+            "title": "Details",
             "details": "Details",
             "properties": "Properties",
             "name": "Name",
@@ -18,11 +19,11 @@
             "mail": "Email",
             "mongo": "MongoDB"
         },
-        "table": {
-            "service": "Service name",
-            "status": "Status"
+        "service": {
+            "title": "Service name"
         },
         "status": {
+            "title": "Status",
             "UP": "UP",
             "DOWN": "DOWN"
         }

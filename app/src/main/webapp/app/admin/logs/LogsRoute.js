@@ -25,7 +25,12 @@
                     url: '/logs',
                     parent: 'admin',
                     data: {
-                        pageTitle: 'logs.title'
+                        pageTitle: 'logs.title',
+                        menu: {
+                            icon: 'list',
+                            text: 'global.menu.admin.logs',
+                            order: 5
+                        }
                     },
                     views: {
                         'content@': {
@@ -36,11 +41,6 @@
                     },
                     resolve: {
                         language: language
-                    },
-                    menu: {
-                        icon: 'list',
-                        text: 'global.menu.admin.logs',
-                        order: 5
                     }
                 }
             }

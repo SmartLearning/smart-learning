@@ -11,10 +11,10 @@
                 'admin.audits',
                 'admin.configuration',
                 'admin.docs',
-                'admin.gateway',
                 'admin.health',
                 'admin.logs',
-                'admin.analyzes',
+                'admin.metrics',
+                // 'admin.analyzes',
                 'admin.user',
                 'app.account',
                 'app.layout'

@@ -167,8 +167,6 @@ ul#strength {
 @include no-margin("bottom");
 @include no-margin("all");
 
-/* jhipster-needle-scss-add-main JHipster will add new css style */
-
 .loading {
     display: none;
     &.ng-cloak {
@@ -660,3 +658,39 @@ md-chips {
         max-height: $i*50px !important;
     }
 }
+
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+
+    .parent {
+        width: 94%;
+        display: inline-flex;
+        white-space: pre-line;
+    }
+    .string {
+        @extend .parent;
+        color: green;
+    }
+
+    .number {
+        @extend .parent;
+        color: darkorange;
+    }
+
+    .boolean {
+        @extend .parent;
+        color: blue;
+    }
+
+    .null {
+        @extend .parent;
+        color: magenta;
+    }
+
+    .key {
+        color: red;
+    }
+}
+
+

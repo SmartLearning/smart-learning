@@ -1,0 +1,84 @@
+<md-toolbar layout="row" class="md-accent md-hue-3">
+    <div class="md-toolbar-tools">
+        <span flex></span>
+        <h2>
+            <span data-translate>{{toState.data.pageTitle}}</span>
+        </h2>
+        <span flex></span>
+    </div>
+</md-toolbar>
+<alert></alert>
+<form name="form" layout="column" flex novalidate>
+    <md-card-content layout="column">
+        <div layout="row">
+            <md-input-container flex-gt-xs>
+                <label class="control-label" for="firstName" data-translate>settings.first_name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName"
+                       ng-model="vm.model.firstName"
+                       ng-required="true"
+                       md-maxlength="100"
+                       ng-minlength="1">
+                <div ng-messages="form.name.$error">
+                    <div ng-message-exp="['required', 'minlength']">
+                        <span data-translate translate-values-length="1">global.messages.error.min_length</span>
+                    </div>
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-values-length="50">global.messages.error.max_length</span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container flex-gt-xs>
+                <label class="control-label" for="lastName" data-translate>settings.last_name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName"
+                       ng-model="vm.model.lastName"
+                       ng-required="true"
+                       md-maxlength="100"
+                       ng-minlength="1">
+                <div ng-messages="form.lastname.$error">
+                    <div ng-message-exp="['required', 'minlength']">
+                        <span data-translate translate-values-length="2">global.messages.error.min_length</span>
+                    </div>
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-values-length="50">global.messages.error.max_length</span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container flex-gt-xs>
+                <label class="control-label" for="email" data-translate>settings.email</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       ng-model="vm.model.email"
+                       ng-required="true"
+                       md-maxlength="100"
+                       ng-minlength="5">
+                <div ng-messages="form.email.$error">
+                    <div ng-message-exp="['required', 'minlength']">
+                        <span data-translate translate-values-length="5">global.messages.error.min_length</span>
+                    </div>
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-values-length="100">global.messages.error.max_length</span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container flex-gt-xs>
+                <label data-translate>settings.language</label>
+                <md-select name="type" ng-required="true" ng-model="vm.model.langKey">
+                    <md-option ng-repeat="language in vm.languages" ng-value="language">
+                        <span data-translate>{{language | findLanguageFromKey}}</span>
+                    </md-option>
+                </md-select>
+                <div ng-messages="form.type.$error">
+                    <div ng-message-exp="['required']">
+                        <span data-translate>global.messages.error.required</span>
+                    </div>
+                </div>
+            </md-input-container>
+
+        </div>
+    </md-card-content>
+    <md-divider></md-divider>
+    <md-card-actions layout="row" layout-align="left">
+        <md-button ng-click="vm.save()" ng-disabled="form.$invalid" type="submit" class="md-accent md-raised">
+            <span data-translate>global.buttons.save</span>
+        </md-button>
+    </md-card-actions>
+</form>

@@ -18,10 +18,10 @@
     function AnalyzesController($scope, $mdDialog, Analyzes) {
         var vm = this;
 
-        vm.cachesStats = {};
-        vm.analyzes = {};
         vm.refresh = refresh;
         vm.refreshThreadDumpData = refreshThreadDumpData;
+        vm.cachesStats = {};
+        vm.analyzes = {};
         vm.servicesStats = {};
         vm.updatingAnalyzes = true;
 
@@ -32,63 +32,71 @@
         function activate() {
             vm.refresh();
 
-            $scope.$watch(
-                'vm.analyzes', function (newValue) {
-                    vm.servicesStats = {};
-                    vm.cachesStats = {};
-                    angular.forEach(
-                        newValue.timers, function (value, key) {
-                            if (key.indexOf('web.rest') !== -1 || key.indexOf('service') !== -1) {
-                                vm.servicesStats[key] = value;
-                            }
-                            if (key.indexOf('net.sf.ehcache.Cache') !== -1) {
-                                // remove gets or puts
-                                var index = key.lastIndexOf('.');
-                                var newKey = key.substr(0, index);
+            $scope.$watch('vm.analyzes', onWatch);
 
-                                // Keep the name of the domain
-                                index = newKey.lastIndexOf('.');
-                                vm.cachesStats[newKey] = {
-                                    'name': newKey.substr(index + 1),
-                                    'value': value
-                                };
-                            }
-                        }
-                    );
+            /////////////////////////////////////////////////
+
+            function onWatch(newValue) {
+                vm.servicesStats = {};
+                vm.cachesStats = {};
+                angular.forEach(newValue.timers, onTimer);
+
+                /////////////////////////////////////////////////
+
+                function onTimer(value, key) {
+                    if (key.indexOf('web.rest') !== -1 || key.indexOf('service') !== -1) {
+                        vm.servicesStats[key] = value;
+                    }
+                    if (key.indexOf('net.sf.ehcache.Cache') !== -1) {
+                        // remove gets or puts
+                        var index = key.lastIndexOf('.');
+                        var newKey = key.substr(0, index);
+
+                        // Keep the name of the domain
+                        index = newKey.lastIndexOf('.');
+                        vm.cachesStats[newKey] = {
+                            'name': newKey.substr(index + 1),
+                            'value': value
+                        };
+                    }
                 }
-            );
+            }
         }
 
         function refresh() {
             vm.updatingAnalyzes = true;
-            Analyzes.getAnalyzes().then(
-                function (promise) {
-                    vm.analyzes = promise;
-                    vm.updatingAnalyzes = false;
-                }, function (promise) {
-                    vm.analyzes = promise.data;
-                    vm.updatingAnalyzes = false;
-                }
-            );
+            Analyzes.getAnalyzes().then(onSuccess, onError);
+
+            //////////////////////////////////////////////////////
+
+            function onSuccess(promise) {
+                vm.analyzes = promise;
+                vm.updatingAnalyzes = false;
+            }
+
+            function onError(promise) {
+                vm.analyzes = promise.data;
+                vm.updatingAnalyzes = false;
+            }
         }
 
         function refreshThreadDumpData() {
-            Analyzes.threadDump().then(
-                function (data) {
-                    $mdDialog.show(
-                        {
-                            templateUrl: 'app/admin/analyzes/AnalyzesModalView.html',
-                            controller: 'AnalyzesModalController',
-                            controllerAs: 'vm',
-                            resolve: {
-                                threadDump: function () {
-                                    return data;
-                                }
-                            }
+            Analyzes.threadDump().then(onShow);
+
+            /////////////////////////////////////////////
+
+            function onShow(data) {
+                $mdDialog.show(
+                    {
+                        templateUrl: 'app/admin/analyzes/AnalyzesModalView.html',
+                        controller: 'AnalyzesModalController',
+                        controllerAs: 'vm',
+                        locals: {
+                            threadDump: data
                         }
-                    );
-                }
-            );
+                    }
+                );
+            }
         }
     }
 

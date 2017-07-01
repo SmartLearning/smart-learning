@@ -11,69 +11,48 @@
 
     UserFactory.$inject = [
         '$resource',
-        '$http'
+        'DateUtils'
     ];
     /* @ngInject */
-    function UserFactory($resource, $http) {
+    function UserFactory($resource, DateUtils) {
         var url = 'api/users';
-        var resource = $resource(
+        return $resource(
             url + '/:id',
             {},
             {
+                'search': {
+                    method: 'POST',
+                    url: url + '/search',
+                    isArray: true
+                },
                 'query': {
                     method: 'GET',
-                    isArray: true
+                    isArray: true,
+                    transformResponse: function (data) {
+                        return DateUtils.fromServer(data, [
+                            'createdAt',
+                            'modifiedAt'
+                        ]);
+                    }
+                },
+                'idLoginMaps': {
+                    method: 'GET',
+                    url: url + '/id-login-maps/:ids',
+                    transformResponse: function (data) {
+                        return DateUtils.fromServer(data, [
+                            'createdAt',
+                            'modifiedAt'
+                        ]);
+                    }
                 },
                 'get': {
                     method: 'GET',
-                    transformResponse: function (data) {
-                        if (!data) {
-                            return data;
-                        }
-                        data = angular.fromJson(data);
-                        return data;
-                    }
+                    transformResponse: DateUtils.fromServer
                 },
                 'save': {method: 'POST'},
                 'update': {method: 'PUT'},
                 'delete': {method: 'DELETE'}
             }
         );
-
-        resource.searchMerchant = searchMerchant;
-        resource.getByIds = getByIds;
-        resource.getAllCta = getAllCta;
-
-        return resource;
-
-        //////////////////////
-
-        function searchMerchant(query,pageable) {
-            return $http.post(url + '/merchants/', query,
-                {
-                    params: pageable
-                }).then(
-                function (result) {
-                    return result;
-                }
-            )
-        }
-
-        function getByIds(ids) {
-            return $http.post(url + '/find-by-ids', ids).then(
-                function (result) {
-                    return result.data;
-                }
-            )
-        }
-
-        function getAllCta() {
-            return $http.get(url + '/find-all-cta').then(
-                function (result) {
-                    return result.data;
-                }
-            )
-        }
     }
-
 })(angular);

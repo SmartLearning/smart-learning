@@ -25,7 +25,12 @@
                     url: '/configuration',
                     parent: 'admin',
                     data: {
-                        pageTitle: 'configuration.title'
+                        pageTitle: 'configuration.title',
+                        menu: {
+                            icon: 'equalizer',
+                            text: 'global.menu.admin.configuration',
+                            order: 2
+                        }
                     },
                     views: {
                         'content@': {
@@ -36,11 +41,6 @@
                     },
                     resolve: {
                         language: language
-                    },
-                    menu: {
-                        icon: 'equalizer',
-                        text: 'global.menu.admin.configuration',
-                        order: 2
                     }
                 }
             }

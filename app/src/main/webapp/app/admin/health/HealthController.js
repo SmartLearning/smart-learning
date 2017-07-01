@@ -18,18 +18,44 @@
         var vm = this;
 
         vm.addHealthObject = addHealthObject;
-        vm.baseName = baseName;
         vm.flattenHealthData = flattenHealthData;
-        vm.getLabelClass = getLabelClass;
         vm.getModuleName = getModuleName;
         vm.hasSubSystem = hasSubSystem;
         vm.isHealthObject = isHealthObject;
         vm.refresh = refresh;
-        vm.updatingHealth = true;
-        vm.separator = '.';
         vm.showHealth = showHealth;
-        vm.subSystemName = subSystemName;
         vm.transformHealthData = transformHealthData;
+        vm.separator = '.';
+        vm.updatingHealth = true;
+        vm.pagination = {
+            page: 1,
+            size: 10,
+            sort: ['url,desc'],
+            options: [
+                10,
+                25,
+                50,
+                100
+            ]
+        };
+        vm.headers = [
+            {
+                text: 'health.service.title',
+                cellTemplateUrl: 'app/admin/health/cells/ServiceCellTemplateView.html',
+                baseName: baseName,
+                subSystemName: subSystemName
+            },
+            {
+                text: 'health.status.title',
+                cellTemplateUrl: 'app/admin/health/cells/StatusCellTemplateView.html',
+                getLabelClass: getLabelClass
+            },
+            {
+                text: 'health.details.title',
+                cellTemplateUrl: 'app/admin/health/cells/DetailsCellTemplateView.html',
+                showHealth: showHealth
+            }
+        ];
 
         activate();
 
@@ -95,14 +121,6 @@
             return result;
         }
 
-        function getLabelClass(statusState) {
-            if (statusState === 'UP') {
-                return 'label-success';
-            } else {
-                return 'label-danger';
-            }
-        }
-
         function getModuleName(path, name) {
             var result;
             if (path && name) {
@@ -143,36 +161,39 @@
 
         function refresh() {
             vm.updatingHealth = true;
-            Health.checkHealth().then(
+            vm.promise = Health.checkHealth().then(
                 function (response) {
-                    vm.healthData = vm.transformHealthData(response);
+                    vm.data = vm.transformHealthData(response);
+                    vm.totalItems = vm.data.length;
                     vm.updatingHealth = false;
                 }, function (response) {
-                    vm.healthData = vm.transformHealthData(response.data);
+                    vm.data = vm.transformHealthData(response.data);
+                    vm.totalItems = vm.data.length;
                     vm.updatingHealth = false;
                 }
-            );
+            ).$promise;
         }
 
-        function showHealth(health) {
-            $mdDialog.show(
-                {
-                    templateUrl: 'app/admin/health/HealthModalView.html',
-                    controller: 'HealthModalController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        currentHealth: function () {
-                            return health;
-                        },
-                        baseName: function () {
-                            return vm.baseName;
-                        },
-                        subSystemName: function () {
-                            return vm.subSystemName;
-                        }
-                    }
+        function getLabelClass(statusState) {
+            if (statusState === 'UP') {
+                return 'md-primary';
+            } else {
+                return 'md-danger';
+            }
+        }
+
+
+        function showHealth(model) {
+            $mdDialog.show({
+                templateUrl: 'app/admin/health/dialogs/ShowHealthView.html',
+                controller: 'ShowHealthController',
+                controllerAs: 'vm',
+                locals: {
+                    model: model,
+                    baseName: baseName,
+                    subSystemName: subSystemName
                 }
-            );
+            });
         }
 
         function subSystemName(name) {

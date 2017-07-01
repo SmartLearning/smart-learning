@@ -10,14 +10,15 @@
         .run(runUser);
 
     runUser.$inject = [
-        'routerHelper'
+        'routerHelper',
+        'AccountConstants'
     ];
     /* @ngInject */
-    function runUser(routerHelper) {
-        routerHelper.configureStates(getStates());
+    function runUser(routerHelper, AccountConstants) {
+        routerHelper.configureStates(getStates(AccountConstants));
     }
 
-    function getStates() {
+    function getStates(AccountConstants) {
         return [
             {
                 state: 'user',
@@ -26,6 +27,7 @@
                     abstract: true,
                     parent: 'admin',
                     data: {
+                        authorities: AccountConstants.getAllRoles(true),
                         pageTitle: 'user.title'
                     },
                     views: {

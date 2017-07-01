@@ -24,7 +24,13 @@
                 config: {
                     url: '',
                     data: {
-                        pageTitle: 'user.list.title'
+                        pageTitle: 'user.title',
+                        menu: {
+                            parent: 'admin',
+                            icon: 'person',
+                            text: 'global.menu.admin.users',
+                            order: 7
+                        }
                     },
                     views: {
                         body: {
@@ -32,12 +38,6 @@
                             controller: 'UserListController',
                             controllerAs: 'vm'
                         }
-                    },
-                    menu: {
-                        parent: 'admin',
-                        icon: 'person',
-                        text: 'global.menu.admin.users',
-                        order: 7
                     }
                 }
             }

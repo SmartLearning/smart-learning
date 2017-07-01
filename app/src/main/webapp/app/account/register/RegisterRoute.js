@@ -28,8 +28,8 @@
                     },
                     views: {
                         'content@': {
-                            templateUrl: 'app/account/register/SignUpView.html',
-                            controller: 'SignUpController',
+                            templateUrl: 'app/account/register/RegisterView.html',
+                            controller: 'RegisterController',
                             controllerAs: 'vm'
                         }
                     },
@@ -47,7 +47,7 @@
     ];
     /* @ngInject */
     function language($translate, $translatePartialLoader) {
-        $translatePartialLoader.addPart('register');
+        $translatePartialLoader.addPart('account');
         return $translate.refresh();
     }
 })(angular);

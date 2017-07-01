@@ -27,7 +27,6 @@
                 data: '=',
                 total: '=?',
                 pagination: '=?',
-                singleRow: '=?',
                 promise: '=?',
                 searchBox: '=?',
                 showHideColumns: '=?',
@@ -116,13 +115,13 @@
         'DateUtils',
         'CustomTableUtil',
         'RichTextEditDialog',
-        'TagUtil',
+        'HtmlTagUtil',
         'StringUtil',
         'TableConstants'
     ];
 
     /* @ngInject */
-    function CustomTableController($scope, $element, $timeout, $q, $filter, $window, $translate, $mdDialog, CustomEditDialog, Alert, DateUtils, CustomTableUtil, RichTextEditDialog, TagUtil, StringUtil, TableConstants) {
+    function CustomTableController($scope, $element, $timeout, $q, $filter, $window, $translate, $mdDialog, CustomEditDialog, Alert, DateUtils, CustomTableUtil, RichTextEditDialog, HtmlTagUtil, StringUtil, TableConstants) {
         var vm = this;
 
         //-- constants --
@@ -973,7 +972,7 @@
             if (!richTextValue || richTextValue === '') {
                 return richTextValue;
             }
-            richTextValue = TagUtil.escapeTags(richTextValue);
+            richTextValue = HtmlTagUtil.escapeTags(richTextValue);
             return StringUtil.limitTo(richTextValue, 100);
         }
     }

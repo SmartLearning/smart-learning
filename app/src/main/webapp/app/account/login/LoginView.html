@@ -3,7 +3,7 @@
         <md-card flex layout="column" layout-padding>
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline" data-translate>login.title</span>
+                    <span class="md-headline" data-translate>account.login.title</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
@@ -11,34 +11,34 @@
 
                 <form name="loginForm" layout="column">
                     <md-input-container class="md-block" md-no-float role="alert">
-                        <label><span data-translate>login.username.placeholder</span></label>
+                        <label><span data-translate>account.username.placeholder</span></label>
                         <input md-autofocus type="text" name="username" ng-model="vm.model.username"
                                ng-required="true" ng-minlength="3" md-maxlength="50">
                         <div ng-messages="loginForm.username.$error" role="alert">
                             <div ng-message-exp="['required', 'minlength']">
-                                <span data-translate>login.username.errors.min</span>
+                                <span data-translate translate-value-length="3">global.messages.error.min_length</span>
                             </div>
                             <div ng-message="md-maxlength">
-                                <span data-translate>login.username.errors.max</span>
+                                <span data-translate translate-value-length="50">global.messages.error.max_length</span>
                             </div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block" md-no-float role="alert">
-                        <label><span data-translate>login.password.placeholder</span></label>
+                        <label><span data-translate>account.password.placeholder</span></label>
                         <input type="password" name="password" ng-model="vm.model.password"
-                               ng-required="true" minlength="3" md-maxlength="100">
+                               ng-required="true" minlength="4" md-maxlength="100">
                         <div ng-messages="loginForm.password.$error">
-                            <div ng-message-exp="['required','minlength']">
-                                <span data-translate>login.password.errors.min</span>
+                            <div ng-message-exp="['required', 'minlength']">
+                                <span data-translate translate-value-length="4">global.messages.error.min_length</span>
                             </div>
                             <div ng-message="md-maxlength">
-                                <span data-translate>login.password.errors.max</span>
+                                <span data-translate translate-value-length="100">global.messages.error.max_length</span>
                             </div>
                         </div>
                     </md-input-container>
                     <md-button type="submit" class="md-raised md-primary" ng-click="vm.login($event)"
                                ng-disabled="loginForm.$invalid">
-                        <span data-translate>login.button</span>
+                        <span data-translate>account.login.button</span>
                     </md-button>
                 </form>
             </md-card-content>

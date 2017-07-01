@@ -9,13 +9,16 @@
         .module('app.blocks')
         .filter('format', FormatFilter)
         .filter('capitalize', CapitalizeFilter)
-        .filter('characters', characters)
-        .filter('words', words)
+        .filter('characters', CharactersFilter)
+        .filter('words', WordsFilter)
         .filter('split', SplitFilter)
         .filter('yesNo', YesNoFilter)
         .filter('join', JoinFilter)
-        .filter('normalizeSlugUrl', NormalizeSlugUrlFilter);
+        .filter('normalizeSlugUrl', NormalizeSlugUrlFilter)
+        .filter('prettify', PrettifyFilter);
 
+    FormatFilter.$inject = [];
+    /* @ngInject */
     function FormatFilter() {
         return formatFilter;
 
@@ -38,6 +41,8 @@
         }
     }
 
+    CapitalizeFilter.$inject = [];
+    /* @ngInject */
     function CapitalizeFilter() {
         return capitalizeFilter;
 
@@ -52,7 +57,9 @@
         }
     }
 
-    function characters() {
+    CharactersFilter.$inject = [];
+    /* @ngInject */
+    function CharactersFilter() {
         return charactersFilter;
 
         ////////////////////
@@ -84,7 +91,9 @@
         }
     }
 
-    function words() {
+    WordsFilter.$inject = [];
+    /* @ngInject */
+    function WordsFilter() {
         return wordsFilter;
 
         /////////////////////
@@ -107,6 +116,8 @@
         }
     }
 
+    SplitFilter.$inject = [];
+    /* @ngInject */
     function SplitFilter() {
         return splitFilter;
 
@@ -122,6 +133,7 @@
     }
 
     YesNoFilter.$inject = ['$filter'];
+    /* @ngInject */
     function YesNoFilter($filter) {
         return yesNoFilter;
 
@@ -136,6 +148,8 @@
         }
     }
 
+    JoinFilter.$inject = [];
+    /* @ngInject */
     function JoinFilter() {
         return joinFilter;
 
@@ -153,8 +167,44 @@
     NormalizeSlugUrlFilter.$inject = ['StringUtil'];
     /* @ngInject */
     function NormalizeSlugUrlFilter(StringUtil) {
-        return function (value) {
-            return StringUtil.normalizeSlugUrl(value);
+        return StringUtil.normalizeSlugUrl;
+    }
+
+    PrettifyFilter.$inject = [];
+    /* @ngInject */
+    function PrettifyFilter() {
+        return syntaxHighlight;
+
+        //////////////////////////////////////////////
+
+        function syntaxHighlight(json) {
+            if (!json) {
+                return '';
+            }
+            if (!angular.isString(json)) {
+                json = angular.toJson(json, true);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?),?/g, onMatch);
+
+            /////////////////////////////////////////////////
+
+            function onMatch(match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+
+                return '<span class="' + cls + '">' + match + '</span>';
+            }
         }
     }
 })(angular);

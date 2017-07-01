@@ -305,9 +305,10 @@ public class UserResourceIntTest {
         userRepository.save(user);
 
         // Get the user
-        restUserMockMvc.perform(get("/api/users/{username}", user.getUsername()))
+        restUserMockMvc.perform(get("/api/users/{id}", user.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.id").value(user.getId()))
             .andExpect(jsonPath("$.username").value(user.getUsername()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))

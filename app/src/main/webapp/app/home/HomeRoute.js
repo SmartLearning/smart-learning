@@ -9,7 +9,10 @@
         .module('app.home')
         .run(runHome);
 
-    runHome.$inject = ['routerHelper', 'AccountConstants'];
+    runHome.$inject = [
+        'routerHelper',
+        'AccountConstants'
+    ];
     /* @ngInject */
     function runHome(routerHelper) {
         routerHelper.configureStates(getStates());
@@ -24,7 +27,12 @@
                     parent: 'app',
                     data: {
                         authorities: [],
-                        pageTitle: 'home.title.main'
+                        pageTitle: 'home.title.main',
+                        menu: {
+                            icon: 'home',
+                            text: 'global.menu.home',
+                            groupOrder: -20
+                        }
                     },
                     views: {
                         'content@': {
@@ -35,11 +43,6 @@
                     },
                     resolve: {
                         language: language
-                    },
-                    menu: {
-                        icon: 'home',
-                        text: 'global.menu.home',
-                        order: -20
                     }
                 }
             }

@@ -22,7 +22,7 @@
             {
                 state: 'user.detail',
                 config: {
-                    url: '/{i}d',
+                    url: '/{id}',
                     data: {
                         pageTitle: 'user.detail.title'
                     },

@@ -13,7 +13,7 @@
     /* @ngInject */
     function LogsFactory($resource) {
         return $resource(
-            'api/logs', {}, {
+            'management/logs', {}, {
                 'findAll': {
                     method: 'GET',
                     isArray: true

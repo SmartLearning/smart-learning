@@ -245,6 +245,18 @@
                                     timeout: 3000
                                 }
                             );
+                        } else if (result && result.fieldErrors) {
+                            for (var i = 0; i < result.fieldErrors.length; i++) {
+                                var fieldError = result.fieldErrors[i];
+                                // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
+                                var convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
+                                var key = fieldError.objectName + '.errors.' + ('' + fieldError.message).toLowerCase() + '.' + convertedField;
+                                errors.push(
+                                    {
+                                        message: $translate.instant(key)
+                                    }
+                                );
+                            }
                         } else if (result && result.message) {
                             var message = result.message;
                             if (result.description) {
@@ -257,8 +269,14 @@
                                     timeout: 3000
                                 }
                             );
+                        } else if (result && result.AuthenticationException) {
+                            errors.push(
+                                {
+                                    message: result.AuthenticationException
+                                }
+                            );
                         } else {
-                            if (typeof result === 'string' && result.length == 0) {
+                            if (typeof result === 'string' && result.length === 0) {
                                 return;
                             }
                             errors.push(
@@ -317,7 +335,7 @@
                         } else {
                             errors.push(
                                 {
-                                    message: angular.fromJson(result)
+                                    message: angular.toJson(result, true)
                                 }
                             );
                         }

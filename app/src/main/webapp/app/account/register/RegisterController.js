@@ -7,31 +7,47 @@
 
     angular
         .module('account.register')
-        .controller('SignUpController', SignUpController);
+        .controller('RegisterController', RegisterController);
 
-    SignUpController.$inject = [];
+    RegisterController.$inject = [
+        'Language',
+        'Account',
+        'Alert'
+    ];
     /* @ngInject */
-    function SignUpController() {
+    function RegisterController(Language, Account, Alert) {
         var vm = this;
 
         vm.model = {};
-        vm.websitePattern = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
         vm.usernamePattern = /^[a-zA-Z0-9.-]+$/;
-        vm.trimPattern = /^[^\s].*[^\s]$/;
-        vm.passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%*()_+^&])[a-zA-Z0-9!@#$%*()_+^&]*$/;
         vm.emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$/;
-        vm.urlPostFixPattern = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-        vm.phoneNumberPattern = /^0 \([1-9][\d]{2}\) [\d]{3}-[\d]{4}$/;
+
+        vm.register = register;
 
         activate();
 
-        ////////////////
+        ////////////////////////////////////////////
 
         function activate() {
         }
 
-        function signUp(form) {
+        function register(event) {
+            event.preventDefault();
+            Language.getCurrent().then(onLanguage);
 
+            ////////////////////////////////////////////////
+
+            function onLanguage(lang) {
+                vm.model.langKey = lang;
+
+                Account.register({}, vm.model, onSuccess);
+
+                //////////////////////////////////////////////////
+
+                function onSuccess() {
+                    Alert.info('account.info.register')
+                }
+            }
         }
     }
 

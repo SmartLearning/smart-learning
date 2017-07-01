@@ -19,7 +19,7 @@
             {
                 'register': {
                     method: 'POST',
-                    url: url + 'register'
+                    url: url + '/register'
                 },
                 'get': {
                     method: 'GET',

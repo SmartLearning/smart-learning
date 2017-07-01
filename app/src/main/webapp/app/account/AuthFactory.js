@@ -16,10 +16,11 @@
         '$translate',
         'Principal',
         'AuthServer',
-        'Account'
+        'Account',
+        'Activate'
     ];
     /* @ngInject */
-    function AuthFactory($rootScope, $state, $q, $translate, Principal, AuthServer, Account) {
+    function AuthFactory($rootScope, $state, $q, $translate, Principal, AuthServer, Account, Activate) {
 
         return {
             authorize: authorize,
@@ -29,7 +30,7 @@
             updateAccount: updateAccount
         };
 
-        ////////////////
+        ////////////////////////////////////////////////////
 
         function authorize(force) {
             return Principal.identity(force).then(authThen);

@@ -13,7 +13,7 @@ function error() {
     // Send error to notification center with gulp-notify
     if (notification) {
         notify.onError({
-            title: "JHipster Gulp Build",
+            title: "Smart Learning Gulp Build",
             subtitle: "Failure!",
             message: "Error: <%= error.message %>",
             sound: "Beep"

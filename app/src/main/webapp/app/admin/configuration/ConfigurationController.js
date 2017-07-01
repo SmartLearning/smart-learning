@@ -14,24 +14,26 @@
     function ConfigurationController(Configuration) {
         var vm = this;
 
-        vm.allConfiguration = null;
-        vm.configuration = null;
+        vm.configurations = null;
+        vm.properties = null;
 
         activate();
 
         ////////////////
 
         function activate() {
-            Configuration.get().then(
-                function (configuration) {
-                    vm.configuration = configuration;
-                }
-            );
-            Configuration.getEnv().then(
-                function (configuration) {
-                    vm.allConfiguration = configuration;
-                }
-            );
+            Configuration.get().then(onPropertiesSuccess);
+            Configuration.getEnv().then(onEnvSuccess);
+
+            /////////////////////////////////////
+
+            function onPropertiesSuccess(data) {
+                vm.properties = data;
+            }
+
+            function onEnvSuccess(data) {
+                vm.configurations = data;
+            }
         }
     }
 

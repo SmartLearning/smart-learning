@@ -9,14 +9,22 @@
         .module('admin.audits')
         .factory('Audits', AuditsFactory);
 
-    AuditsFactory.$inject = ['$resource'];
+    AuditsFactory.$inject = [
+        '$resource',
+        'DateUtils'
+    ];
     /* @ngInject */
-    function AuditsFactory($resource) {
+    function AuditsFactory($resource, DateUtils) {
         return $resource(
-            'api/audits/:id', {}, {
+            'management/audits/:id',
+            {},
+            {
                 'get': {
                     method: 'GET',
-                    isArray: true
+                    isArray: true,
+                    transformResponse: function (data) {
+                        return DateUtils.fromServer(data, ['timestamp']);
+                    }
                 },
                 'query': {
                     method: 'GET',
@@ -24,6 +32,9 @@
                     params: {
                         fromDate: null,
                         toDate: null
+                    },
+                    transformResponse: function (data) {
+                        return DateUtils.fromServer(data, ['timestamp']);
                     }
                 }
             }

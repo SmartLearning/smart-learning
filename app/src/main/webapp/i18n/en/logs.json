@@ -1,11 +1,22 @@
 {
     "logs": {
         "title": "Logs",
-        "nbloggers": "There are {{ total }} loggers.",
-        "filter": "Filter",
-        "table": {
-            "name": "Name",
-            "level": "Level"
+        "total": "There are {{ total }} loggers.",
+        "name": {
+            "title": "Name"
+        },
+        "filter": {
+            "title": "Filter"
+        },
+        "level": {
+            "title": "Level"
+        },
+        "buttons": {
+            "trace": "Trace",
+            "debug": "Debug",
+            "info": "Info",
+            "warn": "Warn",
+            "error": "Error"
         }
     }
 }

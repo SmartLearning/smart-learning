@@ -11,7 +11,11 @@
                 'account.util',
                 'account.login',
                 'account.logout',
-                'account.register'
+                'account.register',
+                'account.settings',
+                'account.activate',
+                'account.reset',
+                'account.password'
             ]
         );
 

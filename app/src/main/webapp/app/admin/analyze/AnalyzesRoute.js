@@ -25,7 +25,12 @@
                     url: '/analyzes',
                     parent: 'admin',
                     data: {
-                        pageTitle: 'analyzes.title'
+                        pageTitle: 'analyzes.title',
+                        menu: {
+                            icon: 'graphic_eq',
+                            text: 'global.menu.admin.analyzes',
+                            order: 6
+                        }
                     },
                     views: {
                         'content@': {
@@ -36,11 +41,6 @@
                     },
                     resolve: {
                         language: language
-                    },
-                    menu: {
-                        icon: 'graphic_eq',
-                        text: 'global.menu.admin.analyzes',
-                        order: 6
                     }
                 }
             }
@@ -53,8 +53,8 @@
     ];
     /* @ngInject */
     function language($translate, $translatePartialLoader) {
-        $translatePartialLoader.addPart('analyzes');
+        $translatePartialLoader.addPart('analyze');
         return $translate.refresh();
     }
-    
+
 })(angular);

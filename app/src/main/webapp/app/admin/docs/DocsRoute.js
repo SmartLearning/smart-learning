@@ -25,17 +25,17 @@
                     url: '/docs',
                     parent: 'admin',
                     data: {
-                        pageTitle: 'docs.title'
+                        pageTitle: 'docs.title',
+                        menu: {
+                            icon: 'library_books',
+                            text: 'global.menu.admin.docs',
+                            order: 3
+                        }
                     },
                     views: {
                         'content@': {
                             templateUrl: 'app/admin/docs/DocsView.html'
                         }
-                    },
-                    menu: {
-                        icon: 'library_books',
-                        text: 'global.menu.admin.docs',
-                        order: 3
                     }
                 }
             }

@@ -25,7 +25,12 @@
                     url: '/health',
                     parent: 'admin',
                     data: {
-                        pageTitle: 'health.title'
+                        pageTitle: 'health.title',
+                        menu: {
+                            icon: 'fa fa-heartbeat fa-md-size',
+                            text: 'global.menu.admin.health',
+                            order: 4
+                        }
                     },
                     views: {
                         'content@': {
@@ -36,11 +41,6 @@
                     },
                     resolve: {
                         language: language
-                    },
-                    menu: {
-                        icon: 'fa fa-heartbeat fa-md-size',
-                        text: 'global.menu.admin.health',
-                        order: 4
                     }
                 }
             }

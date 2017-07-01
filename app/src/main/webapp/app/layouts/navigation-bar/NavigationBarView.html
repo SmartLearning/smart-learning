@@ -1,14 +1,18 @@
-<div layout="row" layout-wrap flex layout-align-xs="space-around center" layout-padding>
+<div layout="row" flex layout-align="space-around center" layout-padding>
     <md-button ng-click="vm.openSideNavMenu()" hide-gt-sm>
         <md-icon>menu</md-icon>
     </md-button>
     <div layout-margin>
-        <a href="#"><img src="/content/images/logo.png"></a>
+        <a href="#"><img src="/content/images/logo.png" height="100"></a>
     </div>
     <span flex></span>
     <div layout="row" hide-xs hide-sm>
-        <md-button data-menu-item="login" ng-click="vm.login()"
-                   ng-if="!vm.isAuthenticated()" layout-align-xs="start start">
+        <md-button data-menu-item="register" ng-click="vm.register()" ng-if="!vm.isAuthenticated()">
+            <md-icon>person_outline</md-icon>
+            <label data-translate>global.menu.account.register</label>
+        </md-button>
+
+        <md-button data-menu-item="login" ng-click="vm.login()" ng-if="!vm.isAuthenticated()">
             <md-icon>person_outline</md-icon>
             <label data-translate>global.menu.account.login</label>
         </md-button>
@@ -35,6 +39,12 @@
             </md-button>
             <md-menu-content width="4">
                 <md-menu-item>
+                    <md-button ng-click="vm.settings()">
+                        <md-icon>settings</md-icon>
+                        <label data-translate>global.menu.account.settings</label>
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
                     <md-button ng-click="vm.logout()">
                         <md-icon>power</md-icon>
                         <label data-translate>global.menu.account.logout</label>
@@ -50,31 +60,28 @@
              md-no-select-click="true" class="md-primary md-hue-3" md-dynamic-height>
 
         <md-tab ng-repeat="value in vm.menus" ng-disabled="vm.checkForFunction(value.disabled)"
-                ng-click="vm.headerClick(value)" md-active="vm.isCurrentPage(value.state)">
+                ng-click="vm.headerClick(value)" md-active="vm.isCurrentPage(value.state, true)">
             <md-tab-label>
-                <div layout="row" flex>
-                    <md-icon ng-if="value.icon.indexOf(' ') > -1" md-font-icon="{{value.icon}}"></md-icon>
-                    <md-icon ng-if="value.icon.indexOf(' ') == -1">{{value.icon}}</md-icon>
-                    <notification-icon count="value.count">
-                        <span data-tab-item="{{value.state.toLowerCase()}}">{{'global.menu.main.' + value.state.toLowerCase() | translate}}</span>
-                    </notification-icon>
-                </div>
+                <md-icon ng-if="value.icon.indexOf(' ') > -1" md-font-icon="{{value.icon}}"></md-icon>
+                <md-icon ng-if="value.icon.indexOf(' ') == -1">{{value.icon}}</md-icon>
+                <span data-translate>{{value.text}}</span>
             </md-tab-label>
             <md-tab-body>
                 <md-tabs md-stretch-tabs md-border-bottom="true" ng-if="value.items.length"
                          md-no-select-click="true" md-dynamic-height class="md-accent hue-2">
                     <md-tab flex-order="{{menu.order}}" ng-repeat="menu in value.items"
-                            md-active="vm.isCurrentPage(menu.state)"
+                            md-active="vm.isCurrentPage(menu.state, false)"
                             ng-disabled="vm.checkForFunction(menu.disabled)"
                             ng-click="vm.state(menu.state)">
                         <md-tab-label>
                             <md-icon ng-if="menu.icon.indexOf(' ') > -1" md-font-icon="{{menu.icon}}"></md-icon>
                             <md-icon ng-if="menu.icon.indexOf(' ') == -1">{{menu.icon}}</md-icon>
-                            <span data-tab-sub-item="{{menu.state}}">{{menu.text | translate}}</span>
+                            <span data-translate>{{menu.text}}</span>
                         </md-tab-label>
                     </md-tab>
                 </md-tabs>
             </md-tab-body>
         </md-tab>
+
     </md-tabs>
 </md-content>

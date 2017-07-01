@@ -101,7 +101,7 @@
                 ///////////////////////////////////////////////////////////////
 
                 function onRefresh() {
-                    $translate('global.route.full').then(onSuccess, console.log);
+                    $translate('global.route.failed').then(onSuccess, console.log);
 
                     ///////////////////////////////////////////////////////////////
 

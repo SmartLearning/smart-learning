@@ -25,7 +25,12 @@
                     url: '/audits',
                     parent: 'admin',
                     data: {
-                        pageTitle: 'audits.title'
+                        pageTitle: 'audits.title',
+                        menu: {
+                            icon: 'report_problem',
+                            text: 'global.menu.admin.audits',
+                            order: 1
+                        }
                     },
                     views: {
                         'content@': {
@@ -36,11 +41,6 @@
                     },
                     resolve: {
                         language: language
-                    },
-                    menu: {
-                        icon: 'report_problem',
-                        text: 'global.menu.admin.audits',
-                        order: 1
                     }
                 }
             }

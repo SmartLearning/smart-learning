@@ -19,7 +19,7 @@
         ////////////////
 
         function checkHealth() {
-            return $http.get('health').then(
+            return $http.get('management/health').then(
                 function (response) {
                     return response.data;
                 }

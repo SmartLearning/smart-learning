@@ -14,12 +14,18 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
     <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css">
+    <link rel="stylesheet" href="bower_components/mdPickers/dist/mdPickers.min.css">
     <link rel="stylesheet" href="bower_components/textAngular/dist/textAngular.css">
     <!-- endinject -->
     <!-- endbuild -->
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
     <!-- build:css /content/css/main-app.css -->
     <!-- inject:css -->
+    <link rel="stylesheet" href="content/css/angular-material-customize.css">
     <link rel="stylesheet" href="content/css/animate-items.css">
     <link rel="stylesheet" href="content/css/custom-data-table.css">
     <link rel="stylesheet" href="content/css/loading-bar.css">
@@ -124,10 +130,12 @@
 <script src="bower_components/angular-timeago/dist/angular-timeago.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/rangy/rangy-core.js"></script>
+<script src="bower_components/angularjs-camelCase-human/camelcase-browser.js"></script>
 <script src="bower_components/json3/lib/json3.js"></script>
 <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
 <script src="bower_components/angular-ui-mask/dist/mask.js"></script>
 <script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
+<script src="bower_components/mdPickers/dist/mdPickers.min.js"></script>
 <script src="bower_components/ng-device-detector/ng-device-detector.js"></script>
 <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
 <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
@@ -164,7 +172,7 @@
 <script src="app/blocks/util/services/StorageUtilService.js"></script>
 <script src="app/blocks/util/services/SidenavUtilService.js"></script>
 <script src="app/blocks/util/services/RichTextEditDialogService.js"></script>
-<script src="app/blocks/util/services/ParseLinksUtilService.js"></script>
+<script src="app/blocks/util/services/ResponseUtilService.js"></script>
 <script src="app/blocks/util/services/HtmlTagUtilService.js"></script>
 <script src="app/blocks/util/services/DateUtilsService.js"></script>
 <script src="app/blocks/util/services/DataUtilsService.js"></script>
@@ -228,21 +236,20 @@
 <script src="app/admin/user/list/UserListController.js"></script>
 <script src="app/admin/user/detail/UserDetailRoute.js"></script>
 <script src="app/admin/user/detail/UserDetailController.js"></script>
-<script src="app/admin/user/delete/UserDeleteRoute.js"></script>
-<script src="app/admin/user/delete/UserDeleteController.js"></script>
+<script src="app/admin/metrics/MetricsModule.js"></script>
+<script src="app/admin/metrics/MetricsRoute.js"></script>
+<script src="app/admin/metrics/MetricsMonitoringController.js"></script>
+<script src="app/admin/metrics/MetricsFactory.js"></script>
+<script src="app/admin/metrics/MetricsController.js"></script>
 <script src="app/admin/logs/LogsModule.js"></script>
 <script src="app/admin/logs/LogsRoute.js"></script>
 <script src="app/admin/logs/LogsFactory.js"></script>
 <script src="app/admin/logs/LogsController.js"></script>
 <script src="app/admin/health/HealthModule.js"></script>
 <script src="app/admin/health/HealthRoute.js"></script>
-<script src="app/admin/health/HealthModalController.js"></script>
 <script src="app/admin/health/HealthFactory.js"></script>
 <script src="app/admin/health/HealthController.js"></script>
-<script src="app/admin/gateway/GatewayModule.js"></script>
-<script src="app/admin/gateway/GatewayRoute.js"></script>
-<script src="app/admin/gateway/GatewayFactory.js"></script>
-<script src="app/admin/gateway/GatewayController.js"></script>
+<script src="app/admin/health/dialogs/ShowHealthController.js"></script>
 <script src="app/admin/docs/DocsModule.js"></script>
 <script src="app/admin/docs/DocsRoute.js"></script>
 <script src="app/admin/configuration/ConfigurationModule.js"></script>
@@ -265,9 +272,26 @@
 <script src="app/account/util/AuthServerFactory.js"></script>
 <script src="app/account/util/AccountFactory.js"></script>
 <script src="app/account/util/AccountConstants.js"></script>
+<script src="app/account/settings/SettingsModule.js"></script>
+<script src="app/account/settings/SettingsRoute.js"></script>
+<script src="app/account/settings/SettingsController.js"></script>
+<script src="app/account/reset/ResetModule.js"></script>
+<script src="app/account/reset/ResetRoute.js"></script>
+<script src="app/account/reset/ResetFactory.js"></script>
+<script src="app/account/reset/request/ResetRequestModule.js"></script>
+<script src="app/account/reset/request/ResetRequestRoute.js"></script>
+<script src="app/account/reset/request/ResetRequestFactory.js"></script>
+<script src="app/account/reset/request/ResetRequestController.js"></script>
+<script src="app/account/reset/finish/ResetFinishModule.js"></script>
+<script src="app/account/reset/finish/ResetFinishRoute.js"></script>
+<script src="app/account/reset/finish/ResetFinishFactory.js"></script>
+<script src="app/account/reset/finish/ResetFinishController.js"></script>
 <script src="app/account/register/RegisterModule.js"></script>
 <script src="app/account/register/RegisterRoute.js"></script>
 <script src="app/account/register/RegisterController.js"></script>
+<script src="app/account/password/PasswordModule.js"></script>
+<script src="app/account/password/PasswordRoute.js"></script>
+<script src="app/account/password/PasswordController.js"></script>
 <script src="app/account/logout/LogoutModule.js"></script>
 <script src="app/account/logout/LogoutRoute.js"></script>
 <script src="app/account/login/LoginModule.js"></script>
@@ -275,6 +299,10 @@
 <script src="app/account/login/LoginController.js"></script>
 <script src="app/account/AccountModule.js"></script>
 <script src="app/account/AuthFactory.js"></script>
+<script src="app/account/activate/ActivateModule.js"></script>
+<script src="app/account/activate/ActivateRoute.js"></script>
+<script src="app/account/activate/ActivateFactory.js"></script>
+<script src="app/account/activate/ActivateController.js"></script>
 <script src="app/account/AccountRoute.js"></script>
 <!-- endinject -->
 <!-- endbuild -->

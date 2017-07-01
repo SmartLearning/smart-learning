@@ -71,7 +71,6 @@ public class UserDTO {
         this.modifiedBy = user.getModifiedBy();
         this.modifiedAt = user.getModifiedAt();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
-
     }
 
     @Override

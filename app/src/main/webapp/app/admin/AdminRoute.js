@@ -27,7 +27,10 @@
                     parent: 'app',
                     abstract: true,
                     data: {
-                        authorities: AccountConstants.getAllRoles(true)
+                        authorities: AccountConstants.getAllRoles(true),
+                        menu: {
+                            groupOrder: 10
+                        }
                     }
                 }
             }

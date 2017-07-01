@@ -10,75 +10,119 @@
         .controller('AuditsController', AuditsController);
 
     AuditsController.$inject = [
-        '$filter',
+        'moment',
+        '$mdpDatePicker',
         'Audits',
-        'ParseLinksUtil'
+        'ResponseUtil'
     ];
     /* @ngInject */
-    function AuditsController($filter, Audits, ParseLinksUtil) {
+    function AuditsController(moment, $mdpDatePicker, Audits, ResponseUtil) {
         var vm = this;
+        var format = 'YYYY-MM-DD';
 
-        vm.audits = null;
-        vm.fromDate = null;
-        vm.links = null;
-        vm.loadPage = loadPage;
-        vm.onChangeDate = onChangeDate;
-        vm.page = 1;
-        vm.previousMonth = previousMonth;
-        vm.toDate = null;
         vm.today = today;
-        vm.totalItems = null;
+        vm.loadAll = loadAll;
+        vm.onPageChange = onPageChange;
+        vm.onReorder = onReorder;
+        vm.clearFilter = clearFilter;
+        vm.previousMonth = previousMonth;
+        vm.showDatePicker = showDatePicker;
+        vm.fromDate = null;
+        vm.toDate = null;
+        vm.data = [];
+        vm.pagination = {
+            page: 1,
+            size: 10,
+            sort: ['timestamp,desc'],
+            options: [
+                10,
+                25,
+                50,
+                100
+            ]
+        };
+        vm.headers = [
+            {
+                text: 'audits.principal.title',
+                field: 'principal'
+            },
+            {
+                text: 'audits.type.title',
+                field: 'type'
+            },
+            {
+                text: 'audits.timestamp.title',
+                field: 'timestampTouched'
+            },
+            {
+                text: 'audits.message.title',
+                cellTemplateUrl: 'app/admin/audits/MessageCellTemplateView.html'
+            }
+        ];
 
         activate();
 
         ////////////////
 
         function activate() {
-            vm.today();
-            vm.previousMonth();
-            vm.onChangeDate();
+            clearFilter();
         }
 
-        function onChangeDate() {
-            var dateFormat = 'yyyy-MM-dd';
-            var fromDate = $filter('date')(vm.fromDate, dateFormat);
-            var toDate = $filter('date')(vm.toDate, dateFormat);
-
+        function loadAll() {
             Audits.query(
                 {
-                    page: vm.page - 1,
-                    size: 20,
-                    fromDate: fromDate,
-                    toDate: toDate
-                }, function (result, headers) {
-                    vm.audits = result;
-                    vm.links = ParseLinksUtil.parse(headers('link'));
-                    vm.totalItems = headers('X-Total-Count');
-                }
+                    page: vm.pagination.page - 1,
+                    size: vm.pagination.size,
+                    sort: vm.pagination.sort,
+                    fromDate: vm.fromDate,
+                    toDate: vm.toDate
+                }, onSuccess
             );
+
+            ////////////////////////////////
+
+            function onSuccess(result, headers) {
+                vm.data = result;
+                vm.links = ResponseUtil.parseLink(headers('link'));
+                vm.totalItems = headers('X-Total-Count');
+            }
+        }
+
+        function onPageChange(page, size) {
+            vm.pagination.page = page || vm.pagination.page;
+            vm.pagination.size = size || vm.pagination.size;
+            vm.loadAll();
+        }
+
+        function onReorder(order) {
+            vm.pagination.sort = ResponseUtil.buildSort(order);
+            vm.loadAll();
         }
 
         // Date picker configuration
         function today() {
-            // Today + 1 day - needed if the current day must be included
-            var today = new Date();
-            vm.toDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+            vm.toDate = moment().local().startOf('day').format(format);
         }
 
         function previousMonth() {
-            var fromDate = new Date();
-            if (fromDate.getMonth() === 0) {
-                fromDate = new Date(fromDate.getFullYear() - 1, 11, fromDate.getDate());
-            } else {
-                fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth() - 1, fromDate.getDate());
-            }
-
-            vm.fromDate = fromDate;
+            vm.fromDate = moment().local().subtract(1, 'months').startOf('day').format(format);
         }
 
-        function loadPage(page) {
-            vm.page = page;
-            vm.onChangeDate();
+        function showDatePicker(ev, key) {
+            $mdpDatePicker(new Date(), {targetEvent: ev}).then(onSetDateSuccess);
+
+            /////////////////////////
+
+            function onSetDateSuccess(date) {
+                vm[key] = moment(date).local().startOf('day').format(format);
+            }
+        }
+
+
+        function clearFilter() {
+            vm.today();
+            vm.previousMonth();
+            vm.loadAll();
         }
     }
 

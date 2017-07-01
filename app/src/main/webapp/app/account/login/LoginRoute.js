@@ -45,7 +45,7 @@
     ];
     /* @ngInject */
     function language($translate, $translatePartialLoader) {
-        $translatePartialLoader.addPart('login');
+        $translatePartialLoader.addPart('account');
         return $translate.refresh();
     }
 })(angular);

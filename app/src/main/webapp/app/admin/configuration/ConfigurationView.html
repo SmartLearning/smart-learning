@@ -1,48 +1,57 @@
-<div>
-    <h2 data-translate>configuration.title</h2>
-
-    <span data-translate>configuration.filter</span> <input type="text" ng-model="filter" class="form-control">
-    <label ng-hide="filteredConfig.length == 0">Spring configuration</label>
-    <table class="table table-condensed table-striped table-bordered table-responsive"
-           style="table-layout:fixed" ng-hide="filteredConfig.length == 0">
-        <thead>
-        <tr>
-            <th ng-click="predicate = 'prefix'; reverse=!reverse" class="col-sm-4"><span data-translate>configuration.table.prefix</span>
-            </th>
-            <th data-translate="configuration.table.properties" class="col-sm-8">Properties</th>
-        </tr>
-        </thead>
-
-        <tr ng-repeat="entry in filtered = (vm.configuration | filter:filter | orderBy:predicate:reverse)">
-            <td><span>{{entry.prefix}}</span></td>
-            <td>
-                <div class="row" ng-repeat="(key, value) in entry.properties">
-                    <div class="col-md-4">{{key}}</div>
-                    <div class="col-md-8">
-                        <span class="pull-right label label-default break">{{value}}</span>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <div ng-repeat="(key, value) in vm.allConfiguration">
-        <label ng-hide="filtered.length == 0"><span>{{key}}</span></label>
-        <table class="table table-condensed table-striped table-bordered table-responsive"
-               style="table-layout:fixed" ng-hide="filtered.length == 0">
-            <thead>
-            <tr>
-                <th class="col-sm-4">Property</th>
-                <th class="col-sm-8">Value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="item in filtered = (value | filter:filter)">
-                <td class="break">{{item.key}}</td>
-                <td class="break">
-                    <span class="pull-right label label-default break">{{item.val}}</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<md-toolbar layout="row" class="md-accent md-hue-3">
+    <div class="md-toolbar-tools">
+        <span flex></span>
+        <h2>
+            <span data-translate>{{$state.$current.data.pageTitle}}</span>
+        </h2>
+        <span flex></span>
     </div>
-</div>
+</md-toolbar>
+<form name="filterForm" layout="column">
+    <div layout-gt-xs="row" layout="column">
+        <md-input-container flex-gt-xs>
+            <label data-translate>configuration.filter.title</label>
+            <input type="text" ng-model="vm.filter">
+        </md-input-container>
+    </div>
+</form>
+<md-list class="md-dense">
+    <md-subheader>
+        <span data-translate>configuration.properties.title</span>
+    </md-subheader>
+    <md-content flex layout-wrap layout="row" layout-fill layout-align="start start">
+        <md-list-item class="md-2-line md-long-text break-line" flex
+                      ng-repeat="entry in vm.filtered = (vm.properties | filter:vm.filter | orderBy:predicate:reverse)">
+            <md-card class="md-list-item-text" layout="column">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{entry.prefix}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div flex>
+                        <pre ng-bind-html="entry.properties | prettify"></pre>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-list-item>
+    </md-content>
+    <md-divider></md-divider>
+    <md-subheader>
+        <span data-translate>configuration.title</span>
+    </md-subheader>
+    <md-content flex layout-wrap layout="row" layout-fill layout-align="start start">
+        <md-list-item class="md-2-line md-long-text break-line" ng-repeat="(key, value) in vm.configurations">
+            <md-card class="md-list-item-text" layout="column">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{key}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <pre ng-bind-html="value | prettify"></pre>
+                </md-card-content>
+            </md-card>
+        </md-list-item>
+    </md-content>
+</md-list>

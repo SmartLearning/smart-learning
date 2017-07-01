@@ -13,16 +13,14 @@
         '$http',
         '$localStorage',
         '$sessionStorage',
-        '$q',
-        'Principal'
+        '$q'
     ];
     /* @ngInject */
-    function AuthServerFactory($http, $localStorage, $sessionStorage, $q, Principal) {
+    function AuthServerFactory($http, $localStorage, $sessionStorage, $q) {
         return {
             getToken: getToken,
             hasValidToken: hasValidToken,
             login: login,
-            loginHb: loginHb,
             loginWithToken: loginWithToken,
             storeAuthenticationToken: storeAuthenticationToken,
             logout: logout,
@@ -44,23 +42,21 @@
             var data = {
                 username: credentials.username,
                 password: credentials.password,
-                authenticationType: credentials.authType,
                 rememberMe: credentials.rememberMe
             };
-            return $http.post('/api/authenticate', data).success(authenticateSuccess(data.rememberMe));
-        }
+            return $http.post('/api/authenticate', data)
+                .success(authenticateSuccess(data.rememberMe));
 
-        function loginHb(token) {
-            return $http.post('/hb/' + token).success(authenticateSuccess(true));
-        }
+            //////////////////////////////////////////////////////////
 
-        function authenticateSuccess(rememberMe) {
-            return onSuccess;
+            function authenticateSuccess(rememberMe) {
+                return success;
 
-            /////////////////////////////////////////
+                ///////////////////////////////////////////////
 
-            function onSuccess(data, status, headers) {
-                return checkAuthenticationToken(headers, rememberMe);
+                function success(data, status, headers) {
+                    return checkAuthenticationToken(headers, rememberMe);
+                }
             }
         }
 
@@ -76,7 +72,7 @@
         function loginWithToken(jwt, rememberMe) {
             var deferred = $q.defer();
 
-            if (jwt !== undefined) {
+            if (jwt) {
                 storeAuthenticationToken(jwt, rememberMe);
                 deferred.resolve(jwt);
             }

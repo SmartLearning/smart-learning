@@ -11,7 +11,7 @@
 
     compileConfig.$inject = [
         '$compileProvider',
-        'ENV'
+        'DEBUG_INFO_ENABLED'
     ];
     /* @ngInject */
     function compileConfig($compileProvider, DEBUG_INFO_ENABLED) {
