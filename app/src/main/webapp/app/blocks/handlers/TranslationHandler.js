@@ -24,19 +24,17 @@
 
         function initialize() {
             // if the current translation changes, update the window title
-            var translateChangeSuccess = $rootScope.$on(
-                '$translateChangeSuccess', function () {
-                    updateTitle();
-                }
-            );
+            var translateChangeSuccess = $rootScope.$on('$translateChangeSuccess', updateTitle);
 
-            $rootScope.$on(
-                '$destroy', function () {
-                    if (angular.isDefined(translateChangeSuccess) && translateChangeSuccess !== null) {
-                        translateChangeSuccess();
-                    }
+            $rootScope.$on('$destroy', onDestroy);
+
+            ///////////////////////////////////////////////////////////
+
+            function onDestroy() {
+                if (angular.isDefined(translateChangeSuccess) && translateChangeSuccess !== null) {
+                    translateChangeSuccess();
                 }
-            );
+            }
         }
 
         // update the window title using params in the following
@@ -48,11 +46,13 @@
             if (!titleKey && $state.$current.data && $state.$current.data.pageTitle) {
                 titleKey = $state.$current.data.pageTitle;
             }
-            $translate(titleKey || 'global.title').then(
-                function (title) {
-                    $window.document.title = title;
-                }
-            );
+            $translate(titleKey || 'global.title').then(onTitle);
+
+            ////////////////////////////////////////////////////////
+
+            function onTitle(title) {
+                $window.document.title = title;
+            }
         }
     }
 

@@ -12,7 +12,6 @@
     AuthFactory.$inject = [
         '$rootScope',
         '$state',
-        '$window',
         '$q',
         '$translate',
         'Principal',
@@ -20,9 +19,7 @@
         'Account'
     ];
     /* @ngInject */
-    function AuthFactory($rootScope, $state, $window, $q,
-                         $translate, Principal, AuthServer,
-                         Account) {
+    function AuthFactory($rootScope, $state, $q, $translate, Principal, AuthServer, Account) {
 
         return {
             authorize: authorize,
@@ -67,10 +64,8 @@
                         $rootScope.previousStateNameParams = $rootScope.toStateParams;
 
                         // now, send them to the signin state so they can log in
-                        // $state.go('accessdenied');
+                        $state.go('accessdenied');
                         // $state.go('login');
-                        $window.location.replace('/hb-login');
-                        // Login.open();
                     }
                 }
             }
@@ -101,21 +96,19 @@
                 );
 
             function loginThen(data) {
-                Principal.identity(true).then(
-                    function (account) {
-                        // After the login the language will be changed to
-                        // the language selected by the user during his registration
-                        if (account !== null) {
-                            $translate.use(account.langKey).then(
-                                function () {
-                                    $translate.refresh();
-                                }
-                            );
-                        }
-                        deferred.resolve(data);
-                    }
-                );
+                Principal.identity(true).then(onSuccess);
                 return cb();
+
+                //////////////////////////////////////////////////
+
+                function onSuccess(account) {
+                    // After the login the language will be changed to
+                    // the language selected by the user during his registration
+                    if (account !== null) {
+                        $translate.use(account.langKey).then($translate.refresh);
+                    }
+                    deferred.resolve(data);
+                }
             }
 
             return deferred.promise;

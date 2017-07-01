@@ -38,8 +38,7 @@
             'Alert'
         ];
         /* @ngInject */
-        function RouterHelper($location, $window, $rootScope, $state, $translate,
-                              $translatePartialLoader, $filter, Alert) {
+        function RouterHelper($location, $window, $rootScope, $state, $translate, $translatePartialLoader, $filter, Alert) {
             var handlingStateChangeError = false;
             var hasOtherwise = false;
             var stateCounts = {
@@ -60,36 +59,30 @@
             ///////////////
 
             function configureStates(states, otherwisePath) {
-                states.forEach(
-                    function (item) {
-                        item.config.resolve = angular.extend(item.config.resolve || {}, config.resolveAlways);
-                        $stateProvider.state(item.state, item.config);
-                    }
-                );
+                states.forEach(forEach);
                 if (otherwisePath && !hasOtherwise) {
                     hasOtherwise = true;
                     $urlRouterProvider.otherwise(otherwisePath);
                 }
+
+                /////////////////////////////////////////////
+
+                function forEach(item) {
+                    item.config.resolve = angular.extend(item.config.resolve || {}, config.resolveAlways);
+                    $stateProvider.state(item.state, item.config);
+                }
             }
 
-            function handleRoutingErrors() {
+            function init() {
                 // Route cancellation:
                 // On routing error, go to the dashboard.
                 // Provide an exit clause if it tries to do it twice.
                 $rootScope.$on('$stateChangeError', stateChangeError);
-            }
-
-            function init() {
-                handleRoutingErrors();
-                updateDocTitle();
+                $rootScope.$on('$stateChangeSuccess', stateChangeSuccess);
             }
 
             function getStates() {
                 return $state.get();
-            }
-
-            function updateDocTitle() {
-                $rootScope.$on('$stateChangeSuccess', stateChangeSuccess);
             }
 
             function stateChangeError(event, toState, toParams, fromState, fromParams, error) {
@@ -103,38 +96,42 @@
                     'unknown target';
 
                 $translatePartialLoader.addPart('global');
-                $translate.refresh().then(
-                    function () {
-                        $translate('global.route.full').then(
-                            function (message) {
-                                var msg = $filter('format')(
-                                    message,
-                                    destination,
-                                    (error.data || ''),
-                                    (error.statusText || ''),
-                                    (error.status || ''),
-                                    (error || '')
-                                );
-                                Alert.warning(msg, [toState]);
-                                $location.path('/');
-                            }, function () {
-                                console.log(error);
-                            }
+                $translate.refresh().then(onRefresh);
+
+                ///////////////////////////////////////////////////////////////
+
+                function onRefresh() {
+                    $translate('global.route.full').then(onSuccess, console.log);
+
+                    ///////////////////////////////////////////////////////////////
+
+                    function onSuccess(message) {
+                        var msg = $filter('format')(
+                            message,
+                            destination,
+                            (error.data || ''),
+                            (error.statusText || ''),
+                            (error.status || ''),
+                            (error || '')
                         );
+                        Alert.warning(msg, [toState]);
+                        $location.path('/');
                     }
-                );
+                }
             }
 
-            function stateChangeSuccess(event, toState, toParams, fromState, fromParams) {
+            function stateChangeSuccess(event, toState) {
                 stateCounts.changes++;
                 handlingStateChangeError = false;
                 var title = config.pageTitle + ' ' + (toState.title || '');
-                $translate(title || 'global.access.title').then(
-                    function (title) {
-                        $window.document.title = title;
-                        $rootScope.title = title;
-                    }
-                );// data bind to <title>
+                $translate(title || 'global.access.title').then(onSuccess);
+
+                ////////////////////////////////////////////////////////
+
+                function onSuccess(title) {
+                    $window.document.title = title;
+                    $rootScope.title = title;
+                }
             }
         }
     }

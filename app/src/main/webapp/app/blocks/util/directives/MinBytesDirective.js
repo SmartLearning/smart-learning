@@ -7,9 +7,9 @@
 
     angular
         .module('app.blocks')
-        .directive('minBytes', minBytes);
+        .directive('minBytes', OnMinBytes);
 
-    function minBytes() {
+    function OnMinBytes() {
         return {
             restrict: 'A',
             require: '?ngModel',
@@ -23,27 +23,37 @@
                 return;
             }
 
-            ngModel.$validators.minbytes = function (modelValue) {
+            ngModel.$validators.minbytes = onValidator;
+
+            //////////////////////////////////////////////////////////
+
+            function onValidator(modelValue) {
                 return ngModel.$isEmpty(modelValue) || numberOfBytes(modelValue) >= attrs.minbytes;
-            };
-        }
 
-        function endsWith(suffix, str) {
-            return str.indexOf(suffix, str.length - suffix.length) !== -1;
-        }
+                //////////////////////////////////////////////////////////
 
-        function paddingSize(base64String) {
-            if (endsWith('==', base64String)) {
-                return 2;
+                function numberOfBytes(base64String) {
+                    return base64String.length / 4 * 3 - paddingSize(base64String);
+
+                    ////////////////////////////////////////////////////////
+
+                    function paddingSize(base64String) {
+                        if (endsWith('==', base64String)) {
+                            return 2;
+                        }
+                        if (endsWith('=', base64String)) {
+                            return 1;
+                        }
+                        return 0;
+
+                        //////////////////////////////////////////////////////////////
+
+                        function endsWith(suffix, str) {
+                            return str.indexOf(suffix, str.length - suffix.length) !== -1;
+                        }
+                    }
+                }
             }
-            if (endsWith('=', base64String)) {
-                return 1;
-            }
-            return 0;
-        }
-
-        function numberOfBytes(base64String) {
-            return base64String.length / 4 * 3 - paddingSize(base64String);
         }
     }
 })(angular);

@@ -32,33 +32,21 @@
                     query: {
                         method: 'GET',
                         isArray: true,
-                        transformResponse: function (data) {
-                            return DateUtils.fromServer(data);
-                        }
+                        transformResponse: DateUtils.fromServer
                     },
                     get: {
                         method: 'GET',
-                        transformResponse: function (data) {
-                            return DateUtils.fromServer(data);
-                        }
+                        transformResponse: DateUtils.fromServer
                     },
                     update: {
                         method: 'PUT',
-                        transformRequest: function (data) {
-                            return DateUtils.toServer(data);
-                        },
-                        transformResponse: function (data) {
-                            return DateUtils.fromServer(data);
-                        }
+                        transformRequest: DateUtils.toServer,
+                        transformResponse: DateUtils.fromServer
                     },
                     save: {
                         method: 'POST',
-                        transformRequest: function (data) {
-                            return DateUtils.toServer(data);
-                        },
-                        transformResponse: function (data) {
-                            return DateUtils.fromServer(data);
-                        }
+                        transformRequest: DateUtils.toServer,
+                        transformResponse: DateUtils.fromServer
                     },
                     delete: {method: 'DELETE'}
                 }

@@ -9,12 +9,12 @@
 </div>
 <div class="modal-body pad">
     <div ng-show="vm.currentHealth.details">
-        <h4 translate>health.details.properties</h4>
+        <h4 data-translate>health.details.properties</h4>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th class="col-md-6 text-left" translate>health.details.name</th>
-                <th class="col-md-6 text-left" translate>health.details.value</th>
+                <th class="col-md-6 text-left" data-translate>health.details.name</th>
+                <th class="col-md-6 text-left" data-translate>health.details.value</th>
             </tr>
             </thead>
             <tbody>
@@ -26,7 +26,7 @@
         </table>
     </div>
     <div ng-show="vm.currentHealth.error">
-        <h4 translate>health.details.error</h4>
+        <h4 data-translate>health.details.error</h4>
         <pre>{{vm.currentHealth.error}}</pre>
     </div>
 </div>

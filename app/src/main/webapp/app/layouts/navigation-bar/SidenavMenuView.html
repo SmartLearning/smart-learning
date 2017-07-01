@@ -1,13 +1,13 @@
 <md-toolbar class="md-theme-light">
-    <h1 class="md-toolbar-tools" translate>global.menu.title</h1>
+    <h1 class="md-toolbar-tools" data-translate>global.menu.title</h1>
 </md-toolbar>
 <md-content layout="column" class="sidenav-menu">
     <div layout="row" layout-align="start center" flex>
         <md-icon>business</md-icon>
         <md-button href="/merchant-portal" target="_self">
-            <label translate>global.menu.merchant_portal.button</label>
+            <label data-translate>global.menu.merchant_portal.button</label>
             <md-tooltip>
-                <span translate>global.menu.merchant_portal.tooltip</span>
+                <span data-translate>global.menu.merchant_portal.tooltip</span>
             </md-tooltip>
         </md-button>
         <span flex></span>
@@ -15,7 +15,7 @@
     <div layout="row" layout-align="start center" flex ng-if="!vm.isAuthenticated()">
         <md-icon>person_outline</md-icon>
         <md-button ng-click="vm.login()">
-            <label translate>global.menu.account.login</label>
+            <label data-translate>global.menu.account.login</label>
         </md-button>
         <span flex></span>
     </div>
@@ -25,7 +25,7 @@
             <div layout="row" layout-align="start center" flex>
                 <md-button md-menu-origin ng-click="$mdOpenMenu($event)" >
                     <span ng-if="vm.selectedMerchant">{{vm.selectedMerchant.login | capitalize}}</span>
-                    <span ng-if="!vm.selectedMerchant" translate>global.menu.merchant.select</span>
+                    <span ng-if="!vm.selectedMerchant" data-translate>global.menu.merchant.select</span>
                 </md-button>
                 <md-button class="md-icon-button" ng-if="vm.selectedMerchant" ng-click="vm.clearMerchant()">
                     <md-icon>clear</md-icon>
@@ -64,7 +64,7 @@
         <md-menu ng-controller="LanguageController as vm">
             <div layout="row" layout-align="start center" flex>
                 <md-button md-menu-origin ng-click="$mdOpenMenu($event)">
-                    <label translate>global.menu.language</label>
+                    <label data-translate>global.menu.language</label>
                 </md-button>
             </div>
             <md-menu-content width="4">
@@ -91,7 +91,7 @@
                     <div layout="row">
                         <md-button ng-click="vm.logout()">
                             <md-icon>power</md-icon>
-                            <label translate>global.menu.account.logout</label>
+                            <label data-translate>global.menu.account.logout</label>
                         </md-button>
                     </div>
                 </md-menu-item>
@@ -102,7 +102,7 @@
     <div layout="row" layout-align="start center" flex>
         <md-icon>open_in_new</md-icon>
         <md-button href="https://wiki.hepsiburada.net/display/MSD" target="_blank">
-            <label translate>global.menu.sdw.button</label>
+            <label data-translate>global.menu.sdw.button</label>
         </md-button>
         <span flex></span>
     </div>

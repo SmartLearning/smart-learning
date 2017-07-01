@@ -44,15 +44,11 @@
 
     run.$inject = [
         'StateHandler',
-        'TranslationHandler',
-        'BrowserCompatabilityHandler',
-        'GAHandler'
+        'TranslationHandler'
     ];
     /* @ngInject */
-    function run(StateHandler, TranslationHandler, BrowserCompatabilityHandler, GAHandler) {
+    function run(StateHandler, TranslationHandler) {
         StateHandler.initialize();
         TranslationHandler.initialize();
-        BrowserCompatabilityHandler.check();
-        GAHandler.sendPageEvent();
     }
 })(angular);

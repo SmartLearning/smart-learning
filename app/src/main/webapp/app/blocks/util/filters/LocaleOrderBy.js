@@ -1,3 +1,7 @@
+/**
+ * Developed by Navid Ghahremani (ghahramani.navid@gmail.com)
+ */
+
 (function (angular) {
     'use strict';
 
@@ -10,7 +14,7 @@
     function LocaleOrderBy() {
         return compare;
 
-        ////////////////
+        ///////////////////////////////////////////
 
         function compare(items, field) {
             var filtered = [];

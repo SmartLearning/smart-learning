@@ -7,21 +7,33 @@
 
     angular
         .module('app.blocks')
-        .directive('onEnterKey', onEnterKeyDirective);
+        .directive('onEnterKey', OnEnterKeyDirective);
 
-    onEnterKeyDirective.$inject = [];
+    OnEnterKeyDirective.$inject = [];
     /* @ngInject */
-    function onEnterKeyDirective() {
-        return function (scope, element, attrs) {
-            element.bind("keydown keypress", function(event) {
+    function OnEnterKeyDirective() {
+        return directive;
+
+        ////////////////////////////////////////////////////////////
+
+        function directive(scope, element, attrs) {
+            element.bind("keydown keypress", listener);
+
+            /////////////////////////////////////////////////////////
+
+            function listener(event) {
                 var keyCode = event.which || event.keyCode;
                 if (keyCode === 13) {
-                    scope.$apply(function() {
-                        scope.$eval(attrs.onEnterKey);
-                    });
+                    scope.$apply(apply);
                     event.preventDefault();
                 }
-            });
+
+                //////////////////////////////////////////////////
+
+                function apply() {
+                    scope.$eval(attrs.onEnterKey);
+                }
+            }
         }
     }
 

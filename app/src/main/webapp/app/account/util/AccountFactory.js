@@ -9,32 +9,24 @@
         .module('account.util')
         .factory('Account', AccountFactory);
 
-    AccountFactory.$inject = ['$resource', '$http'];
+    AccountFactory.$inject = ['$resource'];
     /* @ngInject */
-    function AccountFactory($resource, $http) {
-        var resource = $resource(
-            '/api/account', {}, {
+    function AccountFactory($resource) {
+        var url = '/api';
+        return $resource(
+            url + '/account',
+            {},
+            {
+                'register': {
+                    method: 'POST',
+                    url: url + 'register'
+                },
                 'get': {
                     method: 'GET',
-                    params: {},
-                    isArray: false,
-                    interceptor: {
-                        response: function (response) {
-                            // expose response
-                            return response;
-                        }
-                    }
+                    isArray: false
                 }
             }
         );
-
-        resource.registerMerchant = registerMerchant;
-
-        return resource;
-
-        function registerMerchant(signUpDetail) {
-            return $http.post("api/register", signUpDetail);
-        }
     }
 
 })(angular);

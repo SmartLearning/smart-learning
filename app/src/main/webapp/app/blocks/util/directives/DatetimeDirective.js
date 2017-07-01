@@ -26,22 +26,22 @@
         function link(scope, elm, attrs, ctrl) {
             var dateFormat = attrs.datetime;
 
-            ctrl.$formatters.unshift(
-                function (modelValue) {
-                    if (!dateFormat || !modelValue) {
-                        return '';
-                    }
-                    console.log(modelValue, moment(modelValue, 'yyyy/MM/dd HH:mm:ss z'));
-                    return dateFormat;
-                }
-            );
+            ctrl.$formatters.unshift(unshiftFormatter);
+            ctrl.$parsers.unshift(unshiftParser);
 
-            ctrl.$parsers.unshift(
-                function (viewValue) {
-                    var date = moment(viewValue, dateFormat);
-                    return (date && date.isValid() && date.year() > 1950) ? date.toDate() : '';
+            ///////////////////////////////////////////////////////
+
+            function unshiftFormatter(modelValue) {
+                if (!dateFormat || !modelValue) {
+                    return '';
                 }
-            );
+                return dateFormat;
+            }
+
+            function unshiftParser(viewValue) {
+                var date = moment(viewValue, dateFormat);
+                return (date && date.isValid() && date.year() > 1950) ? date.toDate() : '';
+            }
         }
     }
 

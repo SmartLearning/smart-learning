@@ -15,7 +15,7 @@
     ];
     /* @ngInject */
     function localStorageConfig($localStorageProvider, $sessionStorageProvider) {
-        $localStorageProvider.setKeyPrefix('jhi-');
-        $sessionStorageProvider.setKeyPrefix('jhi-');
+        $localStorageProvider.setKeyPrefix('smart-');
+        $sessionStorageProvider.setKeyPrefix('smart-');
     }
 })(angular);

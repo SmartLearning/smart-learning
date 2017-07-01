@@ -23,8 +23,8 @@
             if (!order) {
                 return order;
             }
-            var sortOrder = order.charAt(0) == '-' ? 'desc' : 'asc';
-            var sortColumn = order.charAt(0) == '-' ? order.substr(1) : order;
+            var sortOrder = order.charAt(0) === '-' ? 'desc' : 'asc';
+            var sortColumn = order.charAt(0) === '-' ? order.substr(1) : order;
             return {
                 column: sortColumn,
                 order: sortOrder
@@ -37,7 +37,7 @@
             var a = fieldName.split('.');
             for (var i = 0, n = a.length; i < n; ++i) {
                 var k = a[i];
-                if (i == n - 1) {
+                if (i === n - 1) {
                     model[k] = value;
                     return true;
                 }

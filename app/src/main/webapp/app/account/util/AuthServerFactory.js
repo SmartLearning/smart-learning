@@ -55,7 +55,11 @@
         }
 
         function authenticateSuccess(rememberMe) {
-            return function (data, status, headers) {
+            return onSuccess;
+
+            /////////////////////////////////////////
+
+            function onSuccess(data, status, headers) {
                 return checkAuthenticationToken(headers, rememberMe);
             }
         }
@@ -65,12 +69,6 @@
             if (angular.isDefined(bearerToken) && bearerToken.slice(0, 7) === 'Bearer ') {
                 var jwt = bearerToken.slice(7, bearerToken.length);
                 storeAuthenticationToken(jwt, rememberMe);
-                var merchant = headers('merchant');
-                if (angular.isDefined(merchant) && merchant) {
-                    Principal.setMerchant(merchant);
-                } else {
-                    Principal.clearMerchant();
-                }
                 return jwt;
             }
         }

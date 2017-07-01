@@ -1,3 +1,7 @@
+/**
+ * Developed by Navid Ghahremani (ghahramani.navid@gmail.com)
+ */
+
 (function (angular) {
     'use strict';
 
@@ -18,13 +22,10 @@
     }
 
     function link(scope, element, attributes, ngModel) {
-        ngModel.$validators.equalTo = function(modelValue) {
-            return modelValue == scope.otherModelValue;
+        ngModel.$validators.equalTo = function (modelValue) {
+            return modelValue === scope.otherModelValue;
         };
-
-        scope.$watch("otherModelValue", function() {
-            ngModel.$validate();
-        });
+        scope.$watch("otherModelValue", ngModel.$validate);
     }
 
 })(angular);

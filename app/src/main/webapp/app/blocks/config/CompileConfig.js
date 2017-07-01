@@ -14,9 +14,9 @@
         'ENV'
     ];
     /* @ngInject */
-    function compileConfig($compileProvider, ENV) {
+    function compileConfig($compileProvider, DEBUG_INFO_ENABLED) {
         // disable debug data on prod profile to improve performance
-        if (ENV === 'prod') {
+        if (!DEBUG_INFO_ENABLED) {
             $compileProvider.debugInfoEnabled(false);
         }
         /*

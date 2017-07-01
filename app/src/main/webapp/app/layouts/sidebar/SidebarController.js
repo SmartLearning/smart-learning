@@ -30,43 +30,12 @@
         }
 
         function refreshNavRoutes() {
-            var routes = states.filter(filter)
-                .sort(sort);
+            var routes = states.filter(filter).sort(sort);
 
             vm.routes = [];
 
             var groups = {};
-            routes.forEach(
-                function (item) {
-                    if (!item.settings) {
-                        return true;
-                    }
-                    var group = item.settings.group = item.settings.group || angular.extend({}, MenuGroups.ROOT);
-
-                    if (!angular.isObject(group)) {
-                        group = {
-                            name: group
-                        };
-                    }
-
-                    if (angular.isUndefined(groups[group.name])) {
-                        groups[group.name] = {
-                            items: [],
-                            icon: group.icon
-                        };
-                    }
-
-                    groups[group.name].items.push(
-                        angular.extend(
-                            {},
-                            item.settings,
-                            {
-                                name: item.name
-                            }
-                        )
-                    );
-                }
-            );
+            routes.forEach(onIterate);
 
             var i = 1;
             for (var index in groups) {
@@ -87,6 +56,8 @@
                 }
             }
 
+            ////////////////////////////////////////////////
+
             function filter(r) {
                 return !r.abstract &&
                     (
@@ -99,6 +70,36 @@
                     return 0;
                 }
                 return r1.settings.order - r2.settings.order;
+            }
+
+            function onIterate(item) {
+                if (!item.settings) {
+                    return true;
+                }
+                var group = item.settings.group = item.settings.group || angular.extend({}, MenuGroups.ROOT);
+
+                if (!angular.isObject(group)) {
+                    group = {
+                        name: group
+                    };
+                }
+
+                if (angular.isUndefined(groups[group.name])) {
+                    groups[group.name] = {
+                        items: [],
+                        icon: group.icon
+                    };
+                }
+
+                groups[group.name].items.push(
+                    angular.extend(
+                        {},
+                        item.settings,
+                        {
+                            name: item.name
+                        }
+                    )
+                );
             }
         }
 

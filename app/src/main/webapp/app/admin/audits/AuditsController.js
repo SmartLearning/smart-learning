@@ -12,10 +12,10 @@
     AuditsController.$inject = [
         '$filter',
         'Audits',
-        'ParseLinks'
+        'ParseLinksUtil'
     ];
     /* @ngInject */
-    function AuditsController($filter, Audits, ParseLinks) {
+    function AuditsController($filter, Audits, ParseLinksUtil) {
         var vm = this;
 
         vm.audits = null;
@@ -52,7 +52,7 @@
                     toDate: toDate
                 }, function (result, headers) {
                     vm.audits = result;
-                    vm.links = ParseLinks.parse(headers('link'));
+                    vm.links = ParseLinksUtil.parse(headers('link'));
                     vm.totalItems = headers('X-Total-Count');
                 }
             );

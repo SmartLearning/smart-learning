@@ -1,13 +1,13 @@
 <div>
-    <h2 translate>configuration.title</h2>
+    <h2 data-translate>configuration.title</h2>
 
-    <span translate>configuration.filter</span> <input type="text" ng-model="filter" class="form-control">
+    <span data-translate>configuration.filter</span> <input type="text" ng-model="filter" class="form-control">
     <label ng-hide="filteredConfig.length == 0">Spring configuration</label>
     <table class="table table-condensed table-striped table-bordered table-responsive"
            style="table-layout:fixed" ng-hide="filteredConfig.length == 0">
         <thead>
         <tr>
-            <th ng-click="predicate = 'prefix'; reverse=!reverse" class="col-sm-4"><span translate>configuration.table.prefix</span>
+            <th ng-click="predicate = 'prefix'; reverse=!reverse" class="col-sm-4"><span data-translate>configuration.table.prefix</span>
             </th>
             <th data-translate="configuration.table.properties" class="col-sm-8">Properties</th>
         </tr>

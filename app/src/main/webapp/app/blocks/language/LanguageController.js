@@ -27,17 +27,14 @@
         //////////////////////
 
         function activate() {
-            Language.getAll().then(
-                function (languages) {
-                    vm.languages = languages;
-                }
-            );
+            Language.getAll().then(onLang);
+            Language.getCurrent().then(changeLanguage);
 
-            Language.getCurrent().then(
-                function (lang) {
-                    changeLanguage(lang);
-                }
-            );
+            /////////////////////////////////////////////////////
+
+            function onLang(languages) {
+                vm.languages = languages;
+            }
         }
 
         function changeLanguage(languageKey) {

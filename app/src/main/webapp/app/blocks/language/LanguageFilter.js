@@ -22,6 +22,7 @@
                 'el': 'Ελληνικά',
                 'en': 'English',
                 'es': 'Español',
+                'fa': 'پارسی',
                 'fr': 'Français',
                 'gl': 'Galego',
                 'hu': 'Magyar',

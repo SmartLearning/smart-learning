@@ -8,10 +8,12 @@
     var defaultDateFormat = 'DD.MM.YYYY';
 
     angular.module('app.blocks')
-        .directive('datetimePicker', datetimePickerDirective)
-        .config(configureTimePicker);
+        .directive('datetimePicker', DatetimePickerDirective)
+        .config(ConfigureTimePicker);
 
-    function configureTimePicker($mdDateLocaleProvider) {
+    ConfigureTimePicker.$inject = ['$mdDateLocaleProvider'];
+    /* @ngInject */
+    function ConfigureTimePicker($mdDateLocaleProvider) {
         $mdDateLocaleProvider.formatDate = formatDate;
         $mdDateLocaleProvider.parseDate = parseDate;
 
@@ -28,10 +30,9 @@
         }
     }
 
-    datetimePickerDirective.$inject = [];
+    DatetimePickerDirective.$inject = [];
     /* @ngInject */
-
-    function datetimePickerDirective() {
+    function DatetimePickerDirective() {
         return {
             bindToController: true,
             controller: DatetimePickerController,
@@ -99,8 +100,8 @@
         }
 
         function combineDateTime(newValue, oldValue) {
-            if (oldValue != null && newValue == null) {
-                if (vm.dateValue == null) {
+            if (oldValue !== null && newValue === null) {
+                if (vm.dateValue === null) {
                     vm.timeValue = null;
                     vm.dateValue = null;
                     vm.value = undefined;
@@ -109,7 +110,7 @@
 
             if (vm.dateValue) {
                 vm.value = vm.dateValue;
-                if (vm.timeValue == null) {
+                if (vm.timeValue === null) {
                     var now = new Date();
                     vm.value.setHours(now.getHours());
                     vm.value.setMinutes(now.getMinutes());
@@ -117,7 +118,7 @@
             }
 
             if (vm.timeValue) {
-                if (vm.dateValue == null) {
+                if (vm.dateValue === null) {
                     vm.value = new Date();
                 }
                 vm.timeValueStr = formatTime(vm.timeValue);
@@ -126,7 +127,7 @@
                 vm.value.setMinutes(timeParts[1]);
             }
 
-            if (vm.value == null) {
+            if (vm.value === null) {
                 vm.timeValue = null;
                 vm.dateValue = null;
             } else {

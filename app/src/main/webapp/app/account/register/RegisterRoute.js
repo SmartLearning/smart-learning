@@ -7,11 +7,11 @@
 
     angular
         .module('account.register')
-        .run(run);
+        .run(runRegister);
 
-    run.$inject = ['routerHelper'];
+    runRegister.$inject = ['routerHelper'];
     /* @ngInject */
-    function run(routerHelper) {
+    function runRegister(routerHelper) {
         routerHelper.configureStates(getStates());
     }
 

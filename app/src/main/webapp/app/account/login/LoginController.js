@@ -35,7 +35,7 @@
             //////////////////////////////////////////
 
             function onSuccess() {
-                $state.transitionTo('home', {}, {reload: true});
+                $state.go('home', {}, {reload: true});
             }
         }
     }

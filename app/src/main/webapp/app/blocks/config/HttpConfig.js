@@ -38,25 +38,35 @@
         $urlMatcherFactoryProvider.type(
             'boolean', {
                 name: 'boolean',
-                decode: function (val) {
-                    return val === true || val === 'true';
-                },
-                encode: function (val) {
-                    return val ? 1 : 0;
-                },
-                equals: function (a, b) {
-                    return this.is(a) && a === b;
-                },
-                is: function (val) {
-                    return [
-                            true,
-                            false,
-                            0,
-                            1
-                        ].indexOf(val) >= 0;
-                },
+                decode: decode,
+                encode: encode,
+                equals: equals,
+                is: is,
                 pattern: /bool|true|0|1/
             }
         );
+
+        //////////////////////////////////////////
+
+        function decode(val) {
+            return val === true || val === 'true';
+        }
+
+        function encode(val) {
+            return val ? 1 : 0;
+        }
+
+        function equals(a, b) {
+            return this.is(a) && a === b;
+        }
+
+        function is(val) {
+            return [
+                    true,
+                    false,
+                    0,
+                    1
+                ].indexOf(val) >= 0;
+        }
     }
 })(angular);

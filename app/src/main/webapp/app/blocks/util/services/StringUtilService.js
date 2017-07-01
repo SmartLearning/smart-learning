@@ -12,28 +12,10 @@
     StringUtilService.$inject = [];
     /* @ngInject */
     function StringUtilService() {
-        this.convertTurkishCharacters = convertTurkishCharacters;
         this.limitTo = limitTo;
-        this.normalizeSlugUrl = normalizeSlugUrl;
+        this.normalize = normalize;
 
-        ////////////////
-
-        function convertTurkishCharacters(value) {
-            var converted = value.replace('ü', 'u');
-            converted = converted.replace('ı', 'i');
-            converted = converted.replace('ö', 'o');
-            converted = converted.replace('ü', 'u');
-            converted = converted.replace('ş', 's');
-            converted = converted.replace('ğ', 'g');
-            converted = converted.replace('ç', 'c');
-            converted = converted.replace('İ', 'I');
-            converted = converted.replace('Ö', 'O');
-            converted = converted.replace('Ü', 'U');
-            converted = converted.replace('Ş', 'S');
-            converted = converted.replace('Ğ', 'G');
-            converted = converted.replace('Ç', 'C');
-            return converted;
-        }
+        ////////////////////////////////////////////////////
 
         function limitTo(string, size) {
             if (!string) {
@@ -51,7 +33,7 @@
             return string.substr(0, string.lastIndexOf(" ") + 1) + dots;
         }
 
-        function normalizeSlugUrl(value) {
+        function normalize(value) {
             if (!angular.isString(value)) {
                 return value;
             }
@@ -332,17 +314,19 @@
                 'ž': 'z'
             };
 
-            angular.forEach(
-                charMap, function (item, key) {
-                    value = value.replace(new RegExp(key, 'g'), item);
-                }
-            );
+            angular.forEach(charMap, iterate);
 
             value = value.replace(/[^a-z0-9]+/ig, '-');
             value = value.replace(/[-]{2,}/g, '-');
             value = value.replace(/(^-|-$)/g, '');
 
             return value.toLowerCase();
+
+            ///////////////////////////////////////////////////
+
+            function iterate(item, key) {
+                value = value.replace(new RegExp(key, 'g'), item);
+            }
         }
     }
 

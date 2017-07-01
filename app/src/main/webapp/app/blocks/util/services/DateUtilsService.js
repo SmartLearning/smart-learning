@@ -26,7 +26,8 @@
         this.getFormattedDate = getFormattedDate;
         // common date format for all date input fields
         this.dateformat = format;
-        ////////////////
+
+        ///////////////////////////////////////////////////
 
         function convertLocalDateToServer(date) {
             if (date) {

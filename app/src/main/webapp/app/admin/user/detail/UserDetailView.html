@@ -3,19 +3,19 @@
         <alert></alert>
 
         <div class="form-group">
-            <label translate>global.field.id</label>
+            <label data-translate>global.field.id</label>
             <input type="text" class="form-control" name="id"
                    ng-model="vm.model.id" readonly>
         </div>
 
         <div class="form-group">
-            <label class="control-label" translate>user.login</label>
+            <label class="control-label" data-translate>user.login</label>
             <input type="text" class="form-control" name="login"
                    ng-model="vm.model.login" ng-required="vm.model.id == null" ng-maxlength="50">
 
             <div ng-show="editForm.login.$invalid">
                 <p class="help-block"
-                   ng-show="editForm.login.$error.required" translate>entity.validation.required</p>
+                   ng-show="editForm.login.$error.required" data-translate>entity.validation.required</p>
 
                 <p class="help-block"
                    ng-show="editForm.login.$error.maxlength" translate
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate>user.firstName</label>
+            <label class="control-label" data-translate>user.firstName</label>
             <input type="text" class="form-control" name="firstName"
                    ng-model="vm.model.firstName" ng-maxlength="50">
 
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label translate>user.lastName</label>
+            <label data-translate>user.lastName</label>
             <input type="text" class="form-control" name="lastName"
                    ng-model="vm.model.lastName" ng-maxlength="50">
 
@@ -45,37 +45,37 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate>user.email</label>
+            <label class="control-label" data-translate>user.email</label>
             <input type="email" class="form-control" name="email"
                    ng-model="vm.model.email" required ng-maxlength="100">
 
             <div ng-show="editForm.email.$invalid">
                 <p class="help-block"
-                   ng-show="editForm.email.$error.required" translate>entity.validation.required</p>
+                   ng-show="editForm.email.$error.required" data-translate>entity.validation.required</p>
 
                 <p class="help-block"
                    ng-show="editForm.email.$error.maxlength" translate
                    translate-value-max="100">entity.validation.maxlength</p>
                 <p class="help-block"
-                   ng-show="editForm.email.$error.email" translate>global.messages.validate.email.invalid</p>
+                   ng-show="editForm.email.$error.email" data-translate>global.messages.validate.email.invalid</p>
             </div>
         </div>
         <div class="form-group">
             <label for="activated">
                 <input ng-disabled="vm.model.id === null" type="checkbox" id="activated" ng-model="vm.model.activated">
-                <span translate>user.activated</span>
+                <span data-translate>user.activated</span>
             </label>
         </div>
 
         <div class="form-group">
-            <label translate>user.langKey</label>
+            <label data-translate>user.langKey</label>
             <select class="form-control" name="langKey" ng-model="vm.model.langKey"
                     ng-options="language as language for language in vm.languages track by language">
             </select>
         </div>
 
         <div class="form-group">
-            <label translate>user.profiles</label>
+            <label data-translate>user.profiles</label>
             <select class="form-control" multiple name="authority" ng-model="vm.model.authorities"
                     ng-options="authority for authority in vm.authorities">
             </select>
@@ -83,7 +83,7 @@
     </div>
     <div class="modal-footer">
         <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate>entity.action.save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate>entity.action.save</span>
         </button>
     </div>
 </form>

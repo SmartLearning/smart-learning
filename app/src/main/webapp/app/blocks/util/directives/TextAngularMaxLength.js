@@ -1,5 +1,5 @@
 /**
- * Developed by Yakup Kaya (yakupkaya@gmail.com)
+ * Developed by Navid Ghahremani (ghahramani.navid@gmail.com)
  */
 
 (function (angular) {

@@ -1,3 +1,7 @@
+/**
+ * Developed by Navid Ghahremani (ghahramani.navid@gmail.com)
+ */
+
 (function (angular) {
     'use strict';
 
@@ -13,7 +17,7 @@
         this.openFile = openFile;
         this.toBase64 = toBase64;
 
-        /////////////////
+        /////////////////////////////////////////////
 
         function abbreviate(text) {
             if (!angular.isString(text)) {
@@ -62,10 +66,14 @@
         function toBase64(file, cb) {
             var fileReader = new FileReader();
             fileReader.readAsDataURL(file);
-            fileReader.onload = function (e) {
+            fileReader.onload = onLoad;
+
+            //////////////////////////////////////////////////
+
+            function onLoad(e) {
                 var base64Data = e.target.result.substr(e.target.result.indexOf('base64,') + 'base64,'.length);
                 cb(base64Data);
-            };
+            }
         }
     }
 })(angular);

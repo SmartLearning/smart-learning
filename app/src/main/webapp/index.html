@@ -37,7 +37,7 @@
 </md-sidenav>
 <div class="site-content">
     <!--[if lt IE 9]>
-    <p class="browserupgrade" translate>global.messages.info.browsehappy</p>
+    <p class="browserupgrade" data-translate>global.messages.info.browsehappy</p>
     <![endif]-->
 
     <div ng-cloak>
@@ -59,7 +59,7 @@
     <div layout="column" flex ng-cloak>
         <header ui-view="menu" ng-cloak></header>
         <div ng-if="$state.current.data.title">
-            <span class="md-headline" translate>{{$state.current.data.title}}</span>
+            <span class="md-headline" data-translate>{{$state.current.data.title}}</span>
         </div>
         <md-content layout="column">
             <md-card>

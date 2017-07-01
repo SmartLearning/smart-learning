@@ -12,14 +12,12 @@
     UserListController.$inject = [
         'Principal',
         'User',
-        'ParseLinks',
-        'PaginationConstants',
+        'ParseLinksUtil',
         'Language',
         'AccountConstants'
     ];
     /* @ngInject */
-    function UserListController(Principal, User, ParseLinks,
-                                PaginationConstants, Language, AccountConstants) {
+    function UserListController(Principal, User, ParseLinksUtil, Language, AccountConstants) {
         var vm = this;
 
         vm.authorities = AccountConstants.roles;
@@ -41,30 +39,30 @@
         function activate() {
             vm.loadAll();
 
-            Language.getAll().then(
-                function (languages) {
-                    vm.languages = languages;
-                }
-            );
+            Language.getAll().then(onLanguage);
+            Principal.identity().then(onAccount);
 
-            Principal.identity().then(
-                function (account) {
-                    vm.currentAccount = account;
-                }
-            );
+            ////////////////////////////////////////////////////
+
+            function onLanguage(languages) {
+                vm.languages = languages;
+            }
+
+            function onAccount(account) {
+                vm.currentAccount = account;
+            }
         }
 
         function loadAll() {
-            User.query(
-                {
-                    page: vm.page - 1,
-                    size: PaginationConstants.ITEMS_PER_PAGE
-                }, function (result, headers) {
-                    vm.links = ParseLinks.parse(headers('link'));
-                    vm.totalItems = headers('X-Total-Count');
-                    vm.users = result;
-                }
-            );
+            User.query({page: vm.page - 1, size: 20}, onSuccess);
+
+            ////////////////////////////////////////////////////////
+
+            function onSuccess(result, headers) {
+                vm.links = ParseLinksUtil.parse(headers('link'));
+                vm.totalItems = headers('X-Total-Count');
+                vm.users = result;
+            }
         }
 
         function loadPage(page) {
@@ -74,31 +72,18 @@
 
         function setActive(user, isActivated) {
             user.activated = isActivated;
-            User.update(
-                user, function () {
-                    vm.loadAll();
-                    vm.clear();
-                }
-            );
+            User.update(user, onSuccess);
+
+            ///////////////////////////////////////////////////
+
+            function onSuccess() {
+                vm.loadAll();
+                vm.clear();
+            }
         }
 
         function clear() {
-            vm.user = {
-                id: null,
-                login: null,
-                firstName: null,
-                lastName: null,
-                email: null,
-                activated: null,
-                langKey: null,
-                createdBy: null,
-                createdDate: null,
-                lastModifiedBy: null,
-                lastModifiedDate: null,
-                resetDate: null,
-                resetKey: null,
-                authorities: null
-            };
+            vm.user = {};
             vm.editForm.$setPristine();
             vm.editForm.$setUntouched();
         }

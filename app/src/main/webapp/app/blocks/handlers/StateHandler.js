@@ -19,73 +19,26 @@
         'Auth',
         'Principal',
         'Alert',
-        'ENV',
+        'DEBUG_INFO_ENABLED',
         'VERSION'
     ];
     /* @ngInject */
-    function StateHandlerService($mdDialog, $rootScope, $state, $translate, Language, TranslationHandler, Auth, Principal, Alert, ENV, VERSION) {
+    function StateHandlerService($mdDialog, $rootScope, $state, $translate, Language, TranslationHandler, Auth, Principal, Alert, DEBUG_INFO_ENABLED, VERSION) {
         this.initialize = initialize;
 
         ////////////////
 
         function initialize() {
-            $rootScope.ENV = ENV;
+            $rootScope.DEBUG_INFO_ENABLED = DEBUG_INFO_ENABLED;
             $rootScope.VERSION = VERSION;
             $rootScope.back = back;
 
-            var stateChangeStart = $rootScope.$on(
-                '$stateChangeStart', function (event, toState, toStateParams) {
-                    $rootScope.toState = toState;
-                    $rootScope.toStateParams = toStateParams;
+            var stateChangeStart = $rootScope.$on('$stateChangeStart', onChangeStart);
+            var stateChangeSuccess = $rootScope.$on('$stateChangeSuccess', onChangeSuccess);
 
-                    // Update the language
-                    Language.getCurrent().then(
-                        function (language) {
-                            $translate.use(language);
-                        }
-                    );
+            $rootScope.$on('$destroy', onDestroy);
 
-                    if (Principal.isIdentityResolved()) {
-                        Auth.authorize();
-                    }
-                }
-            );
-
-            var stateChangeSuccess = $rootScope.$on(
-                '$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-                    var titleKey = 'global.title';
-
-                    //clear alerts
-                    Alert.clear();
-
-                    // Remember previous state unless we've been redirected to login or we've just
-                    // reset the state memory after logout. If we're redirected to login, our
-                    // previousState is already set in the authExpiredInterceptor. If we're going
-                    // to login directly, we don't want to be sent to some previous state anyway
-                    if (!$rootScope.redirected && $rootScope.previousStateName) {
-                        $rootScope.previousStateName = fromState.name;
-                        $rootScope.previousStateParams = fromParams;
-                    }
-
-                    // Set the page title key to the one configured in state or use default one
-                    if (toState.data.pageTitle) {
-                        titleKey = toState.data.pageTitle;
-                    }
-                    TranslationHandler.updateTitle(titleKey);
-                    $mdDialog.hide();
-                }
-            );
-
-            $rootScope.$on(
-                '$destroy', function () {
-                    if (angular.isDefined(stateChangeStart) && stateChangeStart !== null) {
-                        stateChangeStart();
-                    }
-                    if (angular.isDefined(stateChangeSuccess) && stateChangeSuccess !== null) {
-                        stateChangeSuccess();
-                    }
-                }
-            );
+            ////////////////////////////////////////////////////////////////
 
             function back() {
                 // If previous state is 'activate' or do not exist go to 'home'
@@ -95,6 +48,50 @@
                     $state.go('home');
                 } else {
                     $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
+                }
+            }
+
+            function onChangeSuccess(event, toState, toParams, fromState, fromParams) {
+                var titleKey = 'global.title';
+
+                //clear alerts
+                Alert.clear();
+
+                // Remember previous state unless we've been redirected to login or we've just
+                // reset the state memory after logout. If we're redirected to login, our
+                // previousState is already set in the authExpiredInterceptor. If we're going
+                // to login directly, we don't want to be sent to some previous state anyway
+                if (!$rootScope.redirected && $rootScope.previousStateName) {
+                    $rootScope.previousStateName = fromState.name;
+                    $rootScope.previousStateParams = fromParams;
+                }
+
+                // Set the page title key to the one configured in state or use default one
+                if (toState.data.pageTitle) {
+                    titleKey = toState.data.pageTitle;
+                }
+                TranslationHandler.updateTitle(titleKey);
+                $mdDialog.hide();
+            }
+
+            function onDestroy() {
+                if (angular.isDefined(stateChangeStart) && stateChangeStart !== null) {
+                    stateChangeStart();
+                }
+                if (angular.isDefined(stateChangeSuccess) && stateChangeSuccess !== null) {
+                    stateChangeSuccess();
+                }
+            }
+
+            function onChangeStart(event, toState, toStateParams) {
+                $rootScope.toState = toState;
+                $rootScope.toStateParams = toStateParams;
+
+                // Update the language
+                Language.getCurrent().then($translate.use);
+
+                if (Principal.isIdentityResolved()) {
+                    Auth.authorize();
                 }
             }
         }

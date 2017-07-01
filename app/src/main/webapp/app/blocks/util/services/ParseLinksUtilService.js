@@ -14,7 +14,7 @@
     function ParseLinksUtilService() {
         this.parse = parse;
 
-        ////////////////
+        /////////////////////////////////////////////
 
         function parse(header) {
             if (header.length === 0) {

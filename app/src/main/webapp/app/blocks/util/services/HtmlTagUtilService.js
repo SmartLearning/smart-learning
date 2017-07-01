@@ -7,11 +7,11 @@
 
     angular
         .module('app.blocks')
-        .service('TagUtil', TagUtilService);
+        .service('HtmlTagUtil', HtmlTagUtilService);
 
-    TagUtilService.$inject = [];
+    HtmlTagUtilService.$inject = [];
     /* @ngInject */
-    function TagUtilService() {
+    function HtmlTagUtilService() {
         this.escapeTags = escapeTags;
 
         ////////////////

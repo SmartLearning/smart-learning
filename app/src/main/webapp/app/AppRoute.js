@@ -55,7 +55,6 @@
     /* @ngInject */
     function language($translate, $translatePartialLoader) {
         $translatePartialLoader.addPart('global');
-        // $translatePartialLoader.addPart('notification');
         return $translate.refresh();
     }
 

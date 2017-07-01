@@ -60,20 +60,28 @@
                 return $q.when(false);
             }
 
-            return this.identity().then(
-                function (_id) {
-                    return _id.authorities && _id.authorities.indexOf(authority) !== -1;
-                }, function () {
-                    return false;
-                }
-            );
+            return this.identity().then(onSuccess, onFailed);
+
+            ////////////////////////////////////////////////////
+
+            function onSuccess(_id) {
+                return _id.authorities && _id.authorities.indexOf(authority) !== -1;
+            }
+
+            function onFailed() {
+                return false;
+            }
         }
 
         function accountHasGivenAuthority(account, givenAuthority) {
             if (account && account.authorities && account.authorities.length > 0) {
-                return account.authorities.filter(function (authority) {
-                        return authority === givenAuthority;
-                    }).length > 0;
+                return account.authorities.filter(filter).length > 0;
+            }
+
+            ///////////////////////////////////////////////////
+
+            function filter(authority) {
+                return authority === givenAuthority;
             }
         }
 
@@ -98,6 +106,8 @@
                 .catch(getAccountCatch);
 
             return deferred.promise;
+
+            /////////////////////////////////////////////////////
 
             function getAccountThen(account) {
                 _identity = account.data;

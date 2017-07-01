@@ -21,7 +21,7 @@
             responseError: responseError
         };
 
-        ////////////////
+        //////////////////////////////////////////////////
 
         function responseError(response) {
             if (response.status === 401) {
@@ -35,24 +35,9 @@
                     var Auth = $injector.get('Auth');
                     Auth.authorize(true);
                 }
-                //storeSavedImportantLocalStorage();
-
             }
             return $q.reject(response);
         }
-
-        var signUpLocalStorage = {};
-
-        function saveImportantLocalStorage() {
-            signUpLocalStorage = $localStorage.signUp;
-        }
-
-        function storeSavedImportantLocalStorage() {
-            //debugger;
-            $localStorage.signUp = signUpLocalStorage;
-        }
-
-
     }
 
 })(angular);

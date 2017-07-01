@@ -4,16 +4,16 @@
             <form flex name="customDataTable.search.form" ng-submit="vm.onSearch(vm.searchForm.searchText)">
                 <div layout-gt-xs="row" layout-align="center center">
                     <md-input-container class="md-block" flex-gt-xs>
-                        <label translate>global.customDataTable.input.search</label>
+                        <label data-translate>global.customDataTable.input.search</label>
                         <input ng-model="vm.searchForm.searchText" type="text">
                     </md-input-container>
                     <md-button ng-click="vm.searchForm.searchText = ''; vm.onSearch(vm.searchForm.searchText)">
                         <md-icon>clear</md-icon>
-                        <span translate>global.customDataTable.button.clear</span>
+                        <span data-translate>global.customDataTable.button.clear</span>
                     </md-button>
                     <md-button ng-click="vm.onSearch(vm.searchForm.searchText)" class="md-raised md-primary">
                         <md-icon>search</md-icon>
-                        <span translate>global.customDataTable.button.search</span>
+                        <span data-translate>global.customDataTable.button.search</span>
                     </md-button>
                 </div>
             </form>
@@ -28,12 +28,12 @@
         <md-menu ng-if="vm.showHideColumns">
             <md-button ng-click="$mdOpenMenu()">
                 <md-icon>visibility</md-icon>
-                <span translate>global.customDataTable.button.showHide</span>
+                <span data-translate>global.customDataTable.button.showHide</span>
             </md-button>
             <md-menu-content width="10" layout-padding>
                 <md-menu-item ng-repeat="header in vm.tHeaders" ng-if="header.showHide" style="padding: 2px 0;">
                     <md-checkbox ng-model="header.visible">
-                        <span translate>{{header.text}}</span>
+                        <span data-translate>{{header.text}}</span>
                     </md-checkbox>
                 </md-menu-item>
             </md-menu-content>
@@ -93,7 +93,7 @@
             <tr ng-if="vm.isEmptyData">
                 <td colspan="{{vm.selectable ? (vm.keyControlled ? vm.tHeaders.length : vm.tHeaders.length + 1) : vm.tHeaders.length}}">
                     <div layout="column" flex layout-align="center center">
-                        <span translate>global.messages.no_data_added</span>
+                        <span data-translate>global.messages.no_data_added</span>
                     </div>
                 </td>
             </tr>
@@ -120,7 +120,7 @@
                     <!-- default for other types -->
                     <div class="{{header.classes}}" ng-if="!header.cellTemplateUrl">
                         <md-button ng-if="header.onClick" ng-click="vm.callFunction(header.onClick, model, header)">
-                            <label translate translate-values="{{vm.getSuitableDataParams(model, header)}}">
+                            <label data-translate translate-values="{{vm.getSuitableDataParams(model, header)}}">
                                 {{vm.getCorrectValue(model, header)}}
                             </label>
                         </md-button>

@@ -28,14 +28,6 @@
 
             if (token) {
                 config.headers.Authorization = 'Bearer ' + token;
-
-                var merchant = $localStorage.selectedMerchant;
-                if (merchant && !config.headers.merchant) {
-                    config.headers.merchant = merchant;
-                }
-            } else {
-                $localStorage.selectedMerchant = null;
-                delete $localStorage.selectedMerchant;
             }
 
             return config;

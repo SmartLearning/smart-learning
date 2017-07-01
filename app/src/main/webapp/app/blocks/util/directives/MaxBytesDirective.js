@@ -7,11 +7,11 @@
 
     angular
         .module('app.blocks')
-        .directive('maxBytes', maxBytes);
+        .directive('maxBytes', OnMaxBytes);
 
-    maxBytes.$inject = [];
+    OnMaxBytes.$inject = [];
     /* @ngInject */
-    function maxBytes() {
+    function OnMaxBytes() {
         return {
             restrict: 'A',
             require: '?ngModel',
@@ -25,27 +25,37 @@
                 return;
             }
 
-            ngModel.$validators.maxbytes = function (modelValue) {
+            ngModel.$validators.maxbytes = onValidator;
+
+            ////////////////////////////////////////////////////////////
+
+            function onValidator(modelValue) {
                 return ngModel.$isEmpty(modelValue) || numberOfBytes(modelValue) <= attrs.maxbytes;
-            };
-        }
 
-        function endsWith(suffix, str) {
-            return str.indexOf(suffix, str.length - suffix.length) !== -1;
-        }
+                ////////////////////////////////////////////////////
 
-        function paddingSize(base64String) {
-            if (endsWith('==', base64String)) {
-                return 2;
+                function numberOfBytes(base64String) {
+                    return base64String.length / 4 * 3 - paddingSize(base64String);
+
+                    ////////////////////////////////////////////////////////////
+
+                    function paddingSize(base64String) {
+                        if (endsWith('==', base64String)) {
+                            return 2;
+                        }
+                        if (endsWith('=', base64String)) {
+                            return 1;
+                        }
+                        return 0;
+
+                        ///////////////////////////////////////////////////////
+
+                        function endsWith(suffix, str) {
+                            return str.indexOf(suffix, str.length - suffix.length) !== -1;
+                        }
+                    }
+                }
             }
-            if (endsWith('=', base64String)) {
-                return 1;
-            }
-            return 0;
-        }
-
-        function numberOfBytes(base64String) {
-            return base64String.length / 4 * 3 - paddingSize(base64String);
         }
     }
 
