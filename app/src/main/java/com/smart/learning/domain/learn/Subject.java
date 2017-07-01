@@ -7,8 +7,8 @@ import java.util.Set;
 
 /**
  * Represents a category of learning. Student can
- * choose any of these topics and system will generate a course based on
- * one or more Terms.
+ * choose any of these topics and system will generate a course including some
+ * GeneratedLessons.
  */
 @Document(collection = "subjects")
 public class Subject extends StringBaseDateModel {
