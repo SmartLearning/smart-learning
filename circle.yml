@@ -22,12 +22,12 @@ dependencies:
         - yarn install
 test:
     override:
-        - chmod +x gradlew
         - cd app/
-        - gradlew clean test --no-daemon
-        - gulp test
-        - gradlew bootRepackage -Pprod -x test --no-daemon
-        - gradlew deployHeroku --no-daemon
+        - chmod +x gradlew
+        - ./gradlew clean test --no-daemon
+        - ./gulp test
+        - ./gradlew bootRepackage -Pprod -x test --no-daemon
+        - ./gradlew deployHeroku --no-daemon
 deployment:
     staging:
         branch: develop
