@@ -1,0 +1,22 @@
+{
+    "logs": {
+        "title": "Logs",
+        "total": "There are {{ total }} loggers.",
+        "name": {
+            "title": "Name"
+        },
+        "filter": {
+            "title": "Filter"
+        },
+        "level": {
+            "title": "Level"
+        },
+        "buttons": {
+            "trace": "Trace",
+            "debug": "Debug",
+            "info": "Info",
+            "warn": "Warn",
+            "error": "Error"
+        }
+    }
+}

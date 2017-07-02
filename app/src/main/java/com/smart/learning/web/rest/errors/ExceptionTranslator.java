@@ -94,7 +94,7 @@ public class ExceptionTranslator {
         if (HttpStatusCodeException.class.isAssignableFrom(ex.getClass())) {
             HttpStatusCodeException exception = (HttpStatusCodeException) ex;
             status = exception.getStatusCode();
-            message = "global.error." + status.value();
+            message = "global.messages.error." + status.value();
 
             description = exception.getResponseBodyAsString();
             logger.debug("Exception body is: {}", description);

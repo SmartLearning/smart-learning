@@ -29,6 +29,8 @@ services:
             - ./config/bash/wait-for-it.sh:/home/docker/wait-for-it.sh:ro
         external_links:
             - sonar-app:sonar
+        env_file:
+            - ../app/config/env-variables/app.env
 
     mysql-db:
         image: mysql:5.7

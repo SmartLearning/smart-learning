@@ -1,0 +1,696 @@
+/*[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}*/
+
+.site {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 1 */
+}
+
+.site-header,
+.site-footer {
+    flex-shrink: 0; /* 2 */
+}
+
+.site-content {
+    flex: 1 0 auto; /* 2 */
+}
+
+body.md-dialog-is-showing {
+    overflow: visible !important;
+}
+
+.signup-form, .login-form {
+    width: 500px;
+}
+
+.development {
+    position: absolute;
+    width: 149px;
+    height: 149px;
+    top: 0;
+    left: 0;
+    border: 0;
+    z-index: 1000;
+    background: url("../images/development_ribbon.png") no-repeat center center;
+    pointer-events: none;
+}
+
+.full-height {
+    min-height: 100vh;
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+.error {
+    color: white;
+    background-color: red;
+}
+
+.hipster {
+    display: inline-block;
+    width: 347px;
+    height: 497px;
+    background: url("../images/logo.png") no-repeat center top;
+    background-size: contain;
+}
+
+.break {
+    white-space: normal;
+    word-break: break-all;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min--moz-device-pixel-ratio: 2),
+only screen and (-o-min-device-pixel-ratio: 2/1),
+only screen and (min-device-pixel-ratio: 2),
+only screen and (min-resolution: 192dpi),
+only screen and (min-resolution: 2dppx) {
+    .hipster {
+        background: url("../images/logo2x.png") no-repeat center top;
+        background-size: contain;
+    }
+}
+
+/* make sure browsers use the pointer cursor for anchors, even with no href */
+a:hover {
+    cursor: pointer;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+#threadDump .popover, #healthCheck .popover {
+    top: inherit;
+    display: block;
+    font-size: 10px;
+    max-width: 1024px;
+}
+
+#healthCheck .popover {
+    margin-left: -50px;
+}
+
+.health-details {
+    min-width: 400px;
+}
+
+/* start Password strength bar style */
+ul#strength {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    margin-left: 15px;
+    padding: 0;
+    vertical-align: 2px;
+}
+
+.point {
+    background: #DDD;
+    border-radius: 2px;
+    display: inline-block;
+    height: 5px;
+    margin-right: 1px;
+    width: 20px;
+    &:last {
+        margin: 0 !important;
+    }
+}
+
+/* end Password strength bar style */
+
+/* entity tables helpers */
+
+/* Remove Bootstrap padding from the element
+   http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
+@mixin no-padding($side) {
+    @if $side == 'all' {
+        .no-padding {
+            padding: 0 !important;
+        }
+    } @else {
+        .no-padding-#{$side} {
+            padding-#{$side}: 0 !important;
+        }
+    }
+}
+
+@include no-padding("left");
+@include no-padding("right");
+@include no-padding("top");
+@include no-padding("bottom");
+@include no-padding("all");
+
+@mixin no-margin($side) {
+    @if $side == 'all' {
+        .no-margin {
+            margin: 0 !important;
+        }
+    } @else {
+        .no-margin-#{$side} {
+            margin-#{$side}: 0 !important;
+        }
+    }
+}
+
+@include no-margin("left");
+@include no-margin("right");
+@include no-margin("top");
+@include no-margin("bottom");
+@include no-margin("all");
+
+.loading {
+    display: none;
+    &.ng-cloak {
+        display: inherit !important;
+    }
+}
+
+.fa-md-size {
+    font-size: 1.4rem;
+}
+
+md-dialog.midwidth-dialog {
+    max-width: 100%;
+    max-height: 100%;
+    width: 50%;
+    height: 50%;
+    border-radius: 0;
+}
+
+.vertical-repeat-container #vertical-container {
+    height: 300px;
+}
+
+.vertical-repeat-container .repeated-item {
+    border-bottom: 1px solid #ddd;
+    padding-top: 10px;
+    height: 20px;
+}
+
+.vertical-repeat-container md-virtual-repeat-container {
+    border: solid 1px grey;
+}
+
+.vertical-repeat-container .md-virtual-repeat-container .md-virtual-repeat-offsetter {
+    padding-left: 16px;
+}
+
+@media (min-width: 600px) {
+    md-backdrop._md-sidenav-backdrop {
+        position: fixed;
+    }
+}
+
+.md-sidenav-right {
+    top: 0 !important;
+}
+
+.sidenav-width {
+    position: fixed;
+    width: 500px;
+    min-width: 250px;
+    max-width: 500px;
+}
+
+.sidenav-width-create-product {
+    width: 800px;
+    min-width: 250px;
+    max-width: 800px;
+}
+
+.detail-text {
+    width: 100%;
+}
+
+.md-button.md-btn-green {
+    background-color: darkgreen !important;
+}
+
+.md-button.md-btn-red {
+    background-color: darkred !important;
+}
+
+/* Button Groups */
+.btn-group {
+    margin: 20px 0;
+    padding: 3px 15px 3px 15px;
+    background-color: rgba(224, 224, 224, 0.96);
+    text-transform: none;
+    font-weight: 400;
+    min-width: 100px;
+}
+
+.md-button.left {
+    border-radius: 10px 0 0 10px;
+}
+
+.md-button.middle {
+    border-radius: 0;
+    border-left: 1px solid rgba(230, 230, 230, 0.96);
+    border-right: 1px solid rgba(230, 230, 230, 0.96);
+}
+
+.md-button.right {
+    border-radius: 0 10px 10px 0;
+}
+
+/* TextAngular */
+.text-red {
+    color: #E52A3A !important;
+}
+
+.text-gray {
+    color: #5f5f5f !important;
+}
+
+.text-green {
+    color: #4CAF50 !important;
+}
+
+.text-blue {
+    color: #0088bb;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.ta-toolbar {
+    background-color: #F0F0F0;
+    padding: 10px 10px 5px;
+    margin-left: 0px; /* Override bootstrap */
+    border: 1px solid #EEE;
+}
+
+.ta-toolbar .btn-group {
+    position: relative;
+    vertical-align: middle;
+    margin: 0 0 5px 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #333;
+    display: inline-block;
+    float: left;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    max-height: 32px;
+    .btn {
+        float: left;
+        position: relative;
+    }
+    .btn-default {
+        margin: 2px 4px;
+    }
+}
+
+.ta-editor, .white-box {
+    padding: 10px;
+    background-color: #FFF;
+    border: 1px solid #EEE;
+}
+
+textarea.ta-bind {
+    width: 100%;
+}
+
+.by-order {
+    @for $i from 0 through 10 {
+        .order-#{$i} {
+            order: $i !important;
+        }
+    }
+}
+
+.popover {
+    position: absolute;
+    z-index: 100;
+}
+
+/* Angular Material Customs */
+.md-button.md-square-button.md-icon-button {
+    border-radius: 0;
+}
+
+.dashboard-box {
+    width: 160px;
+}
+
+.big-icon-size {
+    font-size: 144px;
+}
+
+#paneId {
+    border: 3px solid #757575;
+    border-radius: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+#paneId > v-pane-content {
+    position: inherit !important;
+}
+
+.underline {
+    text-decoration: underline !important;
+}
+
+#barcodeDialogDiv > a {
+    color: #5475bf;
+    text-decoration: none !important;
+}
+
+.report-card-text {
+    margin: auto;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.margin-between-item {
+    margin: 4px !important;
+}
+
+.report-card {
+    background-color: white;
+    cursor: pointer;
+    padding: 8px !important;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: 4px solid #ff8600;
+    color: black;
+}
+
+.report-card-content {
+    width: 100%;
+    height: 100%;
+}
+
+.report-card-content > span {
+    position: absolute;
+    font-size: 35px;
+    padding: 40px 0;
+    margin-left: 14px;
+    min-width: 92px;
+    text-align: center;
+}
+
+.report-card-main {
+    width: 160px;
+    box-shadow: none;
+    background: transparent;
+}
+
+md-tooltip.large .md-content {
+    font-size: 14px;
+}
+
+.report-card-toolbar {
+    width: 87%;
+    margin: 3px;
+    font-size: 1.5vw;
+    background: transparent !important;
+    color: black !important;
+}
+
+.switch-auto {
+    margin: auto !important;
+}
+
+.select-all-checkboxes {
+    margin-left: 30px;
+}
+
+.report-card-padding {
+    padding: 30px !important;
+}
+
+.sidenav-menu .md-button {
+    text-align: left;
+}
+
+.thumbnail-large {
+    max-width: 180px;
+    max-height: 180px;
+}
+
+.thumbnail-middle {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+/* Horizontal Scroll */
+.scroll {
+    position: absolute;
+    top: 0;
+    z-index: 9;
+    padding: 0;
+    border-radius: 0;
+
+    &.right {
+        right: 0;
+    }
+    &.left {
+        left: 0;
+    }
+}
+
+.fix-secondary {
+    .md-secondary-container {
+        max-width: 100px;
+        width: 100px;
+    }
+}
+
+.variant-container {
+    max-height: 635px;
+    overflow: auto;
+}
+
+.select-all-product-link {
+    position: relative;
+    color: rgb(117, 117, 117);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.select-all-product-link:hover {
+    color: #000;
+}
+
+.select-all-product-link:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: #e67a02;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    visibility: visible;
+}
+
+.less-margin-input-container {
+    margin: 14px 0 !important;
+    padding: 2px !important;
+}
+
+.no-border {
+    border-top: 0 !important;
+}
+
+md-chips {
+    @for $i from 1 through 10 {
+        &.truncate-#{$i*20} {
+            md-chip {
+                max-width: #{$i*20}px;
+            }
+        }
+    }
+
+    &.colorful {
+        md-chip {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            color: #3b73af;
+            background-color: #f5f5f5;
+            margin: 2px;
+            text-align: center;
+            font-size: 12px;
+        }
+    }
+
+    &.no-border {
+        box-shadow: none;
+        md-chips-wrap {
+            box-shadow: none;
+        }
+    }
+}
+
+.no-padding-list {
+    .md-list-item-inner {
+        padding: 0;
+    }
+
+    .md-list-item-text {
+        margin-right: 8px;
+    }
+}
+
+.label {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.table-readable {
+    font-weight: bold;
+
+    .md-selected {
+        font-weight: normal;
+    }
+}
+
+.angular-notifications-icon {
+    border-radius: 50%;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+    height: 16px;
+    font-weight: bold;
+    min-height: 8px;
+    max-height: 16px;
+    max-width: 16px;
+    right: -23px;
+    top: -11px;
+    line-height: 1.4;
+    background: #ea1202;
+    min-width: 9px;
+}
+
+//it shouldn't be here but it is workaround for prod env because this class won't attach to div :(
+.angular-notifications-container {
+    position: relative;
+    display: table-cell;
+    width: 100%;
+}
+
+.disable-div {
+    color: #9f9f9f;
+    cursor: not-allowed;
+}
+
+.yellow-background {
+    background-color: #faa601;
+}
+
+.fancy-radio-container .row {
+    border-bottom: 1px dashed #ddd;
+}
+
+.fancy-radio-container div.row:last-child {
+    border-bottom: 0 dashed #ddd;
+}
+
+.div-box-dashed {
+    border: 2px dashed #000;
+    border-radius: 10px;
+    padding: 20px
+}
+
+.tag-container {
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    padding: 2px;
+    color: #3b73af;
+    font-size: 14px;
+    background-color: #f5f5f5;
+    margin: 2px;
+    text-align: center;
+}
+
+.highlight {
+    color: #3F51B5 !important;
+    font-weight: 900 !important;
+}
+
+.md-simple-table {
+    min-height: 300px !important;
+    max-height: 300px !important;
+
+    md-list-item[disabled=disabled], md-list-item.disabled {
+        background-color: rgba(0, 0, 0, .05);
+
+        img {
+            background-color: rgba(0, 0, 0, .05);
+        }
+    }
+}
+
+.scrollable {
+    overflow: auto;
+}
+
+.no-background {
+    background: none;
+}
+
+@for $i from 1 through 20 {
+    .max-height-#{$i*50} {
+        max-height: $i*50px !important;
+    }
+}
+
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+
+    .parent {
+        width: 94%;
+        display: inline-flex;
+        white-space: pre-line;
+    }
+    .string {
+        @extend .parent;
+        color: green;
+    }
+
+    .number {
+        @extend .parent;
+        color: darkorange;
+    }
+
+    .boolean {
+        @extend .parent;
+        color: blue;
+    }
+
+    .null {
+        @extend .parent;
+        color: magenta;
+    }
+
+    .key {
+        color: red;
+    }
+}
+
+

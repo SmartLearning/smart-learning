@@ -1,0 +1,56 @@
+<md-dialog flex="30">
+    <form name="form" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span data-translate>global.customDataTable.edit_popup.title</span>
+                </h2>
+                <span flex></span>
+                <md-button ng-click="vm.dismiss()" class="md-icon-button">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <div layout="row" flex>
+                <md-input-container flex>
+                    <label data-translate>global.customDataTable.edit_popup.input_title</label>
+                    <input type="text"
+                           name="content"
+                           md-auto-focus
+                           ng-pattern="vm.patternOnlyOneDecimal"
+                           ng-model="vm.model.content"
+                           ng-required="{{vm.validations.required === null ? true : vm.validations.required}}"
+                           ng-attr-ng-max="{{vm.validations.max}}"
+                           ng-attr-ng-min="{{vm.validations.min}}">
+
+                    <div ng-messages="form.content.$error">
+                        <div ng-message-exp="['required','min']" ng-if="vm.validations.min != null">
+                        <span data-translate
+                              translate-value-length="{{vm.validations.min}}">global.messages.error.min</span>
+                        </div>
+                        <div ng-message="required" ng-if="vm.validations.min == null">
+                            <span data-translate>global.messages.error.required</span>
+                        </div>
+                        <div ng-message="max">
+                        <span data-translate
+                              translate-value-length="{{vm.validations.max}}">global.messages.error.max</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span data-translate>global.messages.error.number-only</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.apply()" ng-disabled="form.$invalid">
+                <label data-translate>global.buttons.apply</label>
+                <md-icon>done</md-icon>
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

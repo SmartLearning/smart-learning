@@ -1,0 +1,57 @@
+<md-toolbar layout="row" class="md-accent md-hue-3">
+    <div class="md-toolbar-tools">
+        <span flex></span>
+        <h2>
+            <span data-translate>{{$state.$current.data.pageTitle}}</span>
+        </h2>
+        <span flex></span>
+    </div>
+</md-toolbar>
+<form name="filterForm" layout="column">
+    <div layout-gt-xs="row" layout="column">
+        <md-input-container flex-gt-xs>
+            <label data-translate>configuration.filter.title</label>
+            <input type="text" ng-model="vm.filter">
+        </md-input-container>
+    </div>
+</form>
+<md-list class="md-dense">
+    <md-subheader>
+        <span data-translate>configuration.properties.title</span>
+    </md-subheader>
+    <md-content flex layout-wrap layout="row" layout-fill layout-align="start start">
+        <md-list-item class="md-2-line md-long-text break-line" flex
+                      ng-repeat="entry in vm.filtered = (vm.properties | filter:vm.filter | orderBy:predicate:reverse)">
+            <md-card class="md-list-item-text" layout="column">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{entry.prefix}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div flex>
+                        <pre ng-bind-html="entry.properties | prettify"></pre>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-list-item>
+    </md-content>
+    <md-divider></md-divider>
+    <md-subheader>
+        <span data-translate>configuration.title</span>
+    </md-subheader>
+    <md-content flex layout-wrap layout="row" layout-fill layout-align="start start">
+        <md-list-item class="md-2-line md-long-text break-line" ng-repeat="(key, value) in vm.configurations">
+            <md-card class="md-list-item-text" layout="column">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{key}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <pre ng-bind-html="value | prettify"></pre>
+                </md-card-content>
+            </md-card>
+        </md-list-item>
+    </md-content>
+</md-list>

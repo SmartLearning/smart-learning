@@ -1,0 +1,73 @@
+.light {
+    color: inherit !important;
+}
+
+md-tabs md-icon {
+    @extend .light;
+}
+
+md-tabs-canvas {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    .md-tab {
+        float: none;
+        display: inline-block;
+    }
+}
+
+md-pagination-wrapper {
+    position: relative;
+    width: initial;
+    margin: 0 auto;
+}
+
+md-button {
+    &.light {
+        @extend .light;
+    }
+}
+
+[role="tabpanel"] {
+    transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+    position: absolute;
+}
+
+md-input-container .md-errors-spacer {
+    min-height: 0;
+}
+
+.autocomplete-custom-template {
+    li {
+        border-bottom: 1px solid #ccc;
+        height: auto;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        white-space: normal;
+
+        &:last-child {
+            border-bottom-width: 0;
+        }
+    }
+
+    .item-metadata {
+        display: block;
+        line-height: 2;
+    }
+
+    .item-title {
+        @extend .item-metadata;
+
+        md-icon {
+            height: 18px;
+            width: 18px;
+        }
+    }
+}
+
+/** Warning message **/
+.md-warn {
+    a {
+        text-decoration: underline;
+    }
+}

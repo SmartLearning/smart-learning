@@ -1,0 +1,49 @@
+<md-dialog flex="40">
+    <form name="form" ng-cloak flex>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span data-translate>global.customDataTable.edit_popup.title</span>
+                </h2>
+                <span flex></span>
+                <md-button ng-click="vm.dismiss()" class="md-icon-button">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <div layout="row" flex>
+                <md-input-container flex>
+                    <label data-translate>global.customDataTable.edit_popup.input_title</label>
+                    <input type="text"
+                           name="content"
+                           md-auto-focus
+                           ng-model="vm.model.content"
+                           ng-required="{{vm.validations.minLength > 0}}"
+                           ng-attr-md-maxlength="{{vm.validations.maxLength}}"
+                           ng-attr-ng-minlength="{{vm.validations.minLength}}">
+                    <div ng-messages="form.content.$error">
+                        <div ng-message-exp="['required','minlength']" ng-if="vm.validations.minLength != null">
+                            <span data-translate translate-value-length="{{vm.validations.minLength}}">global.messages.error.min</span>
+                        </div>
+                        <div ng-message="required" ng-if="vm.validations.minLength == null">
+                            <span data-translate>global.messages.error.required</span>
+                        </div>
+                        <div ng-message="md-maxlength">
+                            <span data-translate translate-value-length="{{vm.validations.maxLength}}">global.messages.error.max</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.apply()" ng-disabled="form.$invalid">
+                <label data-translate>global.buttons.apply</label>
+                <md-icon>done</md-icon>
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

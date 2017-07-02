@@ -1,0 +1,133 @@
+{
+    "global": {
+        "title": "Smart Learning",
+        "error_title": "Error",
+        "buttons": {
+            "dismiss": "Dismiss",
+            "agree": "Agree",
+            "add": "Add",
+            "refresh": "Refresh",
+            "save": "Save",
+            "cancel": "Cancel",
+            "ok": "Ok",
+            "apply": "Apply",
+            "clear": "Clear",
+            "select_all": "Select All",
+            "clear_all_item": "Clear {count, plural, one{# item} other{# items}}"
+        },
+        "delete": {
+            "title": "Removing entity",
+            "message": "With this action the entity with id <strong>'{{id}}'</strong> will be removed",
+            "buttons": {
+                "delete": "Remove it!",
+                "cancel": "Dismiss"
+            }
+        },
+        "menu": {
+            "title": "Menu",
+            "language": "Language",
+            "home": "Home",
+            "account": {
+                "settings": "Settings",
+                "password": "Password",
+                "sessions": "Sessions",
+                "login": "Sign in",
+                "logout": "Sign out",
+                "register": "Register"
+            },
+            "admin": {
+                "title": "Administrator",
+                "gateway": "Gateway",
+                "tracker": "User tracker",
+                "metrics": "Metrics",
+                "health": "Health",
+                "configuration": "Configuration",
+                "logs": "Logs",
+                "audits": "Audits",
+                "docs": "API",
+                "users": "Users"
+            }
+        },
+        "form": {
+            "yes": "Yes",
+            "no": "No",
+            "from": "Min",
+            "to": "Max",
+            "created_by": "Created by",
+            "created_at": "Created at",
+            "modified_by": "Modified by",
+            "modified_at": "Modified at"
+        },
+        "messages": {
+            "success": "<strong>The information saved!</strong>",
+            "created": "<strong>The information created!</strong>",
+            "updated": "<strong>The information updated!</strong>",
+            "deleted": "<strong>The information deleted!</strong>",
+            "info": {
+                "no_data_added": "No data found",
+                "browsehappy": "Our website has detected that you are using a <strong>outdated</strong> browser or which we <strong>don't support</strong>, the browser will prevent you from accessing certain features. we recommend you to <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a>",
+                "authenticated": "If you want to <a class=\"alert-link\" href=\"\" ng-click=\"vm.login()\">sign in</a>, you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
+                "register": "You don't have an account yet? <a class=\"alert-link\" ui-sref=\"register\">Register a new account</a>"
+            },
+            "error": {
+                "not_match": "The password and its confirmation do not match!",
+                "length": "This field's length should be {{length}} character",
+                "required": "This field is required",
+                "number_only": "You can enter only number",
+                "user_exists": "<strong>Login name already registered!</strong> Please choose another one.",
+                "email_exists": "<strong>E-mail is already in use!</strong> Please choose another one.",
+                "min_length": "Field length cannot be lower than {{length}} characters",
+                "max_length": "Field length cannot be higher than {{length}} characters",
+                "min": "This field value cannot be lower than {{length}}",
+                "max": "This field value cannot be higher than {{length}}",
+                "gsm": "GSM should start with 5 and its length should be 10",
+                "phone_number_length": "Number should be {{length}} digits include zero.",
+                "form_invalid": "The form has some errors, please check it and try again",
+                "email": "Invalid email address",
+                "not_active_user": "User is not activated",
+                "user_not_found": "User is not found",
+                "username_pattern": "Should contain just lowercase english letters, numbers and dash (-) and dot (.)",
+                "password": "Should contain at least 1 number.<br>Should contain both lowercase and uppercase characters.<br>Should contain at least 1 special character from list: ! @ # $ % * ( ) _ + ^ &. <br>Sample password: Abc123! , 123!Abc, 123Abc! ,...",
+                "equal_to": "This field value must match previous entry.",
+                "concurrencyFailure": "System error ( syserr-01 ), please contact your system administrator",
+                "access_denied": "You are not authorized to access this part, please contact your system administrator",
+                "validation": "There are some validation errors, please check and correct them",
+                "method_not_supported": "System error ( syserr-02 ), please contact your system administrator",
+                "internal_server_error": "System error ( syserr-03 ), please contact your system administrator",
+                "not_found": "System error ( syserr-04 ), please contact your system administrator",
+                "unsupported_operation": "This operation is not supported for this resource",
+                "illegal_state": "Resource is not in state to fullfill this operation",
+                "common_message_prod": "System Error {{spanID}},{{traceID}} please contact your system administrator.",
+                "common_message_local": "System Error {{spanID}},{{traceID}} {{cause}} {{exception}} please contact your system administrator.",
+                "mongo_exception": "Mongo system error"
+            }
+        },
+        "customDataTable": {
+            "input": {
+                "search": "Search"
+            },
+            "button": {
+                "clear": "Clear",
+                "search": "Search",
+                "showHide": "Show/Hide"
+            },
+            "edit_popup": {
+                "title": "Editing",
+                "input_title": "Content"
+            },
+            "query": "Please enter to inquiry",
+            "query_hint": "The more accurate query, the more accurate results. Please write anything to search",
+            "select_yes_no_description": "Please select one of items bellow then click on apply button",
+            "no_result": "No result found",
+            "page": "Page: ",
+            "rowsPerPage": "Page Size: ",
+            "of": " of ",
+            "searchFound": "Found {{ found }} matching data"
+        },
+        "datetimepicker": {
+            "am": "am",
+            "pm": "pm",
+            "date": "Date"
+        }
+    }
+}

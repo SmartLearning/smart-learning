@@ -34,6 +34,11 @@ RUN echo 'docker:docker' | chpasswd
 RUN mkdir -p /home/docker/project
 RUN cd /home && chmod -R g+rwx /home/docker && chown -R :docker /home/docker
 
+# install yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN sudo apt-get update && sudo apt-get install yarn
+
 # clean
 RUN apt-get clean && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/oracle-jdk${JAVA_VERSION}-installer

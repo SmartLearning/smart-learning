@@ -1,0 +1,11 @@
+{
+    "configuration": {
+        "title": "Configuration",
+        "filter": {
+            "title": "Filter (by prefix)"
+        },
+        "properties": {
+            "title": "Properties"
+        }
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "user": {
+        "title": "Users",
+        "button": {
+            "reset_password": "Reset Password",
+            "delete": "Delete"
+        },
+        "delete" :{
+            "title": "Delete user?",
+            "message": "Delete user \"{{ login }}\"?",
+            "delete": "Delete",
+            "cancel": "Cancel"
+        },
+        "reset_password": {
+            "title": "Reset Password?",
+            "message": "Reset password \" {{ login }} \" user.",
+            "reset": "Reset",
+            "cancel": "cancel",
+            "success": "Send mail for reset password",
+            "not_found": "User not found."
+        },
+        "username": {
+            "title": "Username"
+        },
+        "email": {
+            "title": "Email",
+            "errors": {
+                "pattern": "Invalid email address",
+                "max": "User name name cannot be more than 60 characters"
+            }
+        },
+        "first_name": {
+            "title": "First name"
+        },
+        "last_name": {
+            "title": "Last name"
+        },
+        "authorities": {
+            "title": "Authorities",
+            "names": {
+                "ROLE_USER": "User",
+                "ROLE_ADMIN": "Admin"
+            },
+            "errors": {
+                "required": "You should at lease select one authority for the user"
+            }
+        },
+        "language": {
+            "title": "Language"
+        },
+        "role": {
+            "title": "Role"
+        },
+        "created_at": {
+            "title": "Created At"
+        },
+        "modified_by": {
+            "title": "Modified by"
+        },
+        "modified_at": {
+            "title": "Modified At"
+        },
+        "status": {
+            "title": "Activated",
+            "activated": "Active",
+            "deactivated": "Inactive"
+        },
+        "errors": {
+            "exist_email": "The email you are trying to use already exists",
+            "exist_username": "The username you are trying to use already exists",
+            "not_allowed": "User has not permission to do this operation"
+        }
+    }
+}

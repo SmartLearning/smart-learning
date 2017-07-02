@@ -1,0 +1,45 @@
+<md-custom-table
+    headers="vm.headers"
+    data="vm.data"
+    total="vm.totalItems"
+    selectable="true"
+    promise="vm.promise"
+    key-controlled="false"
+    on-reorder="vm.onReorder(order)"
+    pagination="vm.pagination"
+    show-hide-columns="false"
+    on-paginate="vm.onPageChange(page,pageSize)"
+    on-row-click="vm.onSelectRow(model)">
+    <md-toolbar layout="row" class="md-accent md-hue-3">
+        <div class="md-toolbar-tools">
+            <span flex></span>
+            <h2>
+                <span data-translate>{{toState.data.pageTitle}}</span>
+            </h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <!-- Filter Form -->
+    <form name="filterForm" layout="column">
+        <div layout-gt-xs="row" layout="column">
+            <md-input-container flex-gt-xs>
+                <label data-translate>audits.filter.from</label>
+                <input type="text" name="start" ng-model="vm.fromDate" ng-required="true"
+                       ng-click="vm.showDatePicker($event, 'fromDate')">
+            </md-input-container>
+            <md-input-container flex-gt-xs>
+                <label data-translate>audits.filter.to</label>
+                <input type="text" name="end" ng-model="vm.toDate" ng-required="true"
+                       ng-click="vm.showDatePicker($event, 'toDate')">
+            </md-input-container>
+            <md-button class="md-warn" ng-click="vm.clearFilter()">
+                <md-icon>clear</md-icon>
+                <label data-translate>global.buttons.clear</label>
+            </md-button>
+            <md-button type="submit" class="md-primary" ng-click="vm.loadAll()">
+                <md-icon>search</md-icon>
+                <label data-translate>global.buttons.apply</label>
+            </md-button>
+        </div>
+    </form>
+</md-custom-table>

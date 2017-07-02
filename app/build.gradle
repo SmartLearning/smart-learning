@@ -18,16 +18,22 @@ buildscript {
     }
 }
 
-apply plugin: 'war'
 apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'propdeps'
-apply plugin: 'net.ltgt.apt'
-apply plugin: 'com.moowork.node'
-apply plugin: 'org.springframework.boot'
 
 version = '1.0.0'
+group = 'com.smart.learning'
 sourceCompatibility = 1.8
+targetCompatibility=1.8
+
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+apply plugin: 'propdeps'
+apply plugin: 'com.moowork.gulp'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'net.ltgt.apt'
+apply plugin: "org.sonarqube"
+apply plugin: 'jacoco'
 
 defaultTasks 'bootRun'
 
@@ -35,6 +41,12 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
+    maven { url 'http://repo.spring.io/milestone' }
+    maven { url 'http://repo.spring.io/snapshot' }
+    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'http://repo.maven.apache.org/maven2' }
 }
 
 dependencies {
@@ -148,6 +160,7 @@ if (project.hasProperty('prod')) {
 }
 
 apply from: 'gradle/gatling.gradle'
+apply from: 'gradle/ui.gradle'
 
 bootRepackage {
     mainClass = 'com.smart.learning.LearningApplication'
@@ -188,6 +201,23 @@ if (OperatingSystem.current().isWindows()) {
     }
 }
 
+test {
+    include '**/*UnitTest*'
+    include '**/*IntTest*'
+
+    ignoreFailures true
+    reports.html.enabled = false
+}
+
+jacoco {
+    toolVersion = "${jacoco_version}"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
 
 task cucumberTest(type: Test) {
     include '**/CucumberTest*'
@@ -199,14 +229,6 @@ task cucumberTest(type: Test) {
 }
 
 test.finalizedBy(cucumberTest)
-
-test {
-    include '**/*UnitTest*'
-    include '**/*IntTest*'
-
-    ignoreFailures true
-    reports.html.enabled = false
-}
 
 task testReport(type: TestReport) {
     destinationDir = file("$buildDir/reports/tests")
@@ -233,7 +255,7 @@ task cleanResources(type: Delete) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.0'
+    gradleVersion = '4.0'
 }
 
 task stage(dependsOn: 'bootRepackage') {

@@ -1,0 +1,35 @@
+<md-dialog flex="50" aria-label="{{'health.details.properties' | translate}}">
+    <form name="form" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 translate>health.details.properties</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.close()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                <md-custom-table
+                    headers="vm.headers"
+                    data="vm.data"
+                    total="vm.totalItems"
+                    selectable="false"
+                    key-controlled="false"
+                    show-hide-columns="false">
+                    <md-toolbar layout="row" class="md-accent md-hue-3">
+                        <div class="md-toolbar-tools">
+                            <span flex></span>
+                            <h2>
+                                <span>{{vm.baseName(vm.model.name) | camelCaseToHuman:true}} {{vm.subSystemName(vm.model.name)}}</span>
+                            </h2>
+                            <span flex></span>
+                        </div>
+                    </md-toolbar>
+                    <!-- Filter Form -->
+                </md-custom-table>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

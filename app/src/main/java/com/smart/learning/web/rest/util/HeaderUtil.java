@@ -17,11 +17,11 @@ import static com.smart.learning.config.Constants.HeaderMessage.*;
  */
 public class HeaderUtil {
 
-    public static final String HEADER_ALERT = "X-gatewayApp-alert";
+    public static final String HEADER_ALERT = "X-smartApp-alert";
 
-    public static final String HEADER_ERROR = "X-gatewayApp-error";
+    public static final String HEADER_ERROR = "X-smartApp-error";
 
-    public static final String HEADER_PARAMS = "X-gatewayApp-params";
+    public static final String HEADER_PARAMS = "X-smartApp-params";
 
     private static final Logger logger = LoggerFactory.getLogger(HeaderUtil.class);
 

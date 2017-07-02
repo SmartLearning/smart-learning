@@ -4,8 +4,6 @@ import com.smart.learning.service.dto.UserDTO;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.validation.constraints.Size;
-import java.time.Instant;
-import java.util.Set;
 
 /**
  * View Model extending the UserDTO, which is meant to be used in the user management UI.
@@ -23,14 +21,7 @@ public class ManagedUserVM extends UserDTO {
         // Empty constructor needed for Jackson.
     }
 
-    public ManagedUserVM(String id, String username, String password, String firstName, String lastName,
-                         String email, boolean activated, String imageUrl, String langKey,
-                         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-                         Set<String> authorities) {
-
-        super(id, username, firstName, lastName, email, activated, imageUrl, langKey,
-            createdBy, createdDate, lastModifiedBy, lastModifiedDate, authorities);
-
+    public ManagedUserVM(String password) {
         this.password = password;
     }
 

@@ -131,21 +131,16 @@ public class UserResourceIntTest {
         // Create the User
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            null,
-            DEFAULT_USERNAME,
-            DEFAULT_PASSWORD,
-            DEFAULT_FIRSTNAME,
-            DEFAULT_LASTNAME,
-            DEFAULT_EMAIL,
-            true,
-            DEFAULT_IMAGEURL,
-            DEFAULT_LANGKEY,
-            null,
-            null,
-            null,
-            null,
-            authorities);
+
+        ManagedUserVM managedUserVM = new ManagedUserVM(DEFAULT_PASSWORD);
+        managedUserVM.setUsername(DEFAULT_USERNAME)
+            .setFirstName(DEFAULT_FIRSTNAME)
+            .setLastName(DEFAULT_LASTNAME)
+            .setEmail(DEFAULT_EMAIL)
+            .setActivated(true)
+            .setImageUrl(DEFAULT_IMAGEURL)
+            .setLangKey(DEFAULT_LANGKEY)
+            .setAuthorities(authorities);
 
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -172,21 +167,16 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            null,
-            "anotherusername",
-            DEFAULT_PASSWORD,
-            DEFAULT_FIRSTNAME,
-            DEFAULT_LASTNAME,
-            DEFAULT_EMAIL, // this email should already be used
-            true,
-            DEFAULT_IMAGEURL,
-            DEFAULT_LANGKEY,
-            null,
-            null,
-            null,
-            null,
-            authorities);
+
+        ManagedUserVM managedUserVM = new ManagedUserVM(DEFAULT_PASSWORD);
+        managedUserVM.setUsername("anotherusername")
+            .setFirstName(DEFAULT_FIRSTNAME)
+            .setLastName(DEFAULT_LASTNAME)
+            .setEmail(DEFAULT_EMAIL) // this email should already be used
+            .setActivated(true)
+            .setImageUrl(DEFAULT_IMAGEURL)
+            .setLangKey(DEFAULT_LANGKEY)
+            .setAuthorities(authorities);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -205,21 +195,17 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            "1L",
-            DEFAULT_USERNAME,
-            DEFAULT_PASSWORD,
-            DEFAULT_FIRSTNAME,
-            DEFAULT_LASTNAME,
-            DEFAULT_EMAIL,
-            true,
-            DEFAULT_IMAGEURL,
-            DEFAULT_LANGKEY,
-            null,
-            null,
-            null,
-            null,
-            authorities);
+
+        ManagedUserVM managedUserVM = new ManagedUserVM(DEFAULT_PASSWORD);
+        managedUserVM.setId("1L")
+            .setUsername(DEFAULT_USERNAME)
+            .setFirstName(DEFAULT_FIRSTNAME)
+            .setLastName(DEFAULT_LASTNAME)
+            .setEmail(DEFAULT_EMAIL)
+            .setActivated(true)
+            .setImageUrl(DEFAULT_IMAGEURL)
+            .setLangKey(DEFAULT_LANGKEY)
+            .setAuthorities(authorities);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserMockMvc.perform(post("/api/users")
@@ -240,21 +226,16 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            null,
-            DEFAULT_USERNAME, // this username should already be used
-            DEFAULT_PASSWORD,
-            DEFAULT_FIRSTNAME,
-            DEFAULT_LASTNAME,
-            "anothermail@localhost",
-            true,
-            DEFAULT_IMAGEURL,
-            DEFAULT_LANGKEY,
-            null,
-            null,
-            null,
-            null,
-            authorities);
+
+        ManagedUserVM managedUserVM = new ManagedUserVM(DEFAULT_PASSWORD);
+        managedUserVM.setUsername(DEFAULT_USERNAME)
+            .setFirstName(DEFAULT_FIRSTNAME)
+            .setLastName(DEFAULT_LASTNAME)
+            .setEmail("anothermail@localhost")
+            .setActivated(true)
+            .setImageUrl(DEFAULT_IMAGEURL)
+            .setLangKey(DEFAULT_LANGKEY)
+            .setAuthorities(authorities);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -324,9 +305,10 @@ public class UserResourceIntTest {
         userRepository.save(user);
 
         // Get the user
-        restUserMockMvc.perform(get("/api/users/{username}", user.getUsername()))
+        restUserMockMvc.perform(get("/api/users/{id}", user.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.id").value(user.getId()))
             .andExpect(jsonPath("$.username").value(user.getUsername()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
@@ -377,20 +359,19 @@ public class UserResourceIntTest {
 
     @Test
     public void testUserDTOtoUser() {
-        UserDTO userDTO = new UserDTO(
-            DEFAULT_ID,
-            DEFAULT_USERNAME,
-            DEFAULT_FIRSTNAME,
-            DEFAULT_LASTNAME,
-            DEFAULT_EMAIL,
-            true,
-            DEFAULT_IMAGEURL,
-            DEFAULT_LANGKEY,
-            DEFAULT_USERNAME,
-            null,
-            DEFAULT_USERNAME,
-            null,
-            Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()));
+        UserDTO userDTO = new UserDTO()
+            .setId(DEFAULT_ID)
+            .setUsername(DEFAULT_USERNAME)
+            .setFirstName(DEFAULT_FIRSTNAME)
+            .setLastName(DEFAULT_LASTNAME)
+            .setEmail(DEFAULT_EMAIL)
+            .setActivated(true)
+            .setImageUrl(DEFAULT_IMAGEURL)
+            .setLangKey(DEFAULT_LANGKEY)
+            .setCreatedBy(DEFAULT_USERNAME)
+            .setModifiedBy(DEFAULT_USERNAME)
+            .setAuthorities(Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()));
+
         User user = userMapper.userDTOToUser(userDTO);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);
         assertThat(user.getUsername()).isEqualTo(DEFAULT_USERNAME);
@@ -474,21 +455,21 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            updatedUser.getId(),
-            updatedUser.getUsername(),
-            UPDATED_PASSWORD,
-            UPDATED_FIRSTNAME,
-            UPDATED_LASTNAME,
-            UPDATED_EMAIL,
-            updatedUser.isActivated(),
-            UPDATED_IMAGEURL,
-            UPDATED_LANGKEY,
-            updatedUser.getCreatedBy(),
-            updatedUser.getCreatedAt(),
-            updatedUser.getModifiedBy(),
-            updatedUser.getModifiedAt(),
-            authorities);
+
+        ManagedUserVM managedUserVM = new ManagedUserVM(UPDATED_PASSWORD);
+        managedUserVM.setId(updatedUser.getId())
+            .setUsername(updatedUser.getUsername())
+            .setFirstName(UPDATED_FIRSTNAME)
+            .setLastName(UPDATED_LASTNAME)
+            .setEmail(UPDATED_EMAIL)
+            .setActivated(updatedUser.isActivated())
+            .setImageUrl(UPDATED_IMAGEURL)
+            .setLangKey(UPDATED_LANGKEY)
+            .setCreatedBy(updatedUser.getCreatedBy())
+            .setCreatedAt(updatedUser.getCreatedAt())
+            .setModifiedBy(updatedUser.getModifiedBy())
+            .setModifiedAt(updatedUser.getModifiedAt())
+            .setAuthorities(authorities);
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -527,21 +508,21 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            updatedUser.getId(),
-            updatedUser.getUsername(),
-            updatedUser.getPassword(),
-            updatedUser.getFirstName(),
-            updatedUser.getLastName(),
-            "app@localhost",  // this email should already be used by anotherUser
-            updatedUser.isActivated(),
-            updatedUser.getImageUrl(),
-            updatedUser.getLangKey(),
-            updatedUser.getCreatedBy(),
-            updatedUser.getCreatedAt(),
-            updatedUser.getModifiedBy(),
-            updatedUser.getModifiedAt(),
-            authorities);
+
+        ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getPassword());
+        managedUserVM.setId(updatedUser.getId())
+            .setUsername("app")
+            .setFirstName(updatedUser.getFirstName())
+            .setLastName(updatedUser.getLastName())
+            .setEmail("app@localhost")
+            .setActivated(updatedUser.isActivated())
+            .setImageUrl(updatedUser.getImageUrl())
+            .setLangKey(updatedUser.getLangKey())
+            .setCreatedBy(updatedUser.getCreatedBy())
+            .setCreatedAt(updatedUser.getCreatedAt())
+            .setModifiedBy(updatedUser.getModifiedBy())
+            .setModifiedAt(updatedUser.getModifiedAt())
+            .setAuthorities(authorities);
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -570,21 +551,21 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            updatedUser.getId(),
-            "app", // this username should already be used by anotherUser
-            updatedUser.getPassword(),
-            updatedUser.getFirstName(),
-            updatedUser.getLastName(),
-            updatedUser.getEmail(),
-            updatedUser.isActivated(),
-            updatedUser.getImageUrl(),
-            updatedUser.getLangKey(),
-            updatedUser.getCreatedBy(),
-            updatedUser.getCreatedAt(),
-            updatedUser.getModifiedBy(),
-            updatedUser.getModifiedAt(),
-            authorities);
+
+        ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getPassword());
+        managedUserVM.setId(updatedUser.getId())
+            .setUsername("app")
+            .setFirstName(updatedUser.getFirstName())
+            .setLastName(updatedUser.getLastName())
+            .setEmail(updatedUser.getEmail())
+            .setActivated(updatedUser.isActivated())
+            .setImageUrl(updatedUser.getImageUrl())
+            .setLangKey(updatedUser.getLangKey())
+            .setCreatedBy(updatedUser.getCreatedBy())
+            .setCreatedAt(updatedUser.getCreatedAt())
+            .setModifiedBy(updatedUser.getModifiedBy())
+            .setModifiedAt(updatedUser.getModifiedAt())
+            .setAuthorities(authorities);
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -603,21 +584,20 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
-            updatedUser.getId(),
-            UPDATED_USERNAME,
-            UPDATED_PASSWORD,
-            UPDATED_FIRSTNAME,
-            UPDATED_LASTNAME,
-            UPDATED_EMAIL,
-            updatedUser.isActivated(),
-            UPDATED_IMAGEURL,
-            UPDATED_LANGKEY,
-            updatedUser.getCreatedBy(),
-            updatedUser.getCreatedAt(),
-            updatedUser.getModifiedBy(),
-            updatedUser.getModifiedAt(),
-            authorities);
+        ManagedUserVM managedUserVM = new ManagedUserVM(UPDATED_PASSWORD);
+        managedUserVM.setId(updatedUser.getId())
+            .setUsername(UPDATED_USERNAME)
+            .setFirstName(UPDATED_FIRSTNAME)
+            .setLastName(UPDATED_LASTNAME)
+            .setEmail(UPDATED_EMAIL)
+            .setActivated(updatedUser.isActivated())
+            .setImageUrl(UPDATED_IMAGEURL)
+            .setLangKey(UPDATED_LANGKEY)
+            .setCreatedBy(updatedUser.getCreatedBy())
+            .setCreatedAt(updatedUser.getCreatedAt())
+            .setModifiedBy(updatedUser.getModifiedBy())
+            .setModifiedAt(updatedUser.getModifiedAt())
+            .setAuthorities(authorities);
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

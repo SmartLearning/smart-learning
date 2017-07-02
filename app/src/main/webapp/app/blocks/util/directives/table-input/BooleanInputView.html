@@ -1,0 +1,50 @@
+<md-dialog flex="30">
+    <form name="form" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span data-translate>global.customDataTable.edit_popup.title</span>
+                </h2>
+                <span flex></span>
+                <md-button ng-click="vm.dismiss()" class="md-icon-button">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <div layout="column" flex class="fancy-radio-container">
+                <h4 class="md-caption" data-translate>global.customDataTable.select_yes_no_description</h4>
+
+                <md-divider></md-divider>
+
+                <md-radio-group ng-model="vm.model.content">
+                    <div class="row">
+                        <div flex layout="row" layout-align="start center">
+                            <md-radio-button md-autofocus value="true" class="md-primary no-margin flex md-padding">
+                                <span flex data-translate>global.form.yes</span>
+                            </md-radio-button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div flex layout="row" layout-align="start center">
+                            <md-radio-button class="no-margin flex md-padding" value="false">
+                                <span flex data-translate>global.form.no</span>
+                            </md-radio-button>
+                        </div>
+                    </div>
+                </md-radio-group>
+
+                <md-divider></md-divider>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.apply()" ng-disabled="form.$invalid">
+                <label data-translate>global.buttons.apply</label>
+                <md-icon>done</md-icon>
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
