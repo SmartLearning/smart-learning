@@ -39,7 +39,7 @@ public class User extends StringBaseDateModel {
     private Set<Authority> authorities = new HashSet<>();
 
     @Email
-    @Indexed
+    @Indexed(unique = true)
     @Size(min = 5, max = 100)
     private String email;
 
@@ -236,4 +236,6 @@ public class User extends StringBaseDateModel {
         this.activated = activated;
         return this;
     }
+
 }
+
