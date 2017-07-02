@@ -77,6 +77,19 @@ public class AccountResource {
     }
 
     /**
+     * GET  /account : get the current user.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the current user in body, or status 500 (Internal Server Error) if the user couldn't be returned
+     */
+    @Timed
+    @GetMapping("/account")
+    public ResponseEntity<UserDTO> findCurrentAccount() {
+        return Optional.ofNullable(userService.getUserWithAuthorities())
+            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    /**
      * POST   /account/reset_password/finish : Finish to reset the password of the user
      *
      * @param keyAndPassword the generated key and the new password
@@ -168,7 +181,7 @@ public class AccountResource {
         final String userUsername = SecurityUtils.getCurrentUsername();
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getUsername().equalsIgnoreCase(userUsername))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("global.messages.error", "email_exists", "Email already in use")).body(null);
         }
         return userRepository
             .findOneByUsername(userUsername)
@@ -184,18 +197,5 @@ public class AccountResource {
         return !StringUtils.isEmpty(password) &&
             password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
             password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
-    }
-
-    /**
-     * GET  /account : get the current user.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the current user in body, or status 500 (Internal Server Error) if the user couldn't be returned
-     */
-    @Timed
-    @GetMapping("/account")
-    public ResponseEntity<UserDTO> getAccount() {
-        return Optional.ofNullable(userService.getUserWithAuthorities())
-            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 }

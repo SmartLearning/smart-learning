@@ -1,0 +1,40 @@
+{
+    "audits": {
+        "title": "Audits",
+        "filter": {
+            "title": "Filter per date",
+            "from": "From",
+            "to": "To"
+        },
+        "principal": {
+            "title": "User"
+        },
+        "date": {
+            "title": "Date"
+        },
+        "from": {
+            "title": "From"
+        },
+        "to": {
+            "title": "To"
+        },
+        "type": {
+            "title": "Type"
+        },
+        "timestamp": {
+            "title": "Date"
+        },
+        "message": {
+            "title": "Message"
+        },
+        "remote_address": {
+            "title": "Remote Address"
+        },
+        "status": {
+            "title": "Status"
+        },
+        "data": {
+            "title": "Extra data"
+        }
+    }
+}

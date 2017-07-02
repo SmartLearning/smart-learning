@@ -1,0 +1,26 @@
+<md-custom-table
+    headers="vm.headers"
+    data="vm.data"
+    total="vm.totalItems"
+    selectable="single"
+    promise="vm.promise"
+    key-controlled="true"
+    on-reorder="vm.onReorder(order)"
+    pagination="vm.pagination"
+    show-hide-columns="false"
+    on-paginate="vm.onPageChange(page,pageSize)"
+    on-row-click="vm.onSelectRow(model)">
+    <md-toolbar layout="row" class="md-accent md-hue-3">
+        <div class="md-toolbar-tools">
+            <span flex></span>
+            <h2>
+                <span data-translate>{{toState.data.pageTitle}}</span>
+            </h2>
+            <span flex></span>
+            <md-button ui-sref="user.detail()">
+                <md-icon>add</md-icon>
+                <span data-translate>global.buttons.add</span>
+            </md-button>
+        </div>
+    </md-toolbar>
+</md-custom-table>

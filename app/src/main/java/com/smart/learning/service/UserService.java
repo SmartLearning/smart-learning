@@ -148,8 +148,8 @@ public class UserService {
         return userRepository.findAllByUsernameNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
-    public User getUserWithAuthorities(String id) {
-        return userRepository.findOne(id);
+    public Optional<User> getUserWithAuthorities(String id) {
+        return Optional.ofNullable(userRepository.findOne(id));
     }
 
     public Optional<User> getUserWithAuthoritiesByUsername(String username) {

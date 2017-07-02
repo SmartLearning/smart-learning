@@ -1,0 +1,25 @@
+<md-custom-table
+    headers="vm.headers"
+    data="vm.data"
+    total="vm.totalItems"
+    selectable="false"
+    promise="vm.promise"
+    key-controlled="false"
+    on-reorder="vm.onReorder(order)"
+    pagination="vm.pagination"
+    show-hide-columns="false">
+    <md-toolbar layout="row" class="md-accent md-hue-3">
+        <div class="md-toolbar-tools">
+            <span flex></span>
+            <h2>
+                <span data-translate>{{toState.data.pageTitle}}</span>
+            </h2>
+            <span flex></span>
+            <md-button ng-click="vm.refresh()">
+                <md-icon>refresh</md-icon>
+                <span data-translate>global.buttons.refresh</span>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <!-- Filter Form -->
+</md-custom-table>

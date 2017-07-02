@@ -1,0 +1,6 @@
+<md-button class="md-raised" ng-class="{'md-warn':!model.activated}"
+           ng-click="header.setActive($event, model,!model.activated)">
+    <md-icon>{{model.activated ? 'airplanemode_inactive' : 'airplanemode_active'}}</md-icon>
+    <label ng-if="!model.activated" data-translate>user.status.deactivated</label>
+    <label ng-if="model.activated" data-translate>user.status.activated</label>
+</md-button>

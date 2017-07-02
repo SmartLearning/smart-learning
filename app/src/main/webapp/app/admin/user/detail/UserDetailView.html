@@ -1,0 +1,127 @@
+<alert></alert>
+<form name="form" layout="column" flex novalidate>
+    <md-card-content layout="column">
+        <div layout-gt-xs="row" layout="column">
+            <md-input-container flex-gt-xs>
+                <label data-translate>user.username.title</label>
+                <input ng-required="true" type="text"
+                       md-maxlength="50"
+                       ng-minlength="1"
+                       name="login"
+                       ng-model="vm.model.login">
+                <div ng-messages="form.login.$error">
+                    <div ng-message-exp="['required', 'minlength']">
+                        <span data-translate translate-value-length="1">global.messages.error.min</span>
+                    </div>
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-value-length="50">global.messages.error.max</span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container flex-gt-xs>
+                <label data-translate>user.email.title</label>
+                <input ng-required="true" type="text"
+                       md-maxlength="100"
+                       ng-minlength="5"
+                       name="email"
+                       ng-pattern="vm.emailPattern"
+                       ng-model="vm.model.email">
+                <div ng-messages="form.email.$error">
+                    <div ng-message-exp="['required', 'minlength']">
+                        <span data-translate translate-value-length="5">global.messages.error.min</span>
+                    </div>
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-value-length="100">global.messages.error.max</span>
+                    </div>
+                    <div ng-message="pattern">
+                        <span data-translate>user.email.errors.pattern</span>
+                    </div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row" layout="column">
+            <md-input-container flex-gt-xs>
+                <label data-translate>user.first_name.title</label>
+                <input type="text"
+                       md-maxlength="50"
+                       name="firstName"
+                       ng-model="vm.model.firstName">
+                <div ng-messages="form.firstName.$error">
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-value-length="50">global.messages.error.max</span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container flex-gt-xs>
+                <label data-translate>user.last_name.title</label>
+                <input type="text"
+                       md-maxlength="50"
+                       name="lastName"
+                       ng-model="vm.model.lastName">
+                <div ng-messages="form.lastName.$error">
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-value-length="50">global.messages.error.max</span>
+                    </div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row" layout="column">
+            <md-input-container flex-gt-xs>
+                <label data-translate>user.language.title</label>
+                <md-select name="language" ng-required="true" ng-model="vm.model.langKey"
+                           ng-model-options="{trackBy: '$value'}">
+                    <md-option ng-repeat="item in vm.languages" ng-value="item">
+                        <span>{{item | capitalize}}</span>
+                    </md-option>
+                </md-select>
+                <div ng-messages="form.language.$error">
+                    <div ng-message="required">
+                        <span data-translate>global.messages.error.required</span>
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container flex-gt-xs>
+                <label data-translate>user.authorities.title</label>
+                <md-select name="authority" ng-required="true" ng-model="vm.model.authorities"
+                           ng-model-options="{trackBy: '$value'}" multiple>
+                    <md-option ng-repeat="item in vm.authorities" ng-value="item">
+                        <span>{{item | capitalize}}</span>
+                    </md-option>
+                </md-select>
+                <div ng-messages="form.language.$error">
+                    <div ng-message="required">
+                        <span data-translate>global.messages.error.required</span>
+                    </div>
+                </div>
+            </md-input-container>
+        </div>
+        <md-input-container flex-gt-xs ng-if="vm.model.id">
+            <label data-translate>user.modified_at.title</label>
+            <input type="datetime"
+                   readonly
+                   name="modifiedAt"
+                   ng-model="vm.model.modifiedAt">
+        </md-input-container>
+    </md-card-content>
+    <md-divider></md-divider>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="vm.save()" ng-disabled="form.$invalid" type="submit" class="md-primary md-raised">
+            <md-icon>save</md-icon>
+            <label data-translate>global.buttons.save</label>
+        </md-button>
+        <md-button class="md-raised" ng-if="vm.model.id" ng-class="{'md-warn': !vm.model.activated}"
+                   ng-click="vm.setActive($event, vm.model, !vm.model.activated)">
+            <md-icon>{{vm.model.activated ? 'airplanemode_inactive' : 'airplanemode_active'}}</md-icon>
+            <label ng-if="!vm.model.activated" data-translate>user.status.deactivated</label>
+            <label ng-if="vm.model.activated" data-translate>user.status.activated</label>
+        </md-button>
+        <md-button ng-click="vm.resetPassword()" ng-disabled="form.$invalid" type="submit" class="md-primary md-raised">
+            <md-icon>lock</md-icon>
+            <label data-translate>user.button.reset_password</label>
+        </md-button>
+        <span flex></span>
+        <md-button ng-if="vm.model.id" ng-click="vm.delete($event)" class="md-warn md-raised">
+            <span data-translate>global.buttons.delete</span>
+        </md-button>
+    </md-card-actions>
+</form>

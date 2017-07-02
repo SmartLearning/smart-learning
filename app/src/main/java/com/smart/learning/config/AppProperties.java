@@ -446,7 +446,7 @@ public class AppProperties {
 
             private int port = 2003;
 
-            private String prefix = "jhipsterApplication";
+            private String prefix = "smartApplication";
 
             public String getHost() {
                 return host;

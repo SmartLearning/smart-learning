@@ -1,0 +1,46 @@
+<md-toolbar layout="row" class="md-accent md-hue-3">
+    <div class="md-toolbar-tools">
+        <span flex></span>
+        <h2>
+            <span data-translate>{{toState.data.pageTitle}}</span>
+        </h2>
+        <span flex></span>
+    </div>
+</md-toolbar>
+<alert></alert>
+<form name="form" layout="column" flex novalidate>
+    <md-card-content layout="column">
+        <div layout-gt-xs="row" layout="column">
+            <md-input-container flex-gt-xs>
+                <label data-translate>reset.request.email.title</label>
+                <input ng-required="true" type="email"
+                       md-maxlength="100"
+                       ng-minlength="5"
+                       ng-pattern="vm.emailPattern"
+                       name="email"
+                       md-autofocus
+                       ng-model="vm.model.email">
+                <div ng-messages="form.email.$error">
+                    <div ng-message-exp="['required', 'minlength']">
+                        <span data-translate translate-value-length="5">global.messages.error.min</span>
+                    </div>
+                    <div ng-message="md-maxlength">
+                        <span data-translate translate-value-length="100">global.messages.error.max</span>
+                    </div>
+                    <div ng-message="pattern">
+                        <span data-translate>global.messages.error.invalid_email</span>
+                    </div>
+                </div>
+            </md-input-container>
+        </div>
+    </md-card-content>
+    <md-divider></md-divider>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="vm.requestReset()" ng-disabled="form.$invalid" type="submit"
+                   class="md-primary md-raised">
+            <md-icon>send</md-icon>
+            <label data-translate>reset.request.button</label>
+        </md-button>
+        <span flex></span>
+    </md-card-actions>
+</form>

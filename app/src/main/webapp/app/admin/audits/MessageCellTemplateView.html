@@ -1,0 +1,7 @@
+<div layout="column">
+    <div layout="row" ng-if="model.data.remoteAddress">
+        <span data-translate>audits.remote_address.title</span>
+        <span>{{model.data.remoteAddress}}</span>
+    </div>
+    <span ng-if="model.data.message">{{model.data.message}}</span>
+</div>

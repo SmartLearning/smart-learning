@@ -1,0 +1,62 @@
+<md-dialog flex="40">
+    <form name="form" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span data-translate>global.customDataTable.edit_popup.title</span>
+                </h2>
+                <span flex></span>
+                <md-button ng-click="vm.dismiss()" class="md-icon-button">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <div layout="column">
+                <alert></alert>
+                <span class="md-caption" data-translate ng-if="vm.config.hint">{{vm.config.hint}}</span>
+                <div>
+                    <br/>
+                    <md-autocomplete
+                        md-clear-button="true"
+                        md-no-cache="true"
+                        md-delay="500"
+                        md-auto-focus="true"
+                        md-selected-item="vm.model"
+                        md-select-on-match="true"
+                        md-match-case-insensitive="true"
+                        md-search-text="query"
+                        md-items="item in vm.onSearch(query, true)"
+                        md-item-text="vm.displayField(item)"
+                        md-min-length="vm.config.minLength"
+                        autocomplete-infinite-scroll="vm.onSearch(query)"
+                        placeholder="{{'global.customDataTable.query' | translate}}">
+                        <md-item-template>
+                            <div ng-click="vm.onItemClick($event, item)" ng-disabled="item.disabled" layout="row"
+                                 flex title="{{(item.disabled ? vm.config.disabledTooltipText : '' | translate)}}">
+                                <md-truncate flex md-highlight-text="query" md-highlight-flags="gi">
+                                    {{vm.displayField(item)}}
+                                </md-truncate>
+                                <md-tooltip ng-if="vm.displayField(item).length > 40">{{vm.displayField(item)}}
+                                </md-tooltip>
+                            </div>
+                        </md-item-template>
+                        <md-not-found>
+                            <span data-translate>global.customDataTable.no_result</span>
+                        </md-not-found>
+                    </md-autocomplete>
+                </div>
+            </div>
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.apply()" ng-disabled="!vm.model || form.$invalid">
+                <label data-translate>global.buttons.apply</label>
+                <md-icon>done</md-icon>
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

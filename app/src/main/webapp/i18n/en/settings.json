@@ -1,0 +1,25 @@
+{
+    "settings": {
+        "title": "User settings",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "language": "Language",
+        "email": "Email",
+        "button": "Save",
+        "errors": {
+            "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
+            "emailExists": "<strong>E-mail is already in use!</strong> Please choose another one.",
+            "min": "Required to be at least 1 character",
+            "max": "Cannot be longer than 50 characters",
+            "emailInvalid": "Your e-mail is invalid.",
+            "emailMin": "Required to be at least 5 character",
+            "emailMax": "Cannot be longer than 100 characters"
+        },
+        "messages": {
+            "success": "<strong>Settings Saved!</strong>",
+            "created": "<strong>Settings Created!</strong>",
+            "updated": "<strong>Settings Updated!</strong>",
+            "deleted": "<strong>Settings Deleted!</strong>"
+        }
+    }
+}

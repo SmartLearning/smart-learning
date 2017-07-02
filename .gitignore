@@ -1,6 +1,9 @@
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
+docker/sonar/config/data
+docker/sonar/config/plugins
+docker/sonar/config/conf
 
 ### STS ###
 .apt_generated

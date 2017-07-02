@@ -2,15 +2,17 @@ package com.smart.learning.security;
 
 import com.smart.learning.domain.User;
 import com.smart.learning.repository.mongo.UserRepository;
+import com.smart.learning.service.errors.ClientSideException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -37,7 +39,11 @@ public class DomainUserDetailsService implements UserDetailsService {
         Optional<User> userFromDatabase = userRepository.findOneByUsername(lowercaseUsername);
         return userFromDatabase.map(user -> {
             if (!user.isActivated()) {
-                throw new UserNotActivatedException("User " + lowercaseUsername + " was not activated");
+                throw new ClientSideException(
+                    "global.messages.error.not_active_user",
+                    Collections.singletonMap("username", lowercaseUsername),
+                    HttpStatus.BAD_REQUEST
+                );
             }
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))
@@ -45,6 +51,10 @@ public class DomainUserDetailsService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(lowercaseUsername,
                 user.getPassword(),
                 grantedAuthorities);
-        }).orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseUsername + " was not found in the " + "database"));
+        }).orElseThrow(() -> new ClientSideException(
+            "global.messages.error.user_not_found",
+            Collections.singletonMap("username", lowercaseUsername),
+            HttpStatus.BAD_REQUEST
+        ));
     }
 }

@@ -1,0 +1,6 @@
+<div layout="row" flex>
+    <md-button class="{{model.level === item.value ? item.activeClass : ''}}" ng-repeat="item in header.buttons"
+               ng-click="header.changeLevel(model, item.value)">
+        <span data-translate>{{item.text}}</span>
+    </md-button>
+</div>
