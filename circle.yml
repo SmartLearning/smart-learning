@@ -18,14 +18,16 @@ dependencies:
         - curl -o- -L https://yarnpkg.com/install.sh | bash
         - export PATH=$HOME/.yarn/bin:$PATH
         - yarn global add bower gulp-cli
-        - app/yarn install
+        - cd app/
+        - yarn install
 test:
     override:
         - chmod +x gradlew
-        - app/gradlew clean test --no-daemon
-        - app/gulp test
-        - app/gradlew bootRepackage -Pprod -x test --no-daemon
-        - app/gradlew deployHeroku --no-daemon
+        - cd app/
+        - gradlew clean test --no-daemon
+        - gulp test
+        - gradlew bootRepackage -Pprod -x test --no-daemon
+        - gradlew deployHeroku --no-daemon
 deployment:
     staging:
         branch: develop
