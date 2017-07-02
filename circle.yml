@@ -1,0 +1,33 @@
+machine:
+    services:
+        - docker
+    java:
+        version: oraclejdk8
+    node:
+        version: 6.11.0
+dependencies:
+    cache_directories:
+        - app/node
+        - app/node_modules
+        - app/gradle-cache
+        - ~/.gradle
+        - $HOME/.yarn-cache
+    override:
+        - java -version
+        # Repo for Yarn
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - export PATH=$HOME/.yarn/bin:$PATH
+        - yarn global add bower gulp-cli
+        - app/yarn install
+test:
+    override:
+        - chmod +x gradlew
+        - app/gradlew clean test --no-daemon
+        - app/gulp test
+        - app/gradlew bootRepackage -Pprod -x test --no-daemon
+        - app/gradlew deployHeroku --no-daemon
+deployment:
+    staging:
+        branch: develop
+        heroku:
+            appname: smart-learning

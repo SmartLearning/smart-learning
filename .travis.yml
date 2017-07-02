@@ -1,13 +1,47 @@
-language: java
+os:
+    - linux
+services:
+    - docker
+language: node_js
+node_js:
+    - "6.11.0"
 jdk:
     - oraclejdk8
-before_cache:
-    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-    - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+sudo: false
 cache:
-    directories:
-        - $HOME/.gradle/caches/
-        - $HOME/.gradle/wrapper/
+  directories:
+    - app/node
+    - app/node_modules
+    - app/gradle-cache
+    - $HOME/.gradle
+    - $HOME/.yarn-cache
+env:
+  global:
+    - NODE_VERSION=6.11.0
+    - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+    - SPRING_JPA_SHOW_SQL=false
+before_install:
+    - jdk_switcher use oraclejdk8
+    - java -version
+    # Repo for Yarn
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - yarn global add bower gulp-cli
+install:
+    - app/yarn install
+script:
+    - chmod +x app/gradlew
+    - app/gradlew clean test
+    - app/gulp test
+    - app/gradlew bootRepackage -x test
+    - app/gradlew deployHeroku
+notifications:
+  webhooks:
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: false     # default: false
 deploy:
     provider: heroku
     app: smart-learning
+    api_key:
+      secure: "406342f2-5593-415a-bab0-b8124101fc44"
