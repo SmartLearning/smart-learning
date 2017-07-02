@@ -26,7 +26,7 @@ test:
         - chmod +x gradlew
         - ./gradlew clean test --no-daemon
         - ./gulp test
-        - ./gradlew bootRepackage -Pprod -x test --no-daemon
+        - ./gradlew bootRepackage -x test --no-daemon
         - ./gradlew deployHeroku --no-daemon
 deployment:
     staging:
