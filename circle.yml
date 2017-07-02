@@ -27,7 +27,7 @@ test:
         - cd app/
         - chmod +x gradlew
         - ./gradlew clean test --no-daemon
-        - ./gulp test
+        - gulp install test
         - ./gradlew bootRepackage -x test --no-daemon
         - ./gradlew deployHeroku --no-daemon
 deployment:
