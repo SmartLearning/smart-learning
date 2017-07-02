@@ -10,13 +10,15 @@ dependencies:
         - app/node
         - app/node_modules
         - app/gradle-cache
-        - ~/.gradle
-        - $HOME/.yarn-cache
+        - app/.gradle
+        - app/.yarn-cache
+        - .gradle
+        -  /home/ubuntu/.yarn-cache
     override:
         - java -version
         # Repo for Yarn
         - curl -o- -L https://yarnpkg.com/install.sh | bash
-        - export PATH=$HOME/.yarn/bin:$PATH
+        - export PATH=/home/ubuntu/.yarn/bin:$PATH
         - yarn global add bower gulp-cli
         - cd app/
         - yarn install
