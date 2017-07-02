@@ -19,7 +19,7 @@ dependencies:
         # Repo for Yarn
         - curl -o- -L https://yarnpkg.com/install.sh | bash
         - export PATH=/home/ubuntu/.yarn/bin:$PATH
-        - yarn global add bower gulp-cli
+        - yarn global add bower gulp-cli gulp
         - cd app/
         - yarn install
 test:
