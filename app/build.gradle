@@ -153,14 +153,14 @@ dependencyManagement {
     }
 }
 
+apply from: 'gradle/gatling.gradle'
+apply from: 'gradle/ui.gradle'
+
 if (project.hasProperty('prod')) {
     apply from: 'gradle/profile_prod.gradle'
 } else {
     apply from: 'gradle/profile_dev.gradle'
 }
-
-apply from: 'gradle/gatling.gradle'
-apply from: 'gradle/ui.gradle'
 
 bootRepackage {
     mainClass = 'com.smart.learning.LearningApplication'
