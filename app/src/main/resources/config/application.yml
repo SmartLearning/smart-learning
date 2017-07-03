@@ -35,7 +35,7 @@ spring:
     data:
         mongodb:
             uri: ${MONGODB_URI}
-            database: app
+            database: ${MONGODB_DATABASE}
 
 security:
     basic:
