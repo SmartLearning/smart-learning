@@ -264,9 +264,8 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.0'
 }
 
-task stage {
-    dependsOn 'bootRepackage'
-    dependsOn 'heroku'
+task stage(dependsOn: ['build', 'clean']) {
+
 }
 
 if (project.hasProperty('nodeInstall')) {
@@ -281,3 +280,4 @@ if (project.hasProperty('nodeInstall')) {
 compileJava.dependsOn processResources
 processResources.dependsOn cleanResources, bootBuildInfo
 bootBuildInfo.mustRunAfter cleanResources
+build.mustRunAfter clean
