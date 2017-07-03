@@ -1,7 +1,7 @@
 'use strict';
 
 var exports = {
-    moduleName: 'gatewayApp',
+    moduleName: 'smartApp',
     app: 'src/main/webapp/',
     dist: 'build/www/',
     swaggerDist: 'build/www/swagger-ui/',
