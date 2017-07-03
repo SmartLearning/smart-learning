@@ -265,7 +265,7 @@ task wrapper(type: Wrapper) {
 }
 
 task stage {
-    dependsOn: 'bootRepackage'
+    dependsOn 'bootRepackage'
     dependsOn 'heroku'
 }
 
