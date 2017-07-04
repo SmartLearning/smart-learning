@@ -14,6 +14,8 @@ dependencies:
         - app/.yarn-cache
         - $HOME/.gradle
         - $HOME/.yarn-cache
+        - $HOME/.m2
+        - $HOME/.cache/bower
     override:
         - java -version
         # Repo for Yarn
@@ -24,14 +26,10 @@ dependencies:
         - yarn install
 test:
     override:
-        - cd app/
-        - chmod +x gradlew
-        - ./gradlew clean test --no-daemon
-        - gulp install test
-        - ./gradlew bootRepackage -x test --no-daemon
-        - ./gradlew deployHeroku --no-daemon
-deployment:
-    staging:
-        branch: develop
-        heroku:
-            appname: smart-learning
+        - cd app
+        - chmod +x ./gradlew
+        - ./gradlew clean test  --no-daemon
+        - gulp test
+        - ./gradlew -Pprod clean test
+        - gulp build
+        - ./gradlew -Pprod stage -x test  --no-daemon
