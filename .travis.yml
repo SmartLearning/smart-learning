@@ -17,10 +17,13 @@ cache:
     - app/.yarn-cache
     - $HOME/.gradle
     - $HOME/.yarn-cache
+    - $HOME/.m2
+    - $HOME/.cache/bower
 env:
   global:
     - NODE_VERSION=6.11.0
     - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+    - GRADLE_USER_HOME=gradle-cache
 before_install:
     - jdk_switcher use oraclejdk8
     - java -version

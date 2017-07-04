@@ -1,6 +1,7 @@
 package com.smart.learning.config;
 
 import com.github.mongobee.Mongobee;
+import com.mongodb.MongoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
@@ -45,9 +46,9 @@ public class MongoDBConfiguration {
     }
 
     @Bean
-    public Mongobee mongobee(MongoTemplate mongoTemplate, MongoProperties mongoProperties) {
+    public Mongobee mongobee(MongoClient mongoClient, MongoTemplate mongoTemplate, MongoProperties mongoProperties) {
         logger.debug("Configuring Mongobee");
-        Mongobee mongobee = new Mongobee(mongoProperties.getUri());
+        Mongobee mongobee = new Mongobee(mongoClient);
         mongobee.setDbName(mongoProperties.getDatabase());
         mongobee.setMongoTemplate(mongoTemplate);
         // package to scan for migrations
