@@ -1,48 +1,60 @@
 os:
-    - linux
+- linux
 services:
-    - docker
+- docker
 language: java
 node_js:
-    - "6.11.0"
+- 6.11.0
 jdk:
-    - oraclejdk8
+- oraclejdk8
 sudo: false
+branches:
+  only:
+  - develop
+  - master
 cache:
   directories:
-    - app/node_modules
-    - app/src/main/webapp/bower_components
-    - app/gradle-cache
-    - app/.gradle
-    - app/.yarn-cache
-    - $HOME/.gradle
-    - $HOME/.yarn-cache
-    - $HOME/.m2
-    - $HOME/.cache/bower
+  - app/node_modules
+  - app/src/main/webapp/bower_components
+  - app/gradle-cache
+  - app/.gradle
+  - app/.yarn-cache
+  - "$HOME/.gradle"
+  - "$HOME/.yarn-cache"
+  - "$HOME/.m2"
+  - "$HOME/.cache/bower"
 env:
   global:
-    - NODE_VERSION=6.11.0
-    - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
-    - GRADLE_USER_HOME=gradle-cache
+  - NODE_VERSION=6.11.0
+  - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+  - GRADLE_USER_HOME=gradle-cache
 before_install:
-    - jdk_switcher use oraclejdk8
-    - java -version
-    # Repo for Yarn
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - yarn global add bower gulp-cli gulp
+- jdk_switcher use oraclejdk8
+- java -version
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH=$HOME/.yarn/bin:$PATH
+- yarn global add bower gulp-cli gulp
 install:
-    - yarn install
+- yarn install
 script:
-    - cd app
-    - chmod +x ./gradlew
-    - ./gradlew clean test
-    - gulp test
-    - ./gradlew -Pprod clean test
-    - gulp build
-    - ./gradlew -Pprod stage -x test
+- cd app
+- chmod +x ./gradlew
+- "./gradlew clean test"
+- gulp test
+- "./gradlew -Pprod clean test"
+- gulp build
+- "./gradlew -Pprod stage -x test"
 notifications:
   webhooks:
-    on_success: change  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: false     # default: false
+    on_success: change
+    on_failure: always
+    on_start: false
+
+deploy:
+  provider: heroku
+  api_key:
+    develop: mR1GXCb5wzjlhSXb8SajMcobDXWaufCz6os88q4vO2Gu9DsXfa6fCrjYEmA/raRVQC0yYsE//6RV3QpPsZkq474Ws/xDNQCBFSmzxEoS0nH33yabVzbC2vLVzHSwbWstqm3Hcwbnsma8o4A0KGkraGx3LmqcYENGcvJsSS6I8+j34D5eeyX6SCZbPv6evzy/9asU8yRl4bdjr/oFhe1NxEJXJCa7lyfA80+8YdSWRWma5bTUnNK1AOcJ25Tdn/PosyWKpccH38Pq6Ve5Xpn1tyCmuNsuy1UvGCMokah6Cv0NKju6bT3zws7U1cOLlYqa66krDKyxyGO3GMRpQU3hopmtQV4JgTKQiR8LfsIke/XYCx44QskgRkSGhKaWV+HVwSjWwZMWJeeDBQi/CA7F9DCVc0722yyhwwaJHXCMbwSTiBUoIt3Eh8+kXN8l48SXmtPwZqAg6R0e64FupW+Dm7qSN4pRCxHcEDB1TkIFzSxoKqkmNsG831eHBei80qVAIBn6ttRv9xjJ8G+hur7S6Zc7z98xtUNPHYqBHyK2uqmePy1JyiGGA31yisJkKNr0LRh4lvynORYyxTRhDjJ9xNuNwN3qlIreDYqkNGS3IYe+6d9ekwXoSCYgrPxTsXYaymmkNftKNrxGw/BVmYTpeC5n+HHV8mAJ1HM8pyyAnMM=
+    master: mR1GXCb5wzjlhSXb8SajMcobDXWaufCz6os88q4vO2Gu9DsXfa6fCrjYEmA/raRVQC0yYsE//6RV3QpPsZkq474Ws/xDNQCBFSmzxEoS0nH33yabVzbC2vLVzHSwbWstqm3Hcwbnsma8o4A0KGkraGx3LmqcYENGcvJsSS6I8+j34D5eeyX6SCZbPv6evzy/9asU8yRl4bdjr/oFhe1NxEJXJCa7lyfA80+8YdSWRWma5bTUnNK1AOcJ25Tdn/PosyWKpccH38Pq6Ve5Xpn1tyCmuNsuy1UvGCMokah6Cv0NKju6bT3zws7U1cOLlYqa66krDKyxyGO3GMRpQU3hopmtQV4JgTKQiR8LfsIke/XYCx44QskgRkSGhKaWV+HVwSjWwZMWJeeDBQi/CA7F9DCVc0722yyhwwaJHXCMbwSTiBUoIt3Eh8+kXN8l48SXmtPwZqAg6R0e64FupW+Dm7qSN4pRCxHcEDB1TkIFzSxoKqkmNsG831eHBei80qVAIBn6ttRv9xjJ8G+hur7S6Zc7z98xtUNPHYqBHyK2uqmePy1JyiGGA31yisJkKNr0LRh4lvynORYyxTRhDjJ9xNuNwN3qlIreDYqkNGS3IYe+6d9ekwXoSCYgrPxTsXYaymmkNftKNrxGw/BVmYTpeC5n+HHV8mAJ1HM8pyyAnMM=
+  app:
+    develop: smart-learning-develop
+    master: smart-learning-master
