@@ -32,11 +32,10 @@ before_install:
     - export PATH=$HOME/.yarn/bin:$PATH
     - yarn global add bower gulp-cli gulp
 install:
-    - cd app
     - yarn install
 script:
     - cd app
-    - chmod +x app/gradlew
+    - chmod +x ./gradlew
     - ./gradlew clean test
     - gulp test
     - ./gradlew -Pprod clean test
