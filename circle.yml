@@ -12,8 +12,8 @@ dependencies:
         - app/gradle-cache
         - app/.gradle
         - app/.yarn-cache
-        - .gradle
-        -  /home/ubuntu/.yarn-cache
+        - $HOME/.gradle
+        - $HOME/.yarn-cache
     override:
         - java -version
         # Repo for Yarn

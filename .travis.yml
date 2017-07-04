@@ -10,9 +10,11 @@ jdk:
 sudo: false
 cache:
   directories:
-    - app/node
     - app/node_modules
+    - app/src/main/webapp/bower_components
     - app/gradle-cache
+    - app/.gradle
+    - app/.yarn-cache
     - $HOME/.gradle
     - $HOME/.yarn-cache
 env:
