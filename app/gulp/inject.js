@@ -7,7 +7,6 @@
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var inject = require('gulp-inject');
-var es = require('event-stream');
 var gulpIf = require('gulp-if');
 var order = require('gulp-order');
 var naturalSort = require('gulp-natural-sort');
