@@ -6,7 +6,7 @@
   "env": {
     "APPLICATION_SECURITY_AUTHENTICATION_JWT_SECRET": {
       "required": true,
-      "generator": "generator"
+      "generator": "secret"
     },
     "GRADLE_USER_HOME": {
       "required": true
