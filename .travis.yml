@@ -49,3 +49,21 @@ notifications:
     on_success: change
     on_failure: always
     on_start: always
+
+before_deploy:
+  - cd ./app
+
+deploy:
+  - provider: heroku
+    api_key: 8d73afbc-b956-41fc-acff-986830a8c736
+    skip_cleanup: true
+    app: smart-learning-development
+    on:
+      branch: develop
+
+  - provider: heroku
+    api_key: 8d73afbc-b956-41fc-acff-986830a8c736
+    skip_cleanup: true
+    app: smart-learning-stage
+    on:
+      branch: master
