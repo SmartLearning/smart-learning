@@ -1,7 +1,7 @@
 {
   "name": "smart-learning",
   "scripts": {
-    "postdeploy": "jdk_switcher use oraclejdk8 && java -version && curl -o- -L https://yarnpkg.com/install.sh | bash && export PATH=$HOME/.yarn/bin:$PATH && yarn global add bower gulp-cli gulp"
+    "postdeploy": "java -version && curl -o- -L https://yarnpkg.com/install.sh | bash && export PATH=$HOME/.yarn/bin:$PATH && yarn global add bower gulp-cli gulp"
   },
   "env": {
     "APPLICATION_SECURITY_AUTHENTICATION_JWT_SECRET": {
@@ -37,6 +37,12 @@
   "buildpacks": [
     {
       "url": "heroku/gradle"
+    },
+    {
+      "url": "heroku/java"
+    },
+    {
+      "url": "heroku/nodejs"
     }
   ]
 }
