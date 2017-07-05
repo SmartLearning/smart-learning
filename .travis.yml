@@ -49,15 +49,3 @@ notifications:
     on_success: change
     on_failure: always
     on_start: always
-
-deploy:
-  provider: heroku
-  api_key:
-    secure: mR1GXCb5wzjlhSXb8SajMcobDXWaufCz6os88q4vO2Gu9DsXfa6fCrjYEmA/raRVQC0yYsE//6RV3QpPsZkq474Ws/xDNQCBFSmzxEoS0nH33yabVzbC2vLVzHSwbWstqm3Hcwbnsma8o4A0KGkraGx3LmqcYENGcvJsSS6I8+j34D5eeyX6SCZbPv6evzy/9asU8yRl4bdjr/oFhe1NxEJXJCa7lyfA80+8YdSWRWma5bTUnNK1AOcJ25Tdn/PosyWKpccH38Pq6Ve5Xpn1tyCmuNsuy1UvGCMokah6Cv0NKju6bT3zws7U1cOLlYqa66krDKyxyGO3GMRpQU3hopmtQV4JgTKQiR8LfsIke/XYCx44QskgRkSGhKaWV+HVwSjWwZMWJeeDBQi/CA7F9DCVc0722yyhwwaJHXCMbwSTiBUoIt3Eh8+kXN8l48SXmtPwZqAg6R0e64FupW+Dm7qSN4pRCxHcEDB1TkIFzSxoKqkmNsG831eHBei80qVAIBn6ttRv9xjJ8G+hur7S6Zc7z98xtUNPHYqBHyK2uqmePy1JyiGGA31yisJkKNr0LRh4lvynORYyxTRhDjJ9xNuNwN3qlIreDYqkNGS3IYe+6d9ekwXoSCYgrPxTsXYaymmkNftKNrxGw/BVmYTpeC5n+HHV8mAJ1HM8pyyAnMM=
-  app:
-    develop: smart-learning-develop
-    master: smart-learning-master
-  on:
-    branch:
-      - develop
-      - master
