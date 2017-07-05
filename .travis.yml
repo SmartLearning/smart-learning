@@ -50,8 +50,6 @@ notifications:
     on_failure: always
     on_start: false
 
-before_deploy:
-  - scripts/package.sh prod app
 deploy:
   provider: heroku
   api_key:
