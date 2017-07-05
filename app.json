@@ -1,10 +1,12 @@
 {
   "name": "smart-learning",
   "scripts": {
+    "postdeploy": "jdk_switcher use oraclejdk8 && java -version && curl -o- -L https://yarnpkg.com/install.sh | bash && export PATH=$HOME/.yarn/bin:$PATH && yarn global add bower gulp-cli gulp"
   },
   "env": {
     "APPLICATION_SECURITY_AUTHENTICATION_JWT_SECRET": {
-      "required": true
+      "required": true,
+      "generator": "generator"
     },
     "GRADLE_USER_HOME": {
       "required": true
@@ -18,9 +20,6 @@
     "LIBRATO_USER": {
       "required": true
     },
-    "MONGODB_DATABASE": {
-      "required": true
-    },
     "MONGODB_URI": {
       "required": true
     }
@@ -30,7 +29,10 @@
   "addons": [
     "librato",
     "logentries",
-    "mongolab"
+    {
+      "plan": "mongolab",
+      "as": "MONGODB"
+    }
   ],
   "buildpacks": [
     {
