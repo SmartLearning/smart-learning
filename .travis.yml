@@ -49,21 +49,18 @@ notifications:
     on_success: change
     on_failure: always
     on_start: always
-
-before_deploy:
-  - cd ./app
-
 deploy:
-  - provider: heroku
-    api_key: 8d73afbc-b956-41fc-acff-986830a8c736
-    skip_cleanup: true
-    app: smart-learning-development
-    on:
-      branch: develop
-
-  - provider: heroku
-    api_key: 8d73afbc-b956-41fc-acff-986830a8c736
-    skip_cleanup: true
-    app: smart-learning-stage
-    on:
-      branch: master
+- provider: heroku
+  api_key:
+    secure: RPy/7q1HSd+Lhv1MJCjn7HAc4QdJNlANqW6bfp8CzQiAGL8pFFEkYOxGy4djuVEneFVLgbz7j/j9x514/V9IizO+KwSXsS/Yw3+k/mpx2kJ9i3m0PYlHkIjE4rbSYmN4dBOFY/e4wrbU5EW4wtcdakkt1TJ5Kuxq40gbWBAx4uNFxdMGxeGSx4b08UGBiw75l6wKi+E4jIrQXDf3OHwH7PAiz6tbTS4eY0KVNk3Buw+bl9/QtV094C/9yFNOKrdCJMy2ZjHQH1qLaF9oGNy+PeQvVj6mILGKiaVn9RKbvjogEX6H/dle/8T6k+gy+jLQ3z3MX/ij8mlC/VxU4k04hTouBGzlIPv+3ziky2dk+HX8rxeWF5TNGJHbG/KeqH1CeX7/yYbsIKW394Ozg71EWws7TQN+/PXKceHqoHn4yB8dEEHk3/0IYIQX1ZrAteQu75RhLGV3+WSyC7jkqMC5pmgG6CZdelFTwG9Gnh5L1o4okH6mmLxN1yZvgjDgfMLvXNEVxLcWWYSGq9nY66PiboV4YWmFjEDd4jeOjsZRs35EN2CxsNgi7jOOcVyDd3niJbIs4I5vdzzu/EDD0AhtOI4eQFBx2/4TW2O/0JQp1/f2zNWzRr3QY99u50k6z+TgnwPOavuLsWwMyuOvX8U2/jLloTXlfJmfjjFBIZPf504=
+  skip_cleanup: true
+  app: smart-learning-development
+  on:
+    branch: develop
+- provider: heroku
+  api_key:
+      secure: RPy/7q1HSd+Lhv1MJCjn7HAc4QdJNlANqW6bfp8CzQiAGL8pFFEkYOxGy4djuVEneFVLgbz7j/j9x514/V9IizO+KwSXsS/Yw3+k/mpx2kJ9i3m0PYlHkIjE4rbSYmN4dBOFY/e4wrbU5EW4wtcdakkt1TJ5Kuxq40gbWBAx4uNFxdMGxeGSx4b08UGBiw75l6wKi+E4jIrQXDf3OHwH7PAiz6tbTS4eY0KVNk3Buw+bl9/QtV094C/9yFNOKrdCJMy2ZjHQH1qLaF9oGNy+PeQvVj6mILGKiaVn9RKbvjogEX6H/dle/8T6k+gy+jLQ3z3MX/ij8mlC/VxU4k04hTouBGzlIPv+3ziky2dk+HX8rxeWF5TNGJHbG/KeqH1CeX7/yYbsIKW394Ozg71EWws7TQN+/PXKceHqoHn4yB8dEEHk3/0IYIQX1ZrAteQu75RhLGV3+WSyC7jkqMC5pmgG6CZdelFTwG9Gnh5L1o4okH6mmLxN1yZvgjDgfMLvXNEVxLcWWYSGq9nY66PiboV4YWmFjEDd4jeOjsZRs35EN2CxsNgi7jOOcVyDd3niJbIs4I5vdzzu/EDD0AhtOI4eQFBx2/4TW2O/0JQp1/f2zNWzRr3QY99u50k6z+TgnwPOavuLsWwMyuOvX8U2/jLloTXlfJmfjjFBIZPf504=
+  skip_cleanup: true
+  app: smart-learning-stage
+  on:
+    branch: master
