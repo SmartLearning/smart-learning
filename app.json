@@ -40,9 +40,6 @@
   ],
   "buildpacks": [
     {
-      "url": "https://github.com/trautonen/heroku-buildpack-oracle-java"
-    },
-    {
       "url": "https://github.com/stomita/heroku-buildpack-phantomjs"
     },
     {
