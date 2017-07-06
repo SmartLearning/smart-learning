@@ -23,11 +23,18 @@ dependencies:
         - curl -o- -L https://yarnpkg.com/install.sh | bash
         - export PATH=/home/ubuntu/.yarn/bin:$PATH
         - yarn global add bower gulp-cli gulp
-        - "cd ${APP_DIR}"
+        - echo $HOME
+        - echo ${HOME}
+        - echo ${APP_DIR}
+        - echo $APP_DIR
+        - cd $APP_DIR
+        - pwd
         - yarn install
 test:
     override:
-        - "cd ${APP_DIR}"
+        - cd $APP_DIR
+        - pwd
+        - cd $APP_DIR
         - pwd
         - chmod +x ./gradlew
         - ./gradlew clean test --no-daemon
