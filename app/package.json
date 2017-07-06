@@ -7,7 +7,7 @@
     "node_modules",
     "src/main/webapp/bower_components"
   ],
-  "devDependencies": {
+  "dependencies": {
     "bower": "1.7.9",
     "browser-sync": "2.17.0",
     "del": "2.2.2",
@@ -73,5 +73,5 @@
     "test": "gulp test",
     "postinstall": "webdriver-manager update"
   },
-  "dependencies": {}
+  "devDependencies": {}
 }
