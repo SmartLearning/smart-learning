@@ -8,44 +8,28 @@ machine:
         version: 6.11.0
 dependencies:
     cache_directories:
-        - "${APP_DIR}/node_modules"
-        - "${APP_DIR}/src/main/webapp/bower_components"
-        - "${APP_DIR}/gradle-cache"
-        - "${APP_DIR}/.gradle"
-        - "${APP_DIR}/.yarn-cache"
+        - "$APP_DIR/node_modules"
+        - "$APP_DIR/src/main/webapp/bower_components"
+        - "$APP_DIR/gradle-cache"
+        - "$APP_DIR/.gradle"
+        - "$APP_DIR/.yarn-cache"
         - "~/.gradle"
         - "~/.yarn-cache"
         - "~/.m2"
         - "~/.cache/bower"
     override:
-#        - java -version
-#        # Repo for Yarn
-#        - curl -o- -L https://yarnpkg.com/install.sh | bash
-#        - export PATH=/home/ubuntu/.yarn/bin:$PATH
-#        - yarn global add bower gulp-cli gulp
-        - pwd
-        - ls -laFh
-        - echo ${APP_DIR}
-        - echo $APP_DIR
-        - cd $APP_DIR
-        - pwd
-        - cd ${APP_DIR}
-        - pwd
-        - cd ${APP_DIR}/
-        - pwd
-        - cd app
-        - pwd
-        - ls -laFh
-#        - yarn install
-#test:
-#    override:
-#        - cd $APP_DIR
-#        - pwd
-#        - cd $APP_DIR
-#        - pwd
-#        - chmod +x ./gradlew
-#        - ./gradlew clean test --no-daemon
-#        - gulp test
-#        - ./gradlew -Pprod clean test --no-daemon
-#        - gulp build
-#        - ./gradlew -Pprod stage -x test --no-daemon
+        - java -version
+        # Repo for Yarn
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - export PATH=/home/ubuntu/.yarn/bin:$PATH
+        - yarn global add bower gulp-cli gulp
+        - cd $APP_DIR && yarn install
+test:
+    override:
+        - chmod +x ./gradlew
+        - chmod +x $APP_DIR./gradlew
+        - cd $APP_DIR && ./gradlew clean test --no-daemon
+        - cd $APP_DIR && gulp test
+        - cd $APP_DIR && ./gradlew -Pprod clean test --no-daemon
+        - cd $APP_DIR && gulp build
+        - cd $APP_DIR && ./gradlew -Pprod stage -x test --no-daemon
