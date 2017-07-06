@@ -18,27 +18,31 @@ dependencies:
         - "~/.m2"
         - "~/.cache/bower"
     override:
-        - java -version
-        # Repo for Yarn
-        - curl -o- -L https://yarnpkg.com/install.sh | bash
-        - export PATH=/home/ubuntu/.yarn/bin:$PATH
-        - yarn global add bower gulp-cli gulp
-        - echo $HOME
-        - echo ${HOME}
+#        - java -version
+#        # Repo for Yarn
+#        - curl -o- -L https://yarnpkg.com/install.sh | bash
+#        - export PATH=/home/ubuntu/.yarn/bin:$PATH
+#        - yarn global add bower gulp-cli gulp
+        - pwd
+        - ls -laFh
         - echo ${APP_DIR}
         - echo $APP_DIR
         - cd $APP_DIR
         - pwd
-        - yarn install
-test:
-    override:
-        - cd $APP_DIR
+        - cd ${APP_DIR}
         - pwd
-        - cd $APP_DIR
+        - cd ${APP_DIR}/
         - pwd
-        - chmod +x ./gradlew
-        - ./gradlew clean test --no-daemon
-        - gulp test
-        - ./gradlew -Pprod clean test --no-daemon
-        - gulp build
-        - ./gradlew -Pprod stage -x test --no-daemon
+#        - yarn install
+#test:
+#    override:
+#        - cd $APP_DIR
+#        - pwd
+#        - cd $APP_DIR
+#        - pwd
+#        - chmod +x ./gradlew
+#        - ./gradlew clean test --no-daemon
+#        - gulp test
+#        - ./gradlew -Pprod clean test --no-daemon
+#        - gulp build
+#        - ./gradlew -Pprod stage -x test --no-daemon
