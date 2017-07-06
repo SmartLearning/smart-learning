@@ -241,7 +241,7 @@ task testReport(type: TestReport) {
 cucumberTest.finalizedBy(testReport)
 
 heroku {
-    appName = "smart-learning"
+    appName = "smart-learning-deployment"
 }
 
 configurations {
