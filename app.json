@@ -45,9 +45,6 @@
   "buildpacks": [
     {
       "url": "heroku/gradle"
-    },
-    {
-      "url": "heroku/java"
     }
   ]
 }
