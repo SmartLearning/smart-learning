@@ -40,13 +40,13 @@
   ],
   "buildpacks": [
     {
+      "url": "heroku/nodejs"
+    },
+    {
       "url": "heroku/gradle"
     },
     {
       "url": "heroku/java"
-    },
-    {
-      "url": "heroku/nodejs"
     }
   ]
 }
