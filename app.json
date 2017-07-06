@@ -8,6 +8,10 @@
       "required": true,
       "generator": "secret"
     },
+    "APP_DIR": {
+      "required": true,
+      "value": "app"
+    },
     "GRADLE_USER_HOME": {
       "required": true
     },
