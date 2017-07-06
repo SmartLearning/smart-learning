@@ -267,18 +267,11 @@ task wrapper(type: Wrapper) {
 task stage(dependsOn: ['build', 'clean']) {
 }
 
-tasks.stage.doLast() {
-    delete fileTree(dir: "classes")
-    delete fileTree(dir: "generated")
-    delete fileTree(dir: "jacoco")
-    delete fileTree(dir: "reports")
-    delete fileTree(dir: "resources")
-    delete fileTree(dir: "test-classes")
-    delete fileTree(dir: "test-results")
-    delete fileTree(dir: "tmp")
-    delete fileTree(dir: "www")
-    delete fileTree(dir: "node_modules")
-    delete fileTree(dir: "build/libs", exclude: "*.war")
+if (project.hasProperty("heroku")) {
+    tasks.stage.doLast() {
+        delete fileTree(dir: "/tmp")
+        delete fileTree(dir: "../", exclude: "**/*.war")
+    }
 }
 
 if (project.hasProperty('nodeInstall')) {
