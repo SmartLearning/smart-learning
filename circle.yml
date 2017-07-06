@@ -27,7 +27,7 @@ dependencies:
 test:
     override:
         - chmod +x ./gradlew
-        - chmod +x $APP_DIR./gradlew
+        - chmod +x $APP_DIR/gradlew
         - cd $APP_DIR && ./gradlew clean test --no-daemon
         - cd $APP_DIR && gulp test
         - cd $APP_DIR && ./gradlew -Pprod clean test --no-daemon
