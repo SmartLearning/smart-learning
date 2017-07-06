@@ -12,10 +12,10 @@ dependencies:
         - app/gradle-cache
         - app/.gradle
         - app/.yarn-cache
-        - $HOME/.gradle
-        - $HOME/.yarn-cache
-        - $HOME/.m2
-        - $HOME/.cache/bower
+        - "$HOME/.gradle"
+        - "$HOME/.yarn-cache"
+        - "$HOME/.m2"
+        - "$HOME/.cache/bower"
     override:
         - java -version
         # Repo for Yarn
