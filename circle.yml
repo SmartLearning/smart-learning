@@ -8,15 +8,15 @@ machine:
         version: 6.11.0
 dependencies:
     cache_directories:
-        - app/node_modules
-        - app/src/main/webapp/bower_components
-        - app/gradle-cache
-        - app/.gradle
-        - app/.yarn-cache
-        - "$HOME/.gradle"
-        - "$HOME/.yarn-cache"
-        - "$HOME/.m2"
-        - "$HOME/.cache/bower"
+        - "app/node_modules"
+        - "app/src/main/webapp/bower_components"
+        - "app/gradle-cache"
+        - "app/.gradle"
+        - "app/.yarn-cache"
+        - "~/.gradle"
+        - "~/.yarn-cache"
+        - "~/.m2"
+        - "~/.cache/bower"
     override:
         - java -version
         # Repo for Yarn
@@ -27,6 +27,7 @@ dependencies:
         - yarn install
 test:
     override:
+        - pwd
         - chmod +x ./gradlew
         - ./gradlew clean test --no-daemon
         - gulp test
