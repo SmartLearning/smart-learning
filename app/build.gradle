@@ -267,11 +267,11 @@ task wrapper(type: Wrapper) {
 task stage(dependsOn: ['build', 'clean']) {
 }
 
-if (project.hasProperty("heroku")) {
-    tasks.stage.doLast() {
-        delete fileTree(dir: "/tmp")
-        delete fileTree(dir: "../", exclude: "**/*.war")
+if (project.hasProperty("herokuRemoveAllFiles")) {
+    task removeUnnecessaryFiles(dependsOn: ['stage']) {
+        delete fileTree(dir: '../', exclude: '**/*.war')
     }
+    removeUnnecessaryFiles.mustRunAfter stage
 }
 
 if (project.hasProperty('nodeInstall')) {

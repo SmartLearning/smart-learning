@@ -11,7 +11,7 @@
     },
     "GRADLE_TASK": {
       "required": true,
-      "value": "stage -Pprod -Pheroku -PnodeInstall=true -x test"
+      "value": "stage -Pprod -PherokuRemoveAllFiles -PnodeInstall=true"
     },
     "GRADLE_USER_HOME": {
       "required": true

@@ -35,7 +35,6 @@ spring:
     data:
         mongodb:
             uri: ${MONGODB_URI}
-            database: ${MONGODB_DATABASE:null}
 
 security:
     basic:
