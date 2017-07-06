@@ -14,7 +14,7 @@
     },
     "GRADLE_TASK": {
       "required": true,
-      "value": "stage -Pprod -PinstallNode=true -x test"
+      "value": "stage -Pprod -PnodeInstall=true -x test"
     },
     "GRADLE_USER_HOME": {
       "required": true
