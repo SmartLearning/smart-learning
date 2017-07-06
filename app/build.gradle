@@ -268,17 +268,16 @@ task stage(dependsOn: ['build', 'clean']) {
 }
 
 if (project.hasProperty("herokuRemoveAllFiles")) {
-    task removeUnnecessaryFiles(dependsOn: ['stage']) {
+    tasks.stage.doLast {
         println 'Run removing unnecessary files except war files'
-        delete fileTree(dir: 'build', exclude: '**/*.war')
-        delete fileTree(dir: 'node_modules')
-        delete fileTree(dir: '.gradle')
-        delete fileTree(dir: 'gradle-cache')
-        delete fileTree(dir: 'src/main/java/bower_components')
+        delete fileTree(dir: './build', exclude: '**/*.war')
+        delete fileTree(dir: './node_modules')
+        delete fileTree(dir: './.gradle')
+        delete fileTree(dir: './gradle-cache')
+        delete fileTree(dir: './src/main/java/bower_components')
         delete fileTree(dir: '../.gradle')
         delete fileTree(dir: '../docker')
     }
-    removeUnnecessaryFiles.mustRunAfter stage
 }
 
 if (project.hasProperty('nodeInstall')) {
