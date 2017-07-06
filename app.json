@@ -14,7 +14,7 @@
     },
     "GRADLE_TASK": {
       "required": true,
-      "value": "stage -Pprod"
+      "value": "stage -Pprod -PinstallNode=true -x test"
     },
     "GRADLE_USER_HOME": {
       "required": true
@@ -43,6 +43,9 @@
     }
   ],
   "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
     {
       "url": "heroku/gradle"
     },
