@@ -269,6 +269,7 @@ task stage(dependsOn: ['build', 'clean']) {
 
 if (project.hasProperty("herokuRemoveAllFiles")) {
     task removeUnnecessaryFiles(dependsOn: ['stage']) {
+        println 'Run removing unnecessary files except war files'
         delete fileTree(dir: '../', exclude: '**/*.war')
     }
     removeUnnecessaryFiles.mustRunAfter stage
