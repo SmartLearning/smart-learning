@@ -26,10 +26,9 @@ dependencies:
         - yarn install
 test:
     override:
-        - cd app
         - chmod +x ./gradlew
-        - ./gradlew clean test  --no-daemon
+        - "./gradlew clean test --no-daemon"
         - gulp test
-        - ./gradlew -Pprod clean test
+        - "./gradlew -Pprod clean test --no-daemon"
         - gulp build
-        - ./gradlew -Pprod stage -x test  --no-daemon
+        - "./gradlew -Pprod stage -x test --no-daemon"

@@ -1,51 +1,47 @@
 os:
-  - linux
+    - linux
 services:
-  - docker
+    - docker
 language: java
 node_js:
-  - 6.11.0
+    - 6.11.0
 jdk:
-  - oraclejdk8
+    - oraclejdk8
 sudo: false
-branches:
-  only:
-  - develop
-  - master
 cache:
-  directories:
-  - app/node_modules
-  - app/src/main/webapp/bower_components
-  - app/gradle-cache
-  - app/.gradle
-  - app/.yarn-cache
-  - "$HOME/.gradle"
-  - "$HOME/.yarn-cache"
-  - "$HOME/.m2"
-  - "$HOME/.cache/bower"
+    directories:
+        - app/node_modules
+        - app/src/main/webapp/bower_components
+        - app/gradle-cache
+        - app/.gradle
+        - app/.yarn-cache
+        - "$HOME/.gradle"
+        - "$HOME/.yarn-cache"
+        - "$HOME/.m2"
+        - "$HOME/.cache/bower"
 env:
-  global:
-    - NODE_VERSION=6.11.0
-    - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
-    - GRADLE_USER_HOME=gradle-cache
+    global:
+        - NODE_VERSION=6.11.0
+        - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+        - GRADLE_USER_HOME=gradle-cache
 before_install:
-  - jdk_switcher use oraclejdk8
-  - java -version
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add bower gulp-cli gulp
+    - jdk_switcher use oraclejdk8
+    - java -version
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - yarn global add bower gulp-cli gulp
 install:
-  - cd app
-  - yarn install
+    - cd app
+    - yarn install
 script:
-  - chmod +x ./gradlew
-  - "./gradlew clean test"
-  - gulp test
-  - "./gradlew -Pprod clean test"
-  - gulp build
-  - "./gradlew -Pprod stage -x test"
+    - chmod +x ./gradlew
+    - "./gradlew clean test"
+    - gulp test
+    - "./gradlew -Pprod clean test"
+    - gulp build
+    - "./gradlew -Pprod stage -x test"
 notifications:
-  webhooks:
-    on_success: change
-    on_failure: always
-    on_start: always
+    webhooks:
+        on_success: change
+        on_failure: always
+        on_start: always
