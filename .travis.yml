@@ -10,10 +10,10 @@ jdk:
 sudo: false
 cache:
     directories:
-        - app/node_modules
-        - app/gradle-cache
-        - app/.gradle
-        - app/.yarn-cache
+        - "$APP_DIR/node_modules"
+        - "$APP_DIR/gradle-cache"
+        - "$APP_DIR/.gradle"
+        - "$APP_DIR/.yarn-cache"
         - "$HOME/.gradle"
         - "$HOME/.yarn-cache"
         - "$HOME/.m2"
@@ -29,7 +29,7 @@ before_install:
     - export PATH=$HOME/.yarn/bin:$PATH
     - yarn global add bower gulp-cli gulp
 install:
-    - cd app
+    - cd $APP_DIR
     - yarn install
 script:
     - pwd

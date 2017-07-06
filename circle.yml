@@ -8,11 +8,11 @@ machine:
         version: 6.11.0
 dependencies:
     cache_directories:
-        - "app/node_modules"
-        - "app/src/main/webapp/bower_components"
-        - "app/gradle-cache"
-        - "app/.gradle"
-        - "app/.yarn-cache"
+        - "$APP_DIR/node_modules"
+        - "$APP_DIR/src/main/webapp/bower_components"
+        - "$APP_DIR/gradle-cache"
+        - "$APP_DIR/.gradle"
+        - "$APP_DIR/.yarn-cache"
         - "~/.gradle"
         - "~/.yarn-cache"
         - "~/.m2"
@@ -23,10 +23,11 @@ dependencies:
         - curl -o- -L https://yarnpkg.com/install.sh | bash
         - export PATH=/home/ubuntu/.yarn/bin:$PATH
         - yarn global add bower gulp-cli gulp
-        - cd app/
+        - cd $APP_DIR
         - yarn install
 test:
     override:
+        - cd $APP_DIR
         - pwd
         - chmod +x ./gradlew
         - ./gradlew clean test --no-daemon
