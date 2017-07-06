@@ -33,6 +33,9 @@ dependencies:
         - pwd
         - cd ${APP_DIR}/
         - pwd
+        - cd app
+        - pwd
+        - ls -laFh
 #        - yarn install
 #test:
 #    override:
