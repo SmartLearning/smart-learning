@@ -1,6 +1,9 @@
 {
   "name": "smart-learning",
   "env": {
+    "APP_DIR": {
+      "required": true
+    },
     "APPLICATION_SECURITY_AUTHENTICATION_JWT_SECRET": {
       "required": true,
       "generator": "secret"
