@@ -68,7 +68,6 @@ exports.css = [
 ];
 
 exports.js = [
-    exports.app + 'app/AppController.js',
     exports.app + 'app/**/*.js'
 ];
 
