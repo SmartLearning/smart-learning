@@ -38,16 +38,12 @@
 
         function activate() {
             Language.getAll().then(onLanguageSuccess);
-            Principal.identity().then(onIdentifySuccess);
+            vm.authorities = AccountConstants.getAllRoles();
 
             //////////////////////////////
 
             function onLanguageSuccess(languages) {
                 vm.languages = languages;
-            }
-
-            function onIdentifySuccess(user) {
-                vm.authorities = AccountConstants.getAvailableRoles(user.authorities || []);
             }
         }
 
@@ -120,22 +116,25 @@
                 'user.reset_password.title',
                 'user.reset_password.message',
                 'user.reset_password.reset',
-                'user.reset_password.cancel', {
-                    login: vm.model.login
+                'user.reset_password.cancel',
+                {
+                    login: vm.model.username
                 }
-            ).then(
-                function (yes) {
-                    if (yes) {
-                        ResetRequest.save({}, vm.model.email, onResetSuccess);
-                    }
+            ).then(onSuccess);
 
-                    //////////////////////
+            //////////////////////////////////////////////
 
-                    function onResetSuccess() {
-                        $state.go('user.detail', {id: vm.model.id}, {reload: true});
-                    }
+            function onSuccess(yes) {
+                if (yes) {
+                    ResetRequest.save({}, vm.model.email, onResetSuccess);
                 }
-            );
+
+                /////////////////////////////////////////////////
+
+                function onResetSuccess() {
+                    $state.go('user.detail', {id: vm.model.id}, {reload: true});
+                }
+            }
         }
     }
 

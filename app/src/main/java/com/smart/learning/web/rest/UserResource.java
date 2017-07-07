@@ -8,6 +8,7 @@ import com.smart.learning.security.AuthoritiesConstants;
 import com.smart.learning.service.MailService;
 import com.smart.learning.service.UserService;
 import com.smart.learning.service.dto.UserDTO;
+import com.smart.learning.web.rest.util.CrudResource;
 import com.smart.learning.web.rest.util.HeaderUtil;
 import com.smart.learning.web.rest.util.PaginationUtil;
 import com.smart.learning.web.rest.util.ResponseUtil;
@@ -57,7 +58,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserResource {
 
-    private static final String ENTITY_NAME = "userManagement";
+    private static final String ENTITY_NAME = "user";
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
@@ -92,22 +93,22 @@ public class UserResource {
 
         if (managedUserVM.getId() != null) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new user cannot already have an ID"))
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "error.id_exists"))
                 .body(null);
             // Lowercase the user username before comparing with database
         } else if (userRepository.findOneByUsername(managedUserVM.getUsername().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Username already in use"))
+                .headers(HeaderUtil.createFailureAlert(CrudResource.GLOBAL_NAME, "messages.error.user_exists"))
                 .body(null);
         } else if (userRepository.findOneByEmail(managedUserVM.getEmail()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use"))
+                .headers(HeaderUtil.createFailureAlert(CrudResource.GLOBAL_NAME, "messages.error.email_exists"))
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserVM);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getUsername()))
-                .headers(HeaderUtil.createAlert("userManagement.created", newUser.getUsername()))
+                .headers(HeaderUtil.createEntityCreationAlert(CrudResource.GLOBAL_NAME, newUser.getUsername()))
                 .body(newUser);
         }
     }
@@ -124,7 +125,7 @@ public class UserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable String username) {
         log.debug("REST request to delete User: {}", username);
         userService.deleteUser(username);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert("userManagement.deleted", username)).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(CrudResource.GLOBAL_NAME, username)).build();
     }
 
     /**
@@ -170,11 +171,11 @@ public class UserResource {
         log.debug("REST request to update User : {}", managedUserVM);
         Optional<User> existingUser = userRepository.findOneByEmail(managedUserVM.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserVM.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(CrudResource.GLOBAL_NAME, "messages.error.email_exists")).body(null);
         }
         existingUser = userRepository.findOneByUsername(managedUserVM.getUsername().toLowerCase());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserVM.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Username already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(CrudResource.GLOBAL_NAME, "messages.error.user_exists")).body(null);
         }
         Optional<UserDTO> updatedUser = userService.updateUser(managedUserVM);
 

@@ -24,7 +24,10 @@
                 config: {
                     url: '/{id}',
                     data: {
-                        pageTitle: 'user.detail.title'
+                        pageTitle: 'user.detail.title',
+                        menu: {
+                            indicatorState: 'user.list'
+                        }
                     },
                     views: {
                         body: {

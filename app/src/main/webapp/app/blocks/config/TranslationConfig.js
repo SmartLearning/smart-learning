@@ -22,7 +22,7 @@
             }
         );
 
-        $translateProvider.preferredLanguage('tr');
+        $translateProvider.preferredLanguage('en');
         $translateProvider.useStorage('translationStorageProvider');
         $translateProvider.useSanitizeValueStrategy('escaped');
         $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
