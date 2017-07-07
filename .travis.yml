@@ -1,10 +1,46 @@
+os:
+    - linux
+services:
+    - docker
 language: java
+node_js:
+    - 6.11.0
 jdk:
-  - oraclejdk8
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+    - oraclejdk8
+sudo: false
 cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+    directories:
+        - "$APP_DIR/node_modules"
+        - "$APP_DIR/gradle-cache"
+        - "$APP_DIR/.gradle"
+        - "$APP_DIR/.yarn-cache"
+        - "$HOME/.gradle"
+        - "$HOME/.yarn-cache"
+        - "$HOME/.m2"
+env:
+    global:
+        - NODE_VERSION=6.11.0
+        - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+        - GRADLE_USER_HOME=gradle-cache
+before_install:
+    - jdk_switcher use oraclejdk8
+    - java -version
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - yarn global add bower gulp-cli gulp
+install:
+    - "cd $APP_DIR"
+    - yarn install
+script:
+    - pwd
+    - chmod +x ./gradlew
+    - "./gradlew clean test"
+    - gulp test
+    - "./gradlew -Pprod clean test"
+    - gulp build
+    - "./gradlew -Pprod stage -x test"
+notifications:
+    webhooks:
+        on_success: change
+        on_failure: always
+        on_start: always

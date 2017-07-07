@@ -94,15 +94,15 @@
                 );
             }
 
-            function confirm(event, title, message, okButtonMessage, cancelButtonMessage, usingMessageFormat) {
+            function confirm(event, title, message, okButtonMessage, cancelButtonMessage, params, usingMessageFormat) {
                 var $mdDialog = $injector.get('$mdDialog');
                 var messageFormat = usingMessageFormat ? 'messageformat' : null;
 
                 var text = {
-                    title: $translate.instant(title, null, messageFormat),
-                    message: $translate.instant(message, null, messageFormat),
-                    okButtonMessage: $translate.instant(okButtonMessage, null, messageFormat),
-                    cancelButtonMessage: $translate.instant(cancelButtonMessage, null, messageFormat)
+                    title: $translate.instant(title, params || {}, messageFormat),
+                    message: $translate.instant(message, params || {}, messageFormat),
+                    okButtonMessage: $translate.instant(okButtonMessage, params || {}, messageFormat),
+                    cancelButtonMessage: $translate.instant(cancelButtonMessage, params || {}, messageFormat)
                 };
                 var confirm = $mdDialog.confirm()
                     .title(text.title)
