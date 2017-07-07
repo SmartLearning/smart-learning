@@ -8,10 +8,6 @@
       "required": true,
       "generator": "secret"
     },
-    "APP_DIR": {
-      "required": true,
-      "value": "app"
-    },
     "GRADLE_TASK": {
       "required": true,
       "value": "stage -Pprod -PherokuRemoveAllFiles -PnodeInstall=true"
