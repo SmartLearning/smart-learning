@@ -1,0 +1,47 @@
+{
+  "name": "smart-learning",
+  "scripts": {
+  },
+  "env": {
+    "APP_DIR": {
+      "required": true
+    },
+    "APPLICATION_SECURITY_AUTHENTICATION_JWT_SECRET": {
+      "required": true
+    },
+    "GRADLE_USER_HOME": {
+      "required": true
+    },
+    "LIBRATO_PASSWORD": {
+      "required": true
+    },
+    "LIBRATO_TOKEN": {
+      "required": true
+    },
+    "LIBRATO_USER": {
+      "required": true
+    },
+    "MONGODB_URI": {
+      "required": true
+    },
+    "NEW_RELIC_LICENSE_KEY": {
+      "required": true
+    },
+    "NEW_RELIC_LOG": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "librato",
+    "logentries",
+    "mongolab",
+    "newrelic"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/gradle"
+    }
+  ]
+}
