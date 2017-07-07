@@ -33,3 +33,7 @@ test:
         - cd $APP_DIR && ./gradlew -Pprod clean test --no-daemon
         - cd $APP_DIR && gulp build
         - cd $APP_DIR && ./gradlew -Pprod stage -x test --no-daemon
+    test:
+        post:
+            - cd $APP_DIR && mkdir -p $CIRCLE_TEST_REPORTS/junit/
+            - cd $APP_DIR && find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
