@@ -6,6 +6,8 @@ machine:
         version: oraclejdk8
     node:
         version: 6.11.0
+    environment:
+        _JAVA_OPTIONS: "-Xms512m -Xmx1500m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2"
 dependencies:
     cache_directories:
         - $APP_DIR/node_modules"
