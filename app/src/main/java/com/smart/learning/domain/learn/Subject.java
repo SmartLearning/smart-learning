@@ -1,9 +1,10 @@
 package com.smart.learning.domain.learn;
 
 import com.smart.learning.domain.util.StringBaseDateModel;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Represents a category of learning. Student can
@@ -16,9 +17,12 @@ public class Subject extends StringBaseDateModel {
     private String name;
 
     //student can go further and customize sub-subjects they want to learn
-    private Set<Subject> children;
+    @DBRef
+    private List<Subject> children;
 
-    private Set<Tag> tags;
+    private List<Tag> tags;
+
+    private boolean topLevel;
 
     public String getName() {
         return name;
@@ -28,19 +32,27 @@ public class Subject extends StringBaseDateModel {
         this.name = name;
     }
 
-    public Set<Subject> getChildren() {
+    public List<Subject> getChildren() {
         return children;
     }
 
-    public void setChildren(Set<Subject> children) {
+    public void setChildren(List<Subject> children) {
         this.children = children;
     }
 
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public boolean isTopLevel() {
+        return topLevel;
+    }
+
+    public void setTopLevel(boolean topLevel) {
+        this.topLevel = topLevel;
     }
 }
