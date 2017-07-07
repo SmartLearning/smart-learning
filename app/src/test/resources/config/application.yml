@@ -26,7 +26,8 @@ spring:
         mode: XHTML
     data:
         mongodb:
-            uri: mongodb://localhost:27017/app_test
+            uri: mongodb://localhost:27017
+            database: app_test
 
 liquibase:
     contexts: test
