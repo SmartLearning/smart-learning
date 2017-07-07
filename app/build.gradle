@@ -15,6 +15,7 @@ buildscript {
         classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${spring_boot_version}"
         classpath group: 'org.springframework.build.gradle', name: 'propdeps-plugin', version: "${gradle_plugin_propdeps_version}"
         classpath group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: "${gradle_plugin_sonar_version}"
+        classpath group: 'gradle.plugin.com.heroku.sdk', name: 'heroku-gradle', version: "${gradle_plugin_heroku_version}"
     }
 }
 
@@ -23,7 +24,7 @@ apply plugin: 'java'
 version = '1.0.0'
 group = 'com.smart.learning'
 sourceCompatibility = 1.8
-targetCompatibility=1.8
+targetCompatibility = 1.8
 
 apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
@@ -34,6 +35,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'net.ltgt.apt'
 apply plugin: "org.sonarqube"
 apply plugin: 'jacoco'
+apply plugin: 'com.heroku.sdk.heroku-gradle'
 
 defaultTasks 'bootRun'
 
@@ -58,13 +60,13 @@ dependencies {
     compile group: 'javax.inject', name: 'javax.inject', version: "${inject_version}"
     compile group: 'com.github.mongobee', name: 'mongobee', version: "${mongobee_version}"
     compile group: 'org.mapstruct', name: 'mapstruct-processor', version: "${mapstruct_version}"
-    compile group: 'io.springfox', name: 'springfox-bean-validators', version: "${spring_fox_version}"
     compile group: 'commons-io', name: 'commons-io', version: "${commons_io_version}"
     compile group: 'org.apache.commons', name: 'commons-text', version: "${commons_text_version}"
     compile group: 'org.apache.commons', name: 'commons-lang3', version: "${commons_lang3_version}"
     compile group: 'org.apache.commons', name: 'commons-collections4', version: "${commons_collections4_version}"
     compile group: 'org.apache.commons', name: 'commons-rng-simple', version: "${commons_rng_version}"
 
+    compile group: 'io.springfox', name: 'springfox-bean-validators', version: "${spring_fox_version}"
     compile(group: 'io.springfox', name: 'springfox-swagger2', version: "${spring_fox_version}") {
         exclude group: 'mapstruct', module: 'org.mapstruct'
     }
@@ -153,14 +155,14 @@ dependencyManagement {
     }
 }
 
+apply from: 'gradle/gatling.gradle'
+apply from: 'gradle/ui.gradle'
+
 if (project.hasProperty('prod')) {
     apply from: 'gradle/profile_prod.gradle'
 } else {
     apply from: 'gradle/profile_dev.gradle'
 }
-
-apply from: 'gradle/gatling.gradle'
-apply from: 'gradle/ui.gradle'
 
 bootRepackage {
     mainClass = 'com.smart.learning.LearningApplication'
@@ -238,6 +240,10 @@ task testReport(type: TestReport) {
 
 cucumberTest.finalizedBy(testReport)
 
+heroku {
+    appName = "smart-learning-deployment"
+}
+
 configurations {
     providedRuntime
     compile.exclude module: "spring-boot-starter-tomcat"
@@ -258,7 +264,20 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.0'
 }
 
-task stage(dependsOn: 'bootRepackage') {
+task stage(dependsOn: ['build', 'clean']) {
+}
+
+if (project.hasProperty("herokuRemoveAllFiles")) {
+    tasks.stage.doLast {
+        println 'Run removing unnecessary files except war files'
+        delete fileTree(dir: './build', exclude: '**/*.war')
+        delete fileTree(dir: './node_modules')
+        delete fileTree(dir: './.gradle')
+        delete fileTree(dir: './gradle-cache')
+        delete fileTree(dir: './src/main/java/bower_components')
+        delete fileTree(dir: '../.gradle')
+        delete fileTree(dir: '../docker')
+    }
 }
 
 if (project.hasProperty('nodeInstall')) {
@@ -273,3 +292,4 @@ if (project.hasProperty('nodeInstall')) {
 compileJava.dependsOn processResources
 processResources.dependsOn cleanResources, bootBuildInfo
 bootBuildInfo.mustRunAfter cleanResources
+build.mustRunAfter clean

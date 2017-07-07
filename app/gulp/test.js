@@ -35,7 +35,8 @@ module.exports = {
 function karma(done) {
     new KarmaServer({
         configFile: __dirname + '/../' + config.test + 'karma.conf.js',
-        singleRun: true
+        singleRun: true,
+        failOnEmptyTestSuite: false
     }, done).start();
 }
 

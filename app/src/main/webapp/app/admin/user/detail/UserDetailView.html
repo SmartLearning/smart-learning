@@ -8,8 +8,8 @@
                        md-maxlength="50"
                        ng-minlength="1"
                        name="login"
-                       ng-model="vm.model.login">
-                <div ng-messages="form.login.$error">
+                       ng-model="vm.model.username">
+                <div ng-messages="form.username.$error">
                     <div ng-message-exp="['required', 'minlength']">
                         <span data-translate translate-value-length="1">global.messages.error.min</span>
                     </div>
@@ -105,7 +105,7 @@
     </md-card-content>
     <md-divider></md-divider>
     <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-click="vm.save()" ng-disabled="form.$invalid" type="submit" class="md-primary md-raised">
+        <md-button ng-click="form.$valid && vm.save()" type="submit" class="md-primary md-raised">
             <md-icon>save</md-icon>
             <label data-translate>global.buttons.save</label>
         </md-button>
@@ -115,7 +115,7 @@
             <label ng-if="!vm.model.activated" data-translate>user.status.deactivated</label>
             <label ng-if="vm.model.activated" data-translate>user.status.activated</label>
         </md-button>
-        <md-button ng-click="vm.resetPassword()" ng-disabled="form.$invalid" type="submit" class="md-primary md-raised">
+        <md-button ng-click="form.$valid && vm.resetPassword()" type="submit" class="md-primary md-raised">
             <md-icon>lock</md-icon>
             <label data-translate>user.button.reset_password</label>
         </md-button>

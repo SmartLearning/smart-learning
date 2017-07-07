@@ -1,13 +1,16 @@
 {
   "name": "smart-learning",
-  "scripts": {
-  },
   "env": {
     "APP_DIR": {
       "required": true
     },
     "APPLICATION_SECURITY_AUTHENTICATION_JWT_SECRET": {
-      "required": true
+      "required": true,
+      "generator": "secret"
+    },
+    "GRADLE_TASK": {
+      "required": true,
+      "value": "stage -Pprod -PherokuRemoveAllFiles -PnodeInstall=true"
     },
     "GRADLE_USER_HOME": {
       "required": true
@@ -34,10 +37,13 @@
   "formation": {
   },
   "addons": [
+    "newrelic",
     "librato",
     "logentries",
-    "mongolab",
-    "newrelic"
+    {
+      "plan": "mongolab",
+      "as": "MONGODB"
+    }
   ],
   "buildpacks": [
     {
