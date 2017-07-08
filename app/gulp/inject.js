@@ -7,7 +7,6 @@
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var inject = require('gulp-inject');
-var es = require('event-stream');
 var gulpIf = require('gulp-if');
 var order = require('gulp-order');
 var naturalSort = require('gulp-natural-sort');
@@ -29,11 +28,10 @@ module.exports = {
 function app() {
     return gulp.src(config.app + 'index.html')
         .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(inject(
-            gulp.src(config.app + 'app/**/*.js')
+        .pipe(inject(gulp.src(config.js)
                 .pipe(naturalSort())
                 .pipe(angularFileSort())
-                .pipe(gulpIf(config.js, order(config.jsOrder))), {relative: true}
+                .pipe(gulpIf(config.jsOrder, order(config.jsOrder))), {relative: true}
             )
         )
         .pipe(inject(gulp.src(config.css), {relative: true}))

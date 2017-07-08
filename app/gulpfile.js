@@ -103,7 +103,7 @@ gulp.task('build:app', build.app);
 
 gulp.task('build', ['clean:all'], onBuildSuccess);
 
-gulp.task('default', ['install']);
+gulp.task('default', ['build']);
 
 ///////////////////////////////
 

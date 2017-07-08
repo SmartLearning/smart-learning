@@ -34,8 +34,7 @@ spring:
             max-request-size: 128MB
     data:
         mongodb:
-            uri: mongodb://mongodb:27017
-            database: app
+            uri: ${MONGODB_URI}
 
 security:
     basic:

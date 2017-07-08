@@ -160,8 +160,7 @@ public class ExceptionTranslator {
             title = "error." + responseStatus.value().value();
             message = responseStatus.reason();
         }
-        HttpHeaders headers = HeaderUtil.createFailureAlert(message);
-        return builder.headers(headers).body(new ErrorVM(title, message));
+        return builder.body(new ErrorVM(title, message));
     }
 
     @ResponseBody

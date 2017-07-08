@@ -49,8 +49,24 @@
                     method: 'GET',
                     transformResponse: DateUtils.fromServer
                 },
-                'save': {method: 'POST'},
-                'update': {method: 'PUT'},
+                'save': {
+                    method: 'POST',
+                    transformRequest: function (data) {
+                        return DateUtils.toServer(data, [
+                            'createdAt',
+                            'modifiedAt'
+                        ]);
+                    }
+                },
+                'update': {
+                    method: 'PUT',
+                    transformRequest: function (data) {
+                        return DateUtils.toServer(data, [
+                            'createdAt',
+                            'modifiedAt'
+                        ]);
+                    }
+                },
                 'delete': {method: 'DELETE'}
             }
         );

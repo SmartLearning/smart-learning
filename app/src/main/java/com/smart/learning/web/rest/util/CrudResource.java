@@ -36,7 +36,7 @@ public abstract class CrudResource<
 
     public static final String DELIMITER = "/";
 
-    private static final String GLOBAL_NAME = "global";
+    public static final String GLOBAL_NAME = "global";
 
     protected S service;
 

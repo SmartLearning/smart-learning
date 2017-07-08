@@ -49,7 +49,7 @@ public class MongoDBConfiguration {
     public Mongobee mongobee(MongoClient mongoClient, MongoTemplate mongoTemplate, MongoProperties mongoProperties) {
         logger.debug("Configuring Mongobee");
         Mongobee mongobee = new Mongobee(mongoClient);
-        mongobee.setDbName(mongoProperties.getDatabase());
+        mongobee.setDbName(mongoProperties.getMongoClientDatabase());
         mongobee.setMongoTemplate(mongoTemplate);
         // package to scan for migrations
         mongobee.setChangeLogsScanPackage("com.smart.learning.repository.migrations");
