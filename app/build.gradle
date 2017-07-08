@@ -274,7 +274,7 @@ if (project.hasProperty("herokuRemoveAllFiles")) {
         delete fileTree(dir: 'node_modules')
         delete fileTree(dir: '.gradle')
         delete fileTree(dir: 'gradle-cache')
-        delete fileTree(dir: 'src/main/java/bower_components')
+        delete fileTree(dir: 'src')
         delete fileTree(dir: '../gradle-cache')
         delete fileTree(dir: '../.gradle')
         delete fileTree(dir: '../docker')
