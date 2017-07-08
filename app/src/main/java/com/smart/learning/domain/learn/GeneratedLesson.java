@@ -2,8 +2,10 @@ package com.smart.learning.domain.learn;
 
 import com.smart.learning.domain.User;
 import com.smart.learning.domain.util.StringBaseDateModel;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,10 +14,13 @@ import java.util.List;
  */
 @Document(collection = "generated_lessons")
 public class GeneratedLesson extends StringBaseDateModel {
+
+    private static final long serialVersionUID = -6879130667532994415L;
     private User student;
     //subject that this lessons is linked to
     private Subject subject;
-    private List<Content> contents;
+    @DBRef
+    private List<Content> contents = new LinkedList<>();
 
     public User getStudent() {
         return student;
