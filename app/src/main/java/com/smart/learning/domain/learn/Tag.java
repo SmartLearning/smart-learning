@@ -12,6 +12,15 @@ public class Tag extends StringBaseDateModel {
     private String name;
     private String value;
 
+    public Tag(String name, String value) {
+
+        this.name = name;
+        this.value = value;
+    }
+
+    public Tag() {
+    }
+
     public String getName() {
         return name;
     }

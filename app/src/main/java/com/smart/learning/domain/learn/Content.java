@@ -1,10 +1,13 @@
 package com.smart.learning.domain.learn;
 
 import com.smart.learning.domain.util.StringBaseDateModel;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.net.URI;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A smallest unit of learning in the system. For instance, a content about
@@ -29,7 +32,18 @@ public class Content extends StringBaseDateModel {
     /**
      * assigned tags by system or teachers
      */
-    private Set<Tag> tags;
+    private List<Tag> tags = new LinkedList<>();
+
+    @DBRef
+    private List<Question> questions = new LinkedList<>();
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 
     public String getType() {
         return type;
@@ -47,11 +61,15 @@ public class Content extends StringBaseDateModel {
         this.resource = resource;
     }
 
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public Optional<Tag> findTag(String tag) {
+        return tags.stream().filter(t -> tag.equals(t.getName())).findFirst();
     }
 }
