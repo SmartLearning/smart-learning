@@ -1,6 +1,7 @@
 package com.smart.learning.domain.learn;
 
 import com.smart.learning.domain.util.StringBaseDateModel;
+import com.smart.learning.domain.util.Tag;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,6 +22,8 @@ import java.util.Optional;
  */
 @Document(collection = "contents")
 public class Content extends StringBaseDateModel {
+
+    private static final long serialVersionUID = -7744852279957052291L;
     /**
      * type of the resource: video, Google doc, pdf, image, etc.
      */
@@ -69,6 +72,9 @@ public class Content extends StringBaseDateModel {
         this.tags = tags;
     }
 
+    public boolean hasTag(String tag){
+        return tags.stream().anyMatch(t->t.getName().equals(tag));
+    }
     public Optional<Tag> findTag(String tag) {
         return tags.stream().filter(t -> tag.equals(t.getName())).findFirst();
     }

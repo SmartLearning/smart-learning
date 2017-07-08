@@ -1,6 +1,7 @@
 package com.smart.learning.domain.learn;
 
 import com.smart.learning.domain.util.StringBaseDateModel;
+import com.smart.learning.domain.util.Tag;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,6 +10,8 @@ import java.util.*;
 @Document(collection = "questions")
 public class Question extends StringBaseDateModel {
 
+
+    private static final long serialVersionUID = 4213848476891265481L;
     private Content content;
 
     private String question;
@@ -21,7 +24,6 @@ public class Question extends StringBaseDateModel {
     private String answer;
 
     //the areas this question is related to
-    @DBRef
     private List<Tag> tags = new LinkedList<>();
 
     public Content getContent() {

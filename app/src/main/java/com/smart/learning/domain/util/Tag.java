@@ -1,14 +1,14 @@
-package com.smart.learning.domain.learn;
+package com.smart.learning.domain.util;
 
-import com.smart.learning.domain.util.StringBaseDateModel;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.io.Serializable;
 
 /**
  * Represents a tag to be added to a question.
  * To simplify the learning algorithm, there is no hierarchy for tags
  */
-@Document(collection = "tags")
-public class Tag extends StringBaseDateModel {
+public class Tag implements Serializable {
+
+    private static final long serialVersionUID = -2381960015469845872L;
     private String name;
     private String value;
 

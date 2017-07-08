@@ -14,6 +14,8 @@ import java.util.List;
  */
 @Document(collection = "generated_lessons")
 public class GeneratedLesson extends StringBaseDateModel {
+
+    private static final long serialVersionUID = -6879130667532994415L;
     private User student;
     //subject that this lessons is linked to
     private Subject subject;

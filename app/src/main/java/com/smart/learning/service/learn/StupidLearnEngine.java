@@ -50,7 +50,9 @@ public class StupidLearnEngine implements LearnEngine {
 
     private Map<Integer, List<Content>> getContentsForDifficultyRange(Subject subject, Range<Integer> difficultyRange) {
         List<Content> contentsOfSubject = new LinkedList<>();//todo fill this
-        return contentsOfSubject.stream().filter(o -> difficultyRange.contains(Integer.valueOf(o.findTag(DIFFICULTY_TAG).get().getValue())))
+        return contentsOfSubject.stream()
+            .filter(o -> o.hasTag(DIFFICULTY_TAG))
+            .filter(o -> difficultyRange.contains(Integer.valueOf(o.findTag(DIFFICULTY_TAG).get().getValue())))
             .collect(
                 Collectors.groupingBy(o -> Integer.valueOf(o.findTag(DIFFICULTY_TAG).get().getValue()))
 
@@ -78,7 +80,7 @@ public class StupidLearnEngine implements LearnEngine {
 
 
     @Override
-    public List<Question> questionsForLesson(GeneratedLesson lesson){
+    public List<Question> questionsForLesson(GeneratedLesson lesson) {
         return null;
     }
 

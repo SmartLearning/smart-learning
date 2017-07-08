@@ -1,6 +1,7 @@
 package com.smart.learning.domain.learn;
 
 import com.smart.learning.domain.util.StringBaseDateModel;
+import com.smart.learning.domain.util.Tag;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +15,8 @@ import java.util.List;
 @Document(collection = "subjects")
 public class Subject extends StringBaseDateModel {
 
+
+    private static final long serialVersionUID = -4945393383734576150L;
     private String name;
 
     //student can go further and customize sub-subjects they want to learn
