@@ -15,15 +15,6 @@
     "GRADLE_USER_HOME": {
       "required": true
     },
-    "LIBRATO_PASSWORD": {
-      "required": true
-    },
-    "LIBRATO_TOKEN": {
-      "required": true
-    },
-    "LIBRATO_USER": {
-      "required": true
-    },
     "MONGODB_URI": {
       "required": true
     },
