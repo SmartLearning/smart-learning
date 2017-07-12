@@ -17,10 +17,10 @@ spring:
         livereload:
             enabled: false
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: ${MAILGUN_SMTP_SERVER}
+        port: ${MAILGUN_SMTP_PORT}
+        username: ${MAILGUN_SMTP_LOGIN}
+        password: ${MAILGUN_SMTP_PASSWORD}
     thymeleaf:
         cache: true
 
