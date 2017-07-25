@@ -52,7 +52,7 @@ public class StupidLearnEngine implements LearnEngine {
     private Map<Integer, List<Content>> getContentsForDifficultyRange(Subject subject, Range<Integer> difficultyRange) {
         Range<Integer> range = Range.between(1, difficultyRange.getMaximum());
 
-        List<Content> contentsOfSubject = new LinkedList<>();//todo fill this
+        List<Content> contentsOfSubject = subject.getContents();
         return contentsOfSubject.stream()
             .filter(o -> o.hasTag(DIFFICULTY_TAG))
             .filter(o -> range.contains(o.findTagValue(DIFFICULTY_TAG).map(Integer::valueOf).orElse(-1)))

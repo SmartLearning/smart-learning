@@ -27,6 +27,17 @@ public class Subject extends StringBaseDateModel {
 
     private boolean topLevel;
 
+    @DBRef
+    private List<Content> contents;
+
+    public List<Content> getContents() {
+        return contents;
+    }
+
+    public void setContents(List<Content> contents) {
+        this.contents = contents;
+    }
+
     public String getName() {
         return name;
     }
