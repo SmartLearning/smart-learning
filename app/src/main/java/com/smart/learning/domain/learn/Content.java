@@ -75,7 +75,7 @@ public class Content extends StringBaseDateModel {
     public boolean hasTag(String tag){
         return tags.stream().anyMatch(t->t.getName().equals(tag));
     }
-    public Optional<Tag> findTag(String tag) {
-        return tags.stream().filter(t -> tag.equals(t.getName())).findFirst();
+    public Optional<String> findTagValue(String tag) {
+        return tags.stream().filter(t -> tag.equals(t.getName())).findFirst().map(Tag::getValue);
     }
 }
