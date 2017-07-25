@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StupidLearnEngine implements LearnEngine {
-    private static final String DIFFICULTY_TAG = "difficulty";
+    public static final String DIFFICULTY_TAG = "difficulty";
     private static final int DIFFICULTY_LEVELS = 10;
     private static final int MAX_NUMBER_OF_QUESTIONS_IN_INITIAL_TEST = 30;
 
@@ -21,6 +21,9 @@ public class StupidLearnEngine implements LearnEngine {
 
         Map<Integer, List<Content>> contents = getContentsForDifficultyRange(subject, difficultyRange);
 
+        if (contents.isEmpty()) {
+            throw new RuntimeException("There is no difficulty range/content for the specified range");
+        }
         int questionsPerDifficultyLevel = MAX_NUMBER_OF_QUESTIONS_IN_INITIAL_TEST / contents.size();
         List<Question> questions = new LinkedList<>();
 
@@ -54,8 +57,8 @@ public class StupidLearnEngine implements LearnEngine {
 
         List<Content> contentsOfSubject = subject.getContents();
         return contentsOfSubject.stream()
-            .filter(o -> o.hasTag(DIFFICULTY_TAG))
-            .filter(o -> range.contains(o.findTagValue(DIFFICULTY_TAG).map(Integer::valueOf).orElse(-1)))
+            .filter(content -> content.hasTag(DIFFICULTY_TAG))
+            .filter(content -> range.contains(content.findTagValue(DIFFICULTY_TAG).map(Integer::valueOf).orElse(-1)))
             .collect(
                 Collectors.groupingBy(o -> o.findTagValue(DIFFICULTY_TAG).map(Integer::valueOf).get())
 

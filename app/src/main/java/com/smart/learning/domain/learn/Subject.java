@@ -5,6 +5,7 @@ import com.smart.learning.domain.util.Tag;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,14 +22,14 @@ public class Subject extends StringBaseDateModel {
 
     //student can go further and customize sub-subjects they want to learn
     @DBRef
-    private List<Subject> children;
+    private List<Subject> children = new LinkedList<>();
 
-    private List<Tag> tags;
+    private List<Tag> tags = new LinkedList<>();
 
     private boolean topLevel;
 
     @DBRef
-    private List<Content> contents;
+    private List<Content> contents = new LinkedList<>();
 
     public List<Content> getContents() {
         return contents;
