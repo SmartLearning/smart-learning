@@ -71,12 +71,12 @@ public class Question extends StringBaseDateModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question1 = (Question) o;
-        return Objects.equals(question, question1.question);
+        return Objects.equals(getId(), question1.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(question);
+        return Objects.hash(getId());
     }
 
     public Optional<Tag> findTag(String tag) {

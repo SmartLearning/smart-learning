@@ -47,7 +47,7 @@ public class StupidLearnEngine implements LearnEngine {
 
             }
         }
-        while (initialSize != questions.size()); //if something is added, then there is a chance of adding more on the next iteration
+        while (initialSize != questions.size() && initialSize < MAX_NUMBER_OF_QUESTIONS_IN_INITIAL_TEST); //if something is added, then there is a chance of adding more on the next iteration
 
         return questions;
     }
