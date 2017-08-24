@@ -1,1 +1,169 @@
-Hello world!
+<html lang="en">
+<head>
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <title>Smart Learning</title>
+</head>
+
+<body ng-app="firstApplication" ng-cloak>
+<md-content ng-controller="AppCtrl">
+    <div layout="column">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button aria-label="Go Back">
+                    My Courses
+                </md-button>
+
+
+                <span flex></span>
+                <md-button class="md-raised" aria-label="Learn More">
+                    Result
+                </md-button>
+                <md-button class="md-fab md-mini" aria-label="Favorite">
+                    <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+
+        <div layout-padding>
+            <md-content flex>
+                <div layout="row" layout-align="space-between center">
+                    <h1>Content 3</h1>
+                    <div>
+                        <md-button hide-gt-md class="md-raised" aria-label="Table of content"
+                                   ng-click="showTableOfContent($event)">
+                            Course Content
+                        </md-button>
+                        <md-button class="md-primary md-raised" aria-label="Learn More">
+                            Next >
+                        </md-button>
+                    </div>
+
+                </div>
+                <div layout="row">
+                    <div layout="column" flex="10" layout-fill >
+
+                        <md-toolbar md-scroll-shrink>
+                            <div class="md-toolbar-tools">My Messages</div>
+                        </md-toolbar>
+
+                        <md-content style="height: 600px;" md-theme="altTheme">
+
+                            <section>
+                                <md-subheader class="md-primary">Unread Messages</md-subheader>
+                                <md-list layout-padding>
+                                    <md-list-item class="md-3-line" >
+
+                                        <div class="md-list-item-text">
+                                            <h3>Content 1</h3>
+
+                                        </div>
+                                    </md-list-item>
+                                </md-list>
+                            </section>
+                        </md-content>
+                    </div>
+                    <iframe flex layout-fill
+                            src="https://docs.google.com/document/d/1Z4bk8xSx-8AudSwHAdUT2KgBQsPi7PmiOzBwzPKVSt8/pub?embedded=true"></iframe>
+                </div>
+            </md-content>
+        </div>
+
+        <div style="visibility: hidden">
+            <div class="md-dialog-container" flex layout-fill id="tocDialog">
+                <md-dialog flex>
+                    <md-toolbar md-scroll-shrink>
+                        <div class="md-toolbar-tools">Course contents</div>
+                    </md-toolbar>
+
+                    <md-content layout="column" style="height: 600px;" md-theme="altTheme">
+
+                        <section>
+                            <md-subheader class="md-warn">Contents (6)</md-subheader>
+                            <md-list layout="column" layout-padding>
+                                <md-list-item class="md-3-line">
+
+                                    <div class="md-list-item-text">
+                                        <h3>What is a pronoun?</h3>
+
+
+                                    </div>
+                                </md-list-item>
+                                <md-list-item class="md-3-line">
+
+                                    <div class="md-list-item-text">
+                                        <h3>Past participles in English</h3>
+
+
+                                    </div>
+                                </md-list-item>
+                                <md-list-item class="md-3-line">
+
+                                    <div class="md-list-item-text">
+                                        <h3>Nouns vs verbs</h3>
+
+
+                                    </div>
+                                </md-list-item>
+                                <md-list-item class="md-3-line">
+
+                                    <div class="md-list-item-text">
+                                        <h3>Nouns vs verbs</h3>
+
+
+                                    </div>
+                                </md-list-item>
+                                <md-list-item class="md-3-line">
+
+                                    <div class="md-list-item-text">
+                                        <h3>Nouns vs verbs</h3>
+
+
+                                    </div>
+                                </md-list-item>
+                                <md-list-item class="md-3-line">
+
+                                    <div class="md-list-item-text">
+                                        <h3>Nouns vs verbs</h3>
+
+
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+
+                        <section>
+                            <md-subheader class="md-warn">Exams (1)</md-subheader>
+                            <md-list layout="column" layout-padding>
+                                <md-list-item class="md-3-line">
+
+                                    <div class="md-list-item-text">
+                                        <h3>Final Exam of the course</h3>
+
+
+                                    </div>
+                                </md-list-item>
+
+                            </md-list>
+                        </section>
+
+                    </md-content>
+
+                </md-dialog>
+            </div>
+        </div>
+    </div>
+</md-content>
+
+</body>
+</html>

@@ -1,1 +1,1 @@
-# testi
+To run application locally, install python and run `python -m SimpleHTTPServer`
