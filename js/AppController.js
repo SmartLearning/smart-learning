@@ -21,13 +21,14 @@
         ];
 
         vm.showTableOfContent = showTableOfContent;
+        vm.changePage = changePage;
 
         activate();
 
         ////////////////
 
         function activate() {
-
+            changePage(vm.pages[0]);
         }
 
         function showTableOfContent(ev) {
@@ -37,6 +38,10 @@
                 targetEvent: ev,
                 clickOutsideToClose: true
             });
+        }
+
+        function changePage(item) {
+            vm.title = item.name;
         }
     }
 

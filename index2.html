@@ -35,7 +35,7 @@
     </md-content>
 </div>
 
-<div layout="column">
+<div layout="column" style="height: 100vh;">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <md-button aria-label="Go Back">
@@ -50,7 +50,7 @@
             </md-button>
         </div>
     </md-toolbar>
-    <div layout="row" flex layout-align="space-around center">
+    <div layout="row" layout-align="space-around center">
         <h1 class="md-padding">Content 3</h1>
         <span flex></span>
         <md-button class="md-raised" aria-label="Table of content"
@@ -62,22 +62,19 @@
         </md-button>
     </div>
     <div layout="row" flex>
-        <div>
+        <div hide-sm>
             <md-list>
-                <md-list-item ng-repeat="item in vm.pages">
+                <md-list-item ng-click="vm.changePage(item)" ng-repeat="item in vm.pages">
                     <span data-translate>{{item.name}}</span>
                 </md-list-item>
             </md-list>
         </div>
         <div layout="column" flex>
             <md-toolbar md-scroll-shrink>
-                <div class="md-toolbar-tools">{{vm.name}}</div>
+                <div class="md-toolbar-tools">{{vm.title}}</div>
             </md-toolbar>
-
-            <md-content style="height: 600px;" md-theme="altTheme">
-                <iframe flex layout-fill
-                        src="https://docs.google.com/document/d/1Z4bk8xSx-8AudSwHAdUT2KgBQsPi7PmiOzBwzPKVSt8/pub?embedded=true"></iframe>
-            </md-content>
+            <iframe flex
+                    src="https://docs.google.com/document/d/1Z4bk8xSx-8AudSwHAdUT2KgBQsPi7PmiOzBwzPKVSt8/pub?embedded=true"></iframe>
         </div>
     </div>
 </div>
