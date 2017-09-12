@@ -65,13 +65,13 @@
         <div hide-sm>
             <md-list>
                 <md-list-item ng-click="vm.changePage(item)" ng-repeat="item in vm.pages">
-                    <span data-translate>{{item.name}}</span>
+                    <span data-translate>{{item.title}}</span>
                 </md-list-item>
             </md-list>
         </div>
         <div layout="column" flex>
             <md-toolbar md-scroll-shrink>
-                <div class="md-toolbar-tools">{{vm.current.name}}</div>
+                <div class="md-toolbar-tools">{{vm.current.title}}</div>
             </md-toolbar>
             <iframe flex ng-src="{{vm.current.url}}"></iframe>
         </div>
