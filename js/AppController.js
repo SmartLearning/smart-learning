@@ -52,6 +52,7 @@
         }
 
         function changePage(item) {
+            vm.current = {};
             vm.current = item;
         }
     }
