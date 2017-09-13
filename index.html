@@ -35,7 +35,7 @@
     </md-content>
 </div>
 
-<div layout="column" style="height: 100vh;">
+<form name="body" layout="column" style="height: 100vh;">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <md-button aria-label="Go Back">
@@ -73,9 +73,9 @@
             <md-toolbar md-scroll-shrink>
                 <div class="md-toolbar-tools">{{vm.current.title}}</div>
             </md-toolbar>
-            <iframe flex ng-src="{{vm.current.url}}"></iframe>
+            <iframe id="content" flex></iframe>
         </div>
     </div>
-</div>
+</form>
 </body>
 </html>

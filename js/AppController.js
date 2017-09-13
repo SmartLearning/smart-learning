@@ -11,11 +11,12 @@
 
     AppController.$inject = [
         '$mdDialog',
+        '$timeout',
         '$sce'
     ];
 
     /* @ngInject */
-    function AppController($mdDialog, $sce) {
+    function AppController($mdDialog, $timeout, $sce) {
         var vm = this;
 
         vm.pages = [
@@ -52,8 +53,17 @@
         }
 
         function changePage(item) {
-            vm.current = {};
+            var iframe = angular.element(document.querySelector('#content'));
+            iframe.attr('src', '');
             vm.current = item;
+
+            $timeout(changeUrl, 100);
+
+            ////////////////////////////////////////////
+
+            function changeUrl() {
+                iframe.attr('src', item.url)
+            }
         }
     }
 
