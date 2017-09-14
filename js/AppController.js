@@ -11,19 +11,21 @@
 
     AppController.$inject = [
         '$mdDialog',
+        '$mdUtil',
+        '$mdSidenav',
         '$timeout',
         '$sce'
     ];
 
     /* @ngInject */
-    function AppController($mdDialog, $timeout, $sce) {
+    function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce) {
         var vm = this;
 
         vm.pages = [
             {
                 type: 'exam',
                 title: 'My Messages',
-                url: $sce.trustAsResourceUrl('https://docs.google.com/document/d/1Z4bk8xSx-8AudSwHAdUT2KgBQsPi7PmiOzBwzPKVSt8/pub?embedded=true')
+                url: $sce.trustAsResourceUrl('https://docs.google.com/document/d/1Z4bk8xSx-8AudSwHAdUT2KgBQsPi7PmiOzBwzPKVSt8/pub')
             },
             {
                 type: 'exam',
@@ -34,6 +36,7 @@
 
         vm.showTableOfContent = showTableOfContent;
         vm.changePage = changePage;
+        vm.openMenu = openMenu;
 
         activate();
 
@@ -43,9 +46,20 @@
             changePage(vm.pages[0]);
         }
 
+        function openMenu() {
+            console.log(2);
+            $mdUtil.debounce(timer, 200)();
+
+            ///////////////////////////////////////////
+
+            function timer() {
+                $mdSidenav('left').toggle();
+            }
+        }
+
         function showTableOfContent(ev) {
             $mdDialog.show({
-                templateUrl: 'views/DialogView',
+                templateUrl: 'views/DialogView.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true
@@ -62,7 +76,9 @@
             ////////////////////////////////////////////
 
             function changeUrl() {
-                iframe.attr('src', item.url)
+                iframe.attr('src', item.url);
+
+                $mdSidenav('left').close();
             }
         }
     }
