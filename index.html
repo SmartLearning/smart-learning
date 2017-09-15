@@ -4,6 +4,8 @@
     <meta name="google" value="notranslate">
     <meta name="viewport" content="width=device-width">
 
+    <link rel="stylesheet" href="css/style.css">
+
     <link rel="stylesheet"
           href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.css">
 
@@ -94,8 +96,8 @@
                     <md-icon>menu</md-icon>
                 </md-button>
             </md-toolbar>
-            <div flex layout="row" style="display: block; position: relative; width: 100%; overflow: hidden">
-                <iframe id="content" width="80%" height="100%" style="overflow: auto" flex></iframe>
+            <div flex layout="row" class="scroll-wrapper">
+                <iframe id="content" scrolling="yes" flex></iframe>
             </div>
         </div>
     </div>
