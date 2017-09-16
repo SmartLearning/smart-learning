@@ -14,11 +14,12 @@
         '$mdUtil',
         '$mdSidenav',
         '$timeout',
-        '$sce'
+        '$sce',
+        '$http'
     ];
 
     /* @ngInject */
-    function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce) {
+    function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce, $http) {
         var vm = this;
 
         vm.pages = [
@@ -57,6 +58,7 @@
             }
         }
 
+
         function showTableOfContent(ev) {
             $mdDialog.show({
                 templateUrl: 'views/DialogView.html',
@@ -81,6 +83,48 @@
                 $mdSidenav('left').close();
             }
         }
+
+        let apiKey = 'AIzaSyAPv2lxveRF_vRWo8vLY4juoq40CvNDsTM';
+        let rootFolderId = '0B7TUAIgyr7KDaUw1X0c3dDlVeEU';
+        const FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
+        const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
+
+        vm.listCourses = function () {
+            listItems(rootFolderId,FOLDER_MIME_TYPE).then(t =>{
+                console.log('data in the final block');
+
+                console.log(t.files);
+            })
+
+
+        };
+
+
+
+
+        function listItems(rootId, mimeType) {
+            let q = `'${rootId}' in parents`;
+            if (mimeType !== undefined) {
+                q += ` and mimeType = '${mimeType}'`
+            }
+            return $http({
+                method: 'GET',
+                url: `https://www.googleapis.com/drive/v3/files?q=${q}&key=${apiKey}`
+            }).then(function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                console.log('success in getting courses');
+
+                return response.data;
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                console.log('error in getting courses')
+            });
+
+        }
+
+
     }
 
 })(angular);
