@@ -20,6 +20,12 @@
 
     /* @ngInject */
     function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce, $http) {
+        const FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
+        const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
+        const DOCUMENT_MIME_TYPE = "application/vnd.google-apps.document";
+
+        const apiKey = 'AIzaSyAPv2lxveRF_vRWo8vLY4juoq40CvNDsTM';
+
         var vm = this;
 
         vm.pages = [
@@ -84,13 +90,31 @@
             }
         }
 
-        let apiKey = 'AIzaSyAPv2lxveRF_vRWo8vLY4juoq40CvNDsTM';
+
         let rootFolderId = '0B7TUAIgyr7KDaUw1X0c3dDlVeEU';
-        const FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
-        const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
+
+
+        vm.listCourseItems = function (courseId) {
+            //list children
+            //find content
+            listItems(courseId, [SPREADSHEET_MIME_TYPE, DOCUMENT_MIME_TYPE]).then(t => {
+                console.log('data in the final block');
+                // document with the name of the course is the summary
+                //sheet with the name of the course is exam
+                //sheet with the same name as document is the homework of that content.
+                t.files.forEach(file => {
+                    file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
+                });
+
+                console.log(t.files);
+            })
+
+
+        };
+
 
         vm.listCourses = function () {
-            listItems(rootFolderId,FOLDER_MIME_TYPE).then(t =>{
+            listItems(rootFolderId, [FOLDER_MIME_TYPE]).then(t => {
                 console.log('data in the final block');
 
                 console.log(t.files);
@@ -100,12 +124,11 @@
         };
 
 
-
-
-        function listItems(rootId, mimeType) {
+        function listItems(rootId, mimeTypes) {
             let q = `'${rootId}' in parents`;
-            if (mimeType !== undefined) {
-                q += ` and mimeType = '${mimeType}'`
+            if (mimeTypes !== undefined) {
+                let mimeTypeQueries = mimeTypes.map(mimeType => ` mimeType = '${mimeType}'`).join(' or ')
+                q += ` and (${mimeTypeQueries})`
             }
             return $http({
                 method: 'GET',
