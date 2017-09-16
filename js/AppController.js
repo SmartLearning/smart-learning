@@ -20,6 +20,7 @@
 
     /* @ngInject */
     function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce, $http) {
+
         const FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
         const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
         const DOCUMENT_MIME_TYPE = "application/vnd.google-apps.document";
@@ -106,11 +107,13 @@
                     file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
                 });
 
+
                 console.log(t.files);
             })
 
 
         };
+
 
 
         vm.listCourses = function () {
@@ -129,6 +132,7 @@
             if (mimeTypes !== undefined) {
                 let mimeTypeQueries = mimeTypes.map(mimeType => ` mimeType = '${mimeType}'`).join(' or ')
                 q += ` and (${mimeTypeQueries})`
+
             }
             return $http({
                 method: 'GET',
