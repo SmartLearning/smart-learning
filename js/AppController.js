@@ -90,6 +90,60 @@
             }
         }
 
+        vm.listQuestions = function () {
+            getQuestions('1FqmeBTcnVTOTNeXegnXTuczrLTbqtGXh0kO5bXRej2M').then(t =>console.log(t));
+        };
+
+        function getQuestions(sheetId) {
+
+            return $http({
+                method: 'GET',
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A:B?key=${apiKey}`
+            }).then(function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                console.log('success in getting questions');
+
+                return response.data.values.map(qArray => {
+                    let questionTitle = qArray[0];
+                    let optionsStr = qArray[1];
+                    let questionType = 'checkbox';
+                    let numOfAnswers = (optionsStr.match(/[A]/g) || []).length;
+
+                    if (numOfAnswers === 0) {
+                        questionType = 'text'
+                    } else if (numOfAnswers === 1) {
+                        questionType = 'radio'
+                    } else {
+                        questionType = 'checkbox'
+                    }
+
+                    let answers = optionsStr.split('\n').map(option => {
+                        let isAnswer = false;
+                        if (option.startsWith('[A]')) {
+                            isAnswer = true;
+                        }
+
+                        let answer = option.replace('[A]', '');
+                        return {
+                            name: answer,
+                            answer: isAnswer
+                        }
+                    });
+                    return {
+                        type: questionType,
+                        name: questionTitle,
+                        answers: answers
+                    }
+                });
+
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                console.log('error in getting questions')
+            });
+
+        }
 
         let rootFolderId = '0B7TUAIgyr7KDaUw1X0c3dDlVeEU';
 
@@ -127,7 +181,7 @@
         function listItems(rootId, mimeTypes) {
             let q = `'${rootId}' in parents`;
             if (mimeTypes !== undefined) {
-                let mimeTypeQueries = mimeTypes.map(mimeType => ` mimeType = '${mimeType}'`).join(' or ')
+                let mimeTypeQueries = mimeTypes.map(mimeType => ` mimeType = '${mimeType}'`).join(' or ');
                 q += ` and (${mimeTypeQueries})`
             }
             return $http({
