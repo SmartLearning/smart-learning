@@ -1,0 +1,16 @@
+<md-dialog flex="50">
+    <md-dialog-content>
+        <div layout="column">
+            <custom-text-angular
+                name="description"
+                focus="true"
+                value="vm.model">
+            </custom-text-angular>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.save()">
+            <md-icon>save</md-icon>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

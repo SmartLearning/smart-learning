@@ -6,7 +6,7 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('smartApp')
         .controller('AppController', AppController);
 
     AppController.$inject = [
@@ -24,6 +24,7 @@
         const FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
         const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
         const DOCUMENT_MIME_TYPE = "application/vnd.google-apps.document";
+        let rootFolderId = '0B7TUAIgyr7KDaUw1X0c3dDlVeEU';
 
         const apiKey = 'AIzaSyAPv2lxveRF_vRWo8vLY4juoq40CvNDsTM';
 
@@ -43,12 +44,15 @@
         ];
 
         vm.showTableOfContent = showTableOfContent;
+        vm.listQuestions = listQuestions;
+        vm.listCourses = listCourses;
+        vm.listCourseItems = listCourseItems;
         vm.changePage = changePage;
         vm.openMenu = openMenu;
 
         activate();
 
-        ////////////////
+        ////////////////////////////////
 
         function activate() {
             changePage(vm.pages[0]);
@@ -91,17 +95,25 @@
             }
         }
 
-
-        vm.listQuestions = function () {
-            getQuestions('1FqmeBTcnVTOTNeXegnXTuczrLTbqtGXh0kO5bXRej2M').then(t =>console.log(t));
-        };
+        function listQuestions() {
+            getQuestions('1FqmeBTcnVTOTNeXegnXTuczrLTbqtGXh0kO5bXRej2M').then(t => console.log(t));
+        }
 
         function getQuestions(sheetId) {
-
             return $http({
                 method: 'GET',
                 url: `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A:B?key=${apiKey}`
-            }).then(function successCallback(response) {
+            }).then(successCallback, errorCallback);
+
+            ////////////////////////////////////////
+
+            function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                console.log('error in getting questions')
+            }
+
+            function successCallback(response) {
                 // this callback will be called asynchronously
                 // when the response is available
                 console.log('success in getting questions');
@@ -132,29 +144,23 @@
                             answer: isAnswer
                         }
                     });
+
                     return {
                         type: questionType,
                         name: questionTitle,
                         answers: answers
                     }
                 });
-
-            }, function errorCallback(response) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-                console.log('error in getting questions')
-            });
-
+            }
         }
 
-
-        let rootFolderId = '0B7TUAIgyr7KDaUw1X0c3dDlVeEU';
-
-
-        vm.listCourseItems = function (courseId) {
+        function listCourseItems(courseId) {
             //list children
             //find content
-            listItems(courseId, [SPREADSHEET_MIME_TYPE, DOCUMENT_MIME_TYPE]).then(t => {
+            listItems(courseId, [
+                SPREADSHEET_MIME_TYPE,
+                DOCUMENT_MIME_TYPE
+            ]).then(t => {
                 console.log('data in the final block');
                 // document with the name of the course is the summary
                 //sheet with the name of the course is exam
@@ -163,52 +169,45 @@
                     file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
                 });
 
-
                 console.log(t.files);
-            })
+            });
+        }
 
-
-        };
-
-
-
-        vm.listCourses = function () {
+        function listCourses() {
             listItems(rootFolderId, [FOLDER_MIME_TYPE]).then(t => {
                 console.log('data in the final block');
-
                 console.log(t.files);
-            })
-
-
-        };
-
+            });
+        }
 
         function listItems(rootId, mimeTypes) {
             let q = `'${rootId}' in parents`;
             if (mimeTypes !== undefined) {
-
                 let mimeTypeQueries = mimeTypes.map(mimeType => ` mimeType = '${mimeType}'`).join(' or ');
                 q += ` and (${mimeTypeQueries})`
-
             }
+
             return $http({
                 method: 'GET',
                 url: `https://www.googleapis.com/drive/v3/files?q=${q}&key=${apiKey}`
-            }).then(function successCallback(response) {
+            }).then(successCallback, errorCallback);
+
+            ///////////////////////////////////////////
+
+            function successCallback(response) {
                 // this callback will be called asynchronously
                 // when the response is available
                 console.log('success in getting courses');
 
                 return response.data;
-            }, function errorCallback(response) {
+            }
+
+            function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
                 console.log('error in getting courses')
-            });
-
+            }
         }
-
-
     }
 
 })(angular);

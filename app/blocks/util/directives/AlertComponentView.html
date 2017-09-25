@@ -1,0 +1,11 @@
+<md-toolbar md-theme="alert" class="md-alert-theme md-{{item.type}} md-hue-2" ng-cloak ng-repeat="item in vm.alerts">
+    <div class="md-toolbar-tools">
+        <span flex class="md-flex md-body-1" ng-if="vm.interpolation" data-translate translate-values="{{item.params}}"
+              translate-interpolation="{{vm.interpolation}}">{{item.msg}}</span>
+        <span flex class="md-flex md-body-1" ng-if="!vm.interpolation" data-translate
+              translate-values="{{item.params}}">{{item.msg}}</span>
+        <md-button class="md-action md-icon-button" ng-if="!item.timeout" ng-click="item.close(vm.alerts)">
+            <md-icon>close</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
