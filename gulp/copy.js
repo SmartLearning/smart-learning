@@ -17,7 +17,6 @@ module.exports = {
     languages: languages,
     fonts: fonts,
     common: common,
-    swagger: swagger,
     images: images
 };
 
@@ -46,7 +45,7 @@ function languages() {
 
 function fonts() {
     return es.merge(
-        gulp.src(config.app + 'content/**/*.{woff,woff2,svg,ttf,eot,otf}')
+        gulp.src('content/**/*.{woff,woff2,svg,ttf,eot,otf}')
             .pipe(plumber({errorHandler: handleErrors}))
             .pipe(changed(config.dist + 'content/fonts/'))
             .pipe(flatten())
@@ -72,30 +71,6 @@ function common() {
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist))
         .pipe(gulp.dest(config.dist));
-}
-
-function swagger() {
-    return es.merge(
-        gulp.src([
-            config.bower + 'swagger-ui/dist/**',
-            '!' + config.bower + 'swagger-ui/dist/index.html',
-            '!' + config.bower + 'swagger-ui/dist/swagger-ui.min.js',
-            '!' + config.bower + 'swagger-ui/dist/swagger-ui.js'
-        ])
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.swaggerDist))
-            .pipe(gulp.dest(config.swaggerDist)),
-        gulp.src(config.app + 'swagger-ui/index.html')
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.swaggerDist))
-            .pipe(replace('../bower_components/swagger-ui/dist/', ''))
-            .pipe(replace('swagger-ui.js', 'lib/swagger-ui.min.js'))
-            .pipe(gulp.dest(config.swaggerDist)),
-        gulp.src(config.bower + 'swagger-ui/dist/swagger-ui.min.js')
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.swaggerDist + 'lib/'))
-            .pipe(gulp.dest(config.swaggerDist + 'lib/'))
-    );
 }
 
 function images() {

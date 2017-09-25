@@ -49,7 +49,6 @@ function app() {
             [
                 config.app + '**/*.html',
                 '!' + config.app + 'app/**/*.html',
-                '!' + config.app + 'swagger-ui/**/*',
                 '!' + config.bower + '**/*.html'
             ]
         )

@@ -2,16 +2,13 @@
 
 var exports = {
     moduleName: 'smartApp',
-    app: 'src/main/webapp/',
+    app: './',
     dist: 'build/www/',
-    swaggerDist: 'build/www/swagger-ui/',
-    templates: 'src/main/resources/templates/',
-    targetTemplates: 'target/classes/templates/',
-    test: 'src/test/javascript/',
-    scss: 'src/main/webapp/scss/',
-    sassSrc: 'src/main/webapp/scss/**/*.{scss,sass}',
-    cssDir: 'src/main/webapp/content/css',
-    bower: 'src/main/webapp/bower_components/',
+    test: 'test/javascript/',
+    scss: 'scss/',
+    sassSrc: 'scss/**/*.{scss,sass}',
+    cssDir: 'content/css',
+    bower: 'app/bower_components/',
     tmp: 'build/tmp',
     revManifest: 'build/tmp/rev-manifest.json',
     port: 9000,
@@ -68,7 +65,8 @@ exports.css = [
 ];
 
 exports.js = [
-    exports.app + 'app/**/*.js'
+    exports.app + 'app/*.js',
+    exports.app + 'app/!(bower_components)/**/*.js'
 ];
 
 module.exports = exports;

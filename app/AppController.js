@@ -24,7 +24,7 @@
         const FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
         const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
         const DOCUMENT_MIME_TYPE = "application/vnd.google-apps.document";
-        let rootFolderId = '0B7TUAIgyr7KDaUw1X0c3dDlVeEU';
+        var rootFolderId = '0B7TUAIgyr7KDaUw1X0c3dDlVeEU';
 
         const apiKey = 'AIzaSyAPv2lxveRF_vRWo8vLY4juoq40CvNDsTM';
 
@@ -96,13 +96,19 @@
         }
 
         function listQuestions() {
-            getQuestions('1FqmeBTcnVTOTNeXegnXTuczrLTbqtGXh0kO5bXRej2M').then(t => console.log(t));
+            getQuestions('1FqmeBTcnVTOTNeXegnXTuczrLTbqtGXh0kO5bXRej2M').then(onThen);
+
+            ///////////////////////////////////////////////////
+
+            function onThen(t) {
+                console.log(t);
+            }
         }
 
         function getQuestions(sheetId) {
             return $http({
                 method: 'GET',
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A:B?key=${apiKey}`
+                url: 'https://sheets.googleapis.com/v4/spreadsheets/' + sheetId + '/values/A:B?key=' + api
             }).then(successCallback, errorCallback);
 
             ////////////////////////////////////////
@@ -118,11 +124,15 @@
                 // when the response is available
                 console.log('success in getting questions');
 
-                return response.data.values.map(qArray => {
-                    let questionTitle = qArray[0];
-                    let optionsStr = qArray[1];
-                    let questionType = 'checkbox';
-                    let numOfAnswers = (optionsStr.match(/[A]/g) || []).length;
+                return response.data.values.map(onMap);
+
+                //////////////////////////////////////////////////
+
+                function onMap(qArray) {
+                    var questionTitle = qArray[0];
+                    var optionsStr = qArray[1];
+                    var questionType = 'checkbox';
+                    var numOfAnswers = (optionsStr.match(/[A]/g) || []).length;
 
                     if (numOfAnswers === 0) {
                         questionType = 'text'
@@ -132,82 +142,102 @@
                         questionType = 'checkbox'
                     }
 
-                    let answers = optionsStr.split('\n').map(option => {
-                        let isAnswer = false;
-                        if (option.startsWith('[A]')) {
-                            isAnswer = true;
-                        }
-
-                        let answer = option.replace('[A]', '');
-                        return {
-                            name: answer,
-                            answer: isAnswer
-                        }
-                    });
+                    var answers = optionsStr.split('\n').map(onSplitMap);
 
                     return {
                         type: questionType,
                         name: questionTitle,
                         answers: answers
+                    };
+
+                    ///////////////////////////////////////////
+
+                    function onSplitMap(option) {
+                        var isAnswer = false;
+                        if (option.startsWith('[A]')) {
+                            isAnswer = true;
+                        }
+
+                        var answer = option.replace('[A]', '');
+                        return {
+                            name: answer,
+                            answer: isAnswer
+                        }
                     }
-                });
-            }
-        }
-
-        function listCourseItems(courseId) {
-            //list children
-            //find content
-            listItems(courseId, [
-                SPREADSHEET_MIME_TYPE,
-                DOCUMENT_MIME_TYPE
-            ]).then(t => {
-                console.log('data in the final block');
-                // document with the name of the course is the summary
-                //sheet with the name of the course is exam
-                //sheet with the same name as document is the homework of that content.
-                t.files.forEach(file => {
-                    file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
-                });
-
-                console.log(t.files);
-            });
-        }
-
-        function listCourses() {
-            listItems(rootFolderId, [FOLDER_MIME_TYPE]).then(t => {
-                console.log('data in the final block');
-                console.log(t.files);
-            });
-        }
-
-        function listItems(rootId, mimeTypes) {
-            let q = `'${rootId}' in parents`;
-            if (mimeTypes !== undefined) {
-                let mimeTypeQueries = mimeTypes.map(mimeType => ` mimeType = '${mimeType}'`).join(' or ');
-                q += ` and (${mimeTypeQueries})`
+                }
             }
 
-            return $http({
-                method: 'GET',
-                url: `https://www.googleapis.com/drive/v3/files?q=${q}&key=${apiKey}`
-            }).then(successCallback, errorCallback);
+            function listCourseItems(courseId) {
+                //list children
+                //find content
+                listItems(courseId, [
+                    SPREADSHEET_MIME_TYPE,
+                    DOCUMENT_MIME_TYPE
+                ]).then(onThen);
 
-            ///////////////////////////////////////////
+                ///////////////////////////////////////////////
 
-            function successCallback(response) {
-                // this callback will be called asynchronously
-                // when the response is available
-                console.log('success in getting courses');
+                function onThen(t) {
+                    console.log('data in the final block');
+                    // document with the name of the course is the summary
+                    //sheet with the name of the course is exam
+                    //sheet with the same name as document is the homework of that content.
+                    t.files.forEach(onEach);
 
-                return response.data;
+                    console.log(t.files);
+
+                    ///////////////////////////////////////////
+
+                    function onEach(file) {
+                        file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
+                    }
+                }
             }
 
-            function errorCallback(response) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-                console.log('error in getting courses')
+            function listCourses() {
+                listItems(rootFolderId, [FOLDER_MIME_TYPE]).then(onThen);
+
+
+                /////////////////////////////////////////////////////
+
+                function onThen(t) {
+                    console.log('data in the final block');
+                    console.log(t.files);
+                }
+            }
+
+            function listItems(rootId, mimeTypes) {
+                var q = '\'' + rootId + '\' in parents';
+                if (mimeTypes !== undefined) {
+                    var mimeTypeQueries = mimeTypes.map(onMap).join(' or ');
+                    q += ' and (' + mimeTypeQueries + ')';
+                }
+
+                return $http({
+                    method: 'GET',
+                    url: 'https://www.googleapis.com/drive/v3/files?q=' + q + '&key=' + apiKey
+                }).then(successCallback, errorCallback);
+
+                /////////////////////////////////////////////
+
+                function onMap(mimeType) {
+                    return ' mimeType = \'' + mimeType + '\'';
+                }
+
+                function successCallback(response) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    console.log('success in getting courses');
+
+                    return response.data;
+                }
+
+                function errorCallback(response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    console.log('error in getting courses');
+                }
             }
         }
     }
-
 })(angular);
