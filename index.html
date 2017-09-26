@@ -115,8 +115,8 @@
                     <md-icon>menu</md-icon>
                 </md-button>
             </md-toolbar>
-            <div flex layout="row" class="scroll-wrapper">
-                <iframe id="content" scrolling="yes" flex></iframe>
+            <div flex layout="row" class="scroll-wrapper" ui-view="content">
+                <!--<iframe id="content" scrolling="yes" flex></iframe>-->
             </div>
         </div>
     </div>
@@ -171,7 +171,6 @@
 <script src="app/bower_components/angularjs-camelCase-human/camelcase-browser.js"></script>
 <script src="app/bower_components/json3/lib/json3.js"></script>
 <script src="app/bower_components/angular-loading-bar/build/loading-bar.js"></script>
-<script src="app/bower_components/angular-ui-mask/dist/mask.js"></script>
 <script src="app/bower_components/angular-material-data-table/dist/md-data-table.js"></script>
 <script src="app/bower_components/mdPickers/dist/mdPickers.min.js"></script>
 <script src="app/bower_components/ng-device-detector/ng-device-detector.js"></script>

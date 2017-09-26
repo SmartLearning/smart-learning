@@ -35,7 +35,8 @@
                 'angular-clipboard',
                 'app.layout',
                 'app.blocks',
-                'app.home'
+                'app.home',
+                'app.course'
             ]
         )
         .run(run);
@@ -44,6 +45,7 @@
         'StateHandler',
         'TranslationHandler'
     ];
+
     /* @ngInject */
     function run(StateHandler, TranslationHandler) {
         StateHandler.initialize();

@@ -110,12 +110,8 @@ function runInject() {
 function runInstall() {
     runSequence([
         'inject:dep',
-        'ngconstant:dev',
-        'sass',
-        'copy:languages',
-        'inject:app',
-        'inject:troubleshoot'
-    ]);
+        'ngconstant:dev'
+    ], 'sass', 'copy:languages', 'inject:app', 'inject:troubleshoot');
 }
 
 function runServe(cb) {
@@ -134,10 +130,7 @@ function onBuildSuccess(cb) {
             'copy',
             'inject:vendor',
             'ngconstant:prod',
-            'copy:languages',
-            'inject:app',
-            'inject:troubleshoot',
-            'assets:prod'
-        ], cb
+            'copy:languages'
+        ], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb
     );
 }
