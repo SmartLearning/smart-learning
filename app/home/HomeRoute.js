@@ -9,10 +9,8 @@
         .module('app.home')
         .run(runHome);
 
-    runHome.$inject = [
-        'routerHelper',
-        'AccountConstants'
-    ];
+    runHome.$inject = ['routerHelper'];
+
     /* @ngInject */
     function runHome(routerHelper) {
         routerHelper.configureStates(getStates());
@@ -53,6 +51,7 @@
         '$translate',
         '$translatePartialLoader'
     ];
+
     /* @ngInject */
     function language($translate, $translatePartialLoader) {
         $translatePartialLoader.addPart('home');

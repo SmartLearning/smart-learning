@@ -121,7 +121,7 @@ function runInstall() {
 function runServe(cb) {
     runSequence([
         'install'
-    ], 'serve:listen', 'watch', cb);
+    ], 'serve:listen', cb);
 }
 
 function runBuild(cb) {

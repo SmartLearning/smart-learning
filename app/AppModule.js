@@ -33,10 +33,8 @@
                 'ng.deviceDetector',
                 'angularLazyImg',
                 'angular-clipboard',
-                'app.admin',
                 'app.layout',
                 'app.blocks',
-                'app.account',
                 'app.home'
             ]
         )

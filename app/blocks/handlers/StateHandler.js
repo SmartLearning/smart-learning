@@ -16,14 +16,13 @@
         '$translate',
         'Language',
         'TranslationHandler',
-        'Auth',
-        'Principal',
         'Alert',
         'DEBUG_INFO_ENABLED',
         'VERSION'
     ];
+
     /* @ngInject */
-    function StateHandlerService($mdDialog, $rootScope, $state, $translate, Language, TranslationHandler, Auth, Principal, Alert, DEBUG_INFO_ENABLED, VERSION) {
+    function StateHandlerService($mdDialog, $rootScope, $state, $translate, Language, TranslationHandler, Alert, DEBUG_INFO_ENABLED, VERSION) {
         this.initialize = initialize;
 
         ////////////////
@@ -89,13 +88,8 @@
 
                 // Update the language
                 Language.getCurrent().then($translate.use);
-
-                if (Principal.isIdentityResolved()) {
-                    Auth.authorize();
-                }
             }
         }
-
     }
 
 })(angular);

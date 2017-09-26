@@ -166,78 +166,79 @@
                     }
                 }
             }
+        }
 
-            function listCourseItems(courseId) {
-                //list children
-                //find content
-                listItems(courseId, [
-                    SPREADSHEET_MIME_TYPE,
-                    DOCUMENT_MIME_TYPE
-                ]).then(onThen);
+        function listCourseItems(courseId) {
+            //list children
+            //find content
+            listItems(courseId, [
+                SPREADSHEET_MIME_TYPE,
+                DOCUMENT_MIME_TYPE
+            ]).then(onThen);
 
-                ///////////////////////////////////////////////
+            ///////////////////////////////////////////////
 
-                function onThen(t) {
-                    console.log('data in the final block');
-                    // document with the name of the course is the summary
-                    //sheet with the name of the course is exam
-                    //sheet with the same name as document is the homework of that content.
-                    t.files.forEach(onEach);
+            function onThen(t) {
+                console.log('data in the final block');
+                // document with the name of the course is the summary
+                //sheet with the name of the course is exam
+                //sheet with the same name as document is the homework of that content.
+                t.files.forEach(onEach);
 
-                    console.log(t.files);
+                console.log(t.files);
 
-                    ///////////////////////////////////////////
+                ///////////////////////////////////////////
 
-                    function onEach(file) {
-                        file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
-                    }
-                }
-            }
-
-            function listCourses() {
-                listItems(rootFolderId, [FOLDER_MIME_TYPE]).then(onThen);
-
-
-                /////////////////////////////////////////////////////
-
-                function onThen(t) {
-                    console.log('data in the final block');
-                    console.log(t.files);
-                }
-            }
-
-            function listItems(rootId, mimeTypes) {
-                var q = '\'' + rootId + '\' in parents';
-                if (mimeTypes !== undefined) {
-                    var mimeTypeQueries = mimeTypes.map(onMap).join(' or ');
-                    q += ' and (' + mimeTypeQueries + ')';
-                }
-
-                return $http({
-                    method: 'GET',
-                    url: 'https://www.googleapis.com/drive/v3/files?q=' + q + '&key=' + apiKey
-                }).then(successCallback, errorCallback);
-
-                /////////////////////////////////////////////
-
-                function onMap(mimeType) {
-                    return ' mimeType = \'' + mimeType + '\'';
-                }
-
-                function successCallback(response) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    console.log('success in getting courses');
-
-                    return response.data;
-                }
-
-                function errorCallback(response) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    console.log('error in getting courses');
+                function onEach(file) {
+                    file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
                 }
             }
         }
+
+        function listCourses() {
+            listItems(rootFolderId, [FOLDER_MIME_TYPE]).then(onThen);
+
+
+            /////////////////////////////////////////////////////
+
+            function onThen(t) {
+                console.log('data in the final block');
+                console.log(t.files);
+            }
+        }
+
+        function listItems(rootId, mimeTypes) {
+            var q = '\'' + rootId + '\' in parents';
+            if (mimeTypes !== undefined) {
+                var mimeTypeQueries = mimeTypes.map(onMap).join(' or ');
+                q += ' and (' + mimeTypeQueries + ')';
+            }
+
+            return $http({
+                method: 'GET',
+                url: 'https://www.googleapis.com/drive/v3/files?q=' + q + '&key=' + apiKey
+            }).then(successCallback, errorCallback);
+
+            /////////////////////////////////////////////
+
+            function onMap(mimeType) {
+                return ' mimeType = \'' + mimeType + '\'';
+            }
+
+            function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                console.log('success in getting courses');
+
+                return response.data;
+            }
+
+            function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                console.log('error in getting courses');
+            }
+        }
+
     }
 })(angular);
