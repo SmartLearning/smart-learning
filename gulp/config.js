@@ -3,7 +3,7 @@
 var exports = {
     moduleName: 'smartApp',
     app: './',
-    dist: 'build/www/',
+    dist: 'docs/',
     test: 'test/javascript/',
     scss: 'scss/',
     sassSrc: 'scss/**/*.{scss,sass}',

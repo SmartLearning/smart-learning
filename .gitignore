@@ -2,10 +2,10 @@
 # Project Specific
 ######################
 /app/content/css/main.css
-/build/www/**
 /test/javascript/coverage/
 /test/javascript/PhantomJS*/
 /logs/*.log
+package-lock.json
 
 ######################
 # Node
