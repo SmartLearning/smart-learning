@@ -51,7 +51,6 @@
         }
 
         function openMenu() {
-            console.log(2);
             $mdUtil.debounce(timer, 200)();
 
             ///////////////////////////////////////////
@@ -60,7 +59,6 @@
                 $mdSidenav('left').toggle();
             }
         }
-
 
         function changePage(item) {
             vm.current = item;
