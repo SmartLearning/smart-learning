@@ -22,7 +22,6 @@
                 'ngAria',
                 'ngCacheBuster',
                 'ngFileUpload',
-                'ui.mask',
                 'ui.router',
                 'infinite-scroll',
                 'angular-loading-bar',

@@ -19,18 +19,13 @@
     function getStates() {
         return [
             {
-                state: 'course',
+                state: 'courses',
                 config: {
-                    url: '/',
+                    url: '/courses',
+                    abstract: true,
                     parent: 'app',
                     data: {
-                        authorities: [],
-                        pageTitle: 'course.title.main',
-                        menu: {
-                            icon: 'course',
-                            text: 'global.menu.course',
-                            groupOrder: -20
-                        }
+                        pageTitle: 'course.title'
                     },
                     views: {
                         'content@': {

@@ -15,11 +15,11 @@
         '$mdSidenav',
         '$timeout',
         '$sce',
-        '$http'
+        '$state'
     ];
 
     /* @ngInject */
-    function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce, $http) {
+    function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce, $state) {
 
         const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
         const DOCUMENT_MIME_TYPE = "application/vnd.google-apps.document";
@@ -41,8 +41,7 @@
 
         vm.showTableOfContent = showTableOfContent;
         vm.listQuestions = listQuestions;
-        vm.listCourses = listCourses;
-        vm.listCourseItems = listCourseItems;
+        vm.goTo = goTo;
         vm.changePage = changePage;
         vm.openMenu = openMenu;
 
@@ -52,6 +51,10 @@
 
         function activate() {
             changePage(vm.pages[0]);
+        }
+
+        function goTo(state) {
+            $state.go(state, null, {reload: true});
         }
 
         function openMenu() {
@@ -98,33 +101,6 @@
 
             function onThen(t) {
                 console.log(t);
-            }
-        }
-
-        function listCourseItems(courseId) {
-            //list children
-            //find content
-            listItems(courseId, [
-                SPREADSHEET_MIME_TYPE,
-                DOCUMENT_MIME_TYPE
-            ]).then(onThen);
-
-            ///////////////////////////////////////////////
-
-            function onThen(t) {
-                console.log('data in the final block');
-                // document with the name of the course is the summary
-                //sheet with the name of the course is exam
-                //sheet with the same name as document is the homework of that content.
-                t.files.forEach(onEach);
-
-                console.log(t.files);
-
-                ///////////////////////////////////////////
-
-                function onEach(file) {
-                    file.type = file.mimeType === SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
-                }
             }
         }
     }

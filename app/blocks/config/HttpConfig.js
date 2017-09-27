@@ -30,8 +30,6 @@
         $urlRouterProvider.otherwise('/');
 
         $httpProvider.interceptors.push('errorHandlerInterceptor');
-        $httpProvider.interceptors.push('authExpiredInterceptor');
-        $httpProvider.interceptors.push('authInterceptor');
         $httpProvider.interceptors.push('notificationInterceptor');
 
         $urlMatcherFactoryProvider.type(

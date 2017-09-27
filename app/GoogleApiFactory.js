@@ -34,7 +34,8 @@
             function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
-                console.log('error in getting questions')
+                console.log('error in getting questions', response);
+                return response;
             }
 
             function successCallback(response) {
@@ -115,7 +116,8 @@
             function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
-                console.log('error in getting courses');
+                console.log('error in getting courses', response);
+                return response;
             }
         }
 

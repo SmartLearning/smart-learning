@@ -81,22 +81,13 @@
     <div layout="row" layout-align="space-around center">
         <h2 class="md-padding">Content 3</h2>
         <span flex></span>
-        <md-button class="md-raised" aria-label="Table of content"
-                   ng-click="vm.showTableOfContent($event)">
-            Course Content
+        <md-button class="md-raised" ng-click="vm.goTo('courses.list')">
+            <md-icon>list</md-icon>
+            <span data-translate>global.menu.courses</span>
         </md-button>
-        <md-button class="md-raised"
-
-                   ng-click="vm.listCourseItems('0B7TUAIgyr7KDQ1RUakZDaEFzbzA')">
-            List Courses
-        </md-button>
-        <md-button class="md-raised"
-                   ng-click="vm.listQuestions()">
-            List Questions
-
-        </md-button>
-        <md-button class="md-primary md-raised" aria-label="Learn More">
-            Next >
+        <md-button class="md-raised" ng-click="vm.goTo('questions.list')">
+            <md-icon>question_answer</md-icon>
+            <span data-translate>global.menu.questions</span>
         </md-button>
     </div>
     <div layout="row" flex>
@@ -196,6 +187,7 @@
 <!-- inject:js -->
 <script src="app/AppModule.js"></script>
 <script src="app/blocks/BlocksModule.js"></script>
+<script src="app/courses/CourseModule.js"></script>
 <script src="app/home/HomeModule.js"></script>
 <script src="app/layouts/LayoutModule.js"></script>
 <script src="app/blocks/BlocksConstants.js"></script>
@@ -211,6 +203,9 @@
 <script src="app/blocks/config/LocalStorageConfig.js"></script>
 <script src="app/blocks/config/TranslationConfig.js"></script>
 <script src="app/AppRoute.js"></script>
+<script src="app/courses/CourseRoute.js"></script>
+<script src="app/courses/detail/CourseDetailRoute.js"></script>
+<script src="app/courses/list/CourseListRoute.js"></script>
 <script src="app/home/HomeRoute.js"></script>
 <script src="app/layouts/error/ErrorRoute.js"></script>
 <script src="app/blocks/util/services/Base64UtilService.js"></script>
@@ -227,6 +222,7 @@
 <script src="app/blocks/util/services/StringUtilService.js"></script>
 <script src="app/blocks/config/TranslationStorageFactory.js"></script>
 <script src="app/blocks/language/LanguageFactory.js"></script>
+<script src="app/GoogleApiFactory.js"></script>
 <script src="app/blocks/language/LanguageFilter.js"></script>
 <script src="app/blocks/util/filters/ButtonsFilter.js"></script>
 <script src="app/blocks/util/filters/IconFilter.js"></script>
@@ -248,8 +244,6 @@
 <script src="app/blocks/util/directives/TextAngularDirective.js"></script>
 <script src="app/blocks/util/directives/TextAngularMaxLengthDirective.js"></script>
 <script src="app/blocks/util/directives/AlertComponent.js"></script>
-<script src="app/blocks/interceptor/AuthExpiredInterceptor.js"></script>
-<script src="app/blocks/interceptor/AuthInterceptor.js"></script>
 <script src="app/blocks/interceptor/ErrorHandlerInterceptor.js"></script>
 <script src="app/blocks/interceptor/NotificationInterceptor.js"></script>
 <script src="app/blocks/handlers/StateHandler.js"></script>
@@ -260,9 +254,12 @@
 <script src="app/blocks/util/directives/table-input/NumericInputController.js"></script>
 <script src="app/blocks/util/directives/table-input/TableEnumInputController.js"></script>
 <script src="app/blocks/util/directives/table-input/TableInputController.js"></script>
+<script src="app/courses/CourseController.js"></script>
+<script src="app/courses/detail/CourseDetailController.js"></script>
+<script src="app/courses/list/CourseListController.js"></script>
 <script src="app/home/HomeController.js"></script>
-<script src="app/layouts/navigation-bar/NavigationBarController.js"></script>
 <script src="app/layouts/sidebar/SidebarController.js"></script>
+<script src="app/AppConstant.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
 
