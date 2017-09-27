@@ -1,0 +1,88 @@
+{
+    "global": {
+        "title": "Smart Learning",
+        "error_title": "Error",
+        "buttons": {
+            "dismiss": "Dismiss",
+            "agree": "Agree",
+            "add": "Add",
+            "refresh": "Refresh",
+            "save": "Save",
+            "cancel": "Cancel",
+            "ok": "Ok",
+            "delete": "Delete",
+            "apply": "Apply",
+            "clear": "Clear",
+            "select_all": "Select All",
+            "clear_all_item": "Clear {count, plural, one{# item} other{# items}}"
+        },
+        "delete": {
+            "title": "Removing entity",
+            "message": "With this action the entity with id <strong>'{{id}}'</strong> will be removed",
+            "buttons": {
+                "delete": "Remove it!",
+                "cancel": "Dismiss"
+            }
+        },
+        "menu": {
+            "title": "Menu",
+            "language": "Language",
+            "home": "Home",
+            "courses": "Courses",
+            "questions": "Questions"
+        },
+        "messages": {
+            "success": "<strong>The information saved!</strong>",
+            "created": "<strong>The information created!</strong>",
+            "updated": "<strong>The information updated!</strong>",
+            "deleted": "<strong>The information deleted!</strong>",
+            "info": {
+                "no_data_added": "No data found",
+                "browsehappy": "Our website has detected that you are using a <strong>outdated</strong> browser or which we <strong>don't support</strong>, the browser will prevent you from accessing certain features. we recommend you to <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a>"
+            },
+            "error": {
+                "not_match": "The password and its confirmation do not match!",
+                "length": "This field's length should be {{length}} character",
+                "required": "This field is required",
+                "number_only": "You can enter only number",
+                "min_length": "Field length cannot be lower than {{length}} characters",
+                "max_length": "Field length cannot be higher than {{length}} characters",
+                "min": "This field value cannot be lower than {{length}}",
+                "max": "This field value cannot be higher than {{length}}",
+                "gsm": "GSM should start with 5 and its length should be 10",
+                "phone_number_length": "Number should be {{length}} digits include zero.",
+                "form_invalid": "The form has some errors, please check it and try again",
+                "email": "Invalid email address",
+                "access_denied": "You are not authorized to access this part, please contact your system administrator",
+                "validation": "There are some validation errors, please check and correct them"
+            }
+        },
+        "customDataTable": {
+            "input": {
+                "search": "Search"
+            },
+            "button": {
+                "clear": "Clear",
+                "search": "Search",
+                "showHide": "Show/Hide"
+            },
+            "edit_popup": {
+                "title": "Editing",
+                "input_title": "Content"
+            },
+            "query": "Please enter to inquiry",
+            "query_hint": "The more accurate query, the more accurate results. Please write anything to search",
+            "select_yes_no_description": "Please select one of items bellow then click on apply button",
+            "no_result": "No result found",
+            "page": "Page: ",
+            "rowsPerPage": "Page Size: ",
+            "of": " of ",
+            "searchFound": "Found {{ found }} matching data"
+        },
+        "datetimepicker": {
+            "am": "am",
+            "pm": "pm",
+            "date": "Date"
+        }
+    }
+}

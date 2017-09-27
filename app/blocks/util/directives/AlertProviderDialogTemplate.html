@@ -1,0 +1,10 @@
+<md-toast md-theme="alert">
+    <div class="md-toast-content" md-colors="::{background: 'alert-{{vm.type}}-900'}">
+        <span class="md-toast-text" ng-if="vm.interpolation" translate-interpolation="{{vm.interpolation}}" flex
+              data-translate translate-values="{{vm.params}}">{{vm.content}}</span>
+        <span class="md-toast-text" ng-if="!vm.interpolation" flex data-translate translate-values="{{vm.params}}">{{vm.content}}</span>
+        <md-button class="md-action" ng-click="vm.close()">
+            <md-icon>close</md-icon>
+        </md-button>
+    </div>
+</md-toast>
