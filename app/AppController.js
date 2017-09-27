@@ -10,19 +10,13 @@
         .controller('AppController', AppController);
 
     AppController.$inject = [
-        '$mdDialog',
         '$mdUtil',
         '$mdSidenav',
-        '$timeout',
-        '$sce',
         '$state'
     ];
 
     /* @ngInject */
-    function AppController($mdDialog, $mdUtil, $mdSidenav, $timeout, $sce, $state) {
-
-        const SPREADSHEET_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
-        const DOCUMENT_MIME_TYPE = "application/vnd.google-apps.document";
+    function AppController($mdUtil, $mdSidenav, $state) {
 
         var vm = this;
 
@@ -30,16 +24,15 @@
             {
                 type: 'exam',
                 title: 'My Messages',
-                url: $sce.trustAsResourceUrl('https://docs.google.com/document/d/1Z4bk8xSx-8AudSwHAdUT2KgBQsPi7PmiOzBwzPKVSt8/pub?embedded=true')
+                id: '1Z4bk8xSx-8AudSwHAdUT2KgBQsPi7PmiOzBwzPKVSt8'
             },
             {
                 type: 'exam',
                 title: 'Possessives',
-                url: $sce.trustAsResourceUrl('https://drive.google.com/open?id=1KZCIs_nVrB7NWP1F0N53UIH7VSUAJDNrUX58BiIx6uQ')
+                id: '1KZCIs_nVrB7NWP1F0N53UIH7VSUAJDNrUX58BiIx6uQ'
             }
         ];
 
-        vm.showTableOfContent = showTableOfContent;
         vm.listQuestions = listQuestions;
         vm.goTo = goTo;
         vm.changePage = changePage;
@@ -69,29 +62,9 @@
         }
 
 
-        function showTableOfContent(ev) {
-            $mdDialog.show({
-                templateUrl: 'views/DialogView.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
-            });
-        }
-
         function changePage(item) {
-            var iframe = angular.element(document.querySelector('#content'));
-            iframe.attr('src', '');
             vm.current = item;
-
-            $timeout(changeUrl, 100);
-
-            ////////////////////////////////////////////
-
-            function changeUrl() {
-                iframe.attr('src', item.url);
-
-                $mdSidenav('left').close();
-            }
+            $state.go('contents', {id: item.id}, {reload: true});
         }
 
         function listQuestions() {

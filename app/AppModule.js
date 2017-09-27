@@ -35,7 +35,8 @@
                 'app.layout',
                 'app.blocks',
                 'app.home',
-                'app.course'
+                'app.course',
+                'app.content'
             ]
         )
         .run(run);

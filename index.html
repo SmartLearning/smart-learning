@@ -106,9 +106,7 @@
                     <md-icon>menu</md-icon>
                 </md-button>
             </md-toolbar>
-            <div flex layout="row" class="scroll-wrapper" ui-view="content">
-                <!--<iframe id="content" scrolling="yes" flex></iframe>-->
-            </div>
+            <div flex layout="row" class="scroll-wrapper" ui-view="content"></div>
         </div>
     </div>
     <div layout="row" layout-align="center center" layout-padding>
@@ -142,7 +140,8 @@
 <script src="app/bower_components/angular/angular.js"></script>
 <script src="app/bower_components/angular-translate/angular-translate.js"></script>
 <script src="app/bower_components/messageformat/messageformat.js"></script>
-<script src="app/bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js"></script>
+<script
+    src="app/bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js"></script>
 <script src="app/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
 <script src="app/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
 <script src="app/bower_components/angular-animate/angular-animate.js"></script>
@@ -187,6 +186,7 @@
 <!-- inject:js -->
 <script src="app/AppModule.js"></script>
 <script src="app/blocks/BlocksModule.js"></script>
+<script src="app/contents/ContentModule.js"></script>
 <script src="app/courses/CourseModule.js"></script>
 <script src="app/home/HomeModule.js"></script>
 <script src="app/layouts/LayoutModule.js"></script>
@@ -203,6 +203,7 @@
 <script src="app/blocks/config/LocalStorageConfig.js"></script>
 <script src="app/blocks/config/TranslationConfig.js"></script>
 <script src="app/AppRoute.js"></script>
+<script src="app/contents/ContentRoute.js"></script>
 <script src="app/courses/CourseRoute.js"></script>
 <script src="app/courses/detail/CourseDetailRoute.js"></script>
 <script src="app/courses/list/CourseListRoute.js"></script>
@@ -254,6 +255,7 @@
 <script src="app/blocks/util/directives/table-input/NumericInputController.js"></script>
 <script src="app/blocks/util/directives/table-input/TableEnumInputController.js"></script>
 <script src="app/blocks/util/directives/table-input/TableInputController.js"></script>
+<script src="app/contents/ContentController.js"></script>
 <script src="app/courses/CourseController.js"></script>
 <script src="app/courses/detail/CourseDetailController.js"></script>
 <script src="app/courses/list/CourseListController.js"></script>

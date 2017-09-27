@@ -67,10 +67,12 @@
             //sheet with the same name as document is the homework of that content.
             t.files.forEach(onEach);
 
+            return t;
+
             ///////////////////////////////////////////
 
             function onEach(file) {
-                file.type = file.mimeType === AppConstants.SPREADSHEET_MIME_TYPE ? 'homework' : 'content'
+                file.type = file.mimeType === AppConstants.SPREADSHEET_MIME_TYPE ? 'homework' : 'content';
             }
         }
     }

@@ -12,15 +12,14 @@
     CourseDetailController.$inject = [
         '$state',
         'AppConstants',
-        'GoogleAPI'
+        'model'
     ];
 
     /* @ngInject */
-    function CourseDetailController($state, AppConstants, GoogleAPI, model) {
+    function CourseDetailController($state, AppConstants, model) {
         var vm = this;
 
         vm.model = model;
-        console.log(model);
 
         vm.goToItem = goToItem;
 
@@ -31,8 +30,10 @@
         function activate() {
         }
 
-        function goToItem(id) {
-            $state.go('courses', {id: id}, {reload: true});
+        function goToItem(item) {
+            if (item.mimeType === AppConstants.DOCUMENT_MIME_TYPE) {
+                $state.go('contents', {id: item.id}, {reload: true});
+            }
         }
     }
 
