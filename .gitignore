@@ -1,11 +1,11 @@
 ######################
 # Project Specific
 ######################
-/content/css/*.css
-/build/tmp/
+/app/content/css/main.css
 /test/javascript/coverage/
 /test/javascript/PhantomJS*/
 /logs/*.log
+package-lock.json
 
 ######################
 # Node
@@ -78,6 +78,7 @@ classes/
 # Gradle
 ######################
 .gradle/
+/build/
 
 ######################
 # Package Files
