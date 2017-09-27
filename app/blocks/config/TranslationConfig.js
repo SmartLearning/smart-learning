@@ -18,7 +18,7 @@
         // Initialize angular-translate
         $translateProvider.useLoader(
             '$translatePartialLoader', {
-                urlTemplate: '/i18n/{lang}/{part}.json'
+                urlTemplate: 'i18n/{lang}/{part}.json'
             }
         );
 
@@ -28,7 +28,7 @@
         $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
         $translateProvider.forceAsyncReload(true);
 
-        tmhDynamicLocaleProvider.localeLocationPattern('/i18n/angular-locale_{{locale}}.js');
+        tmhDynamicLocaleProvider.localeLocationPattern('i18n/angular-locale_{{locale}}.js');
         tmhDynamicLocaleProvider.useCookieStorage();
         tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
     }
