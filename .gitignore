@@ -14,7 +14,7 @@ package-lock.json
 node_tmp/
 node_modules/
 bower_components/
-css/
+content/css/
 npm-debug.log.*
 
 ######################
