@@ -1,8 +1,8 @@
 ######################
 # Project Specific
 ######################
-/app/content/css/main.css
-/build/www/**
+/content/css/*.css
+/build/tmp/
 /test/javascript/coverage/
 /test/javascript/PhantomJS*/
 /logs/*.log
@@ -78,7 +78,6 @@ classes/
 # Gradle
 ######################
 .gradle/
-/build/
 
 ######################
 # Package Files

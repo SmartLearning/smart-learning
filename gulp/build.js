@@ -48,6 +48,7 @@ function app() {
         gulp.src(
             [
                 config.app + '**/*.html',
+                '!' + config.app + 'node_modules/**/*.html',
                 '!' + config.app + 'app/**/*.html',
                 '!' + config.bower + '**/*.html'
             ]
