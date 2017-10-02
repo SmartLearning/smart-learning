@@ -15,13 +15,17 @@
         'httpRequestInterceptorCacheBusterProvider',
         '$urlMatcherFactoryProvider'
     ];
-
     /* @ngInject */
     function httpConfig($urlRouterProvider, $httpProvider,
                         httpRequestInterceptorCacheBusterProvider, $urlMatcherFactoryProvider) {
 
         //Cache everything except rest api requests
-        httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*google.*/], false);
+        httpRequestInterceptorCacheBusterProvider.setMatchlist(
+            [
+                /.*api.*/,
+                /.*protected.*/
+            ], false
+        );
 
         $urlRouterProvider.otherwise('/');
 
@@ -55,11 +59,11 @@
 
         function is(val) {
             return [
-                true,
-                false,
-                0,
-                1
-            ].indexOf(val) >= 0;
+                    true,
+                    false,
+                    0,
+                    1
+                ].indexOf(val) >= 0;
         }
     }
 })(angular);
