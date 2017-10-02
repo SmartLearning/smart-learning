@@ -1,0 +1,42 @@
+<div layout="column" flex>
+    <md-list class="md-dense" flex>
+        <md-list-item class="md-2-line" ng-repeat="item in vm.items">
+            <ng-form name="answerForm" layout="column" flex>
+                <span class="md-body-2" data-translate>{{item.name}}</span>
+                <div ng-switch="item.type" class="md-padding">
+                    <div ng-switch-when="checkbox" layout="column">
+                        <md-checkbox flex ng-repeat="answer in item.answers" ng-model="item.selectedAnswer[answer.name]">
+                            <span>{{answer.name}}</span>
+                        </md-checkbox>
+                    </div>
+                    <div ng-switch-when="radio" layout="column">
+                        <md-radio-group ng-model="item.selectedAnswer">
+                            <md-radio-button ng-repeat="answer in item.answers" value="{{answer.name}}"
+                                             class="md-primary">
+                                {{answer.name}}
+                            </md-radio-button>
+                        </md-radio-group>
+                    </div>
+                    <div ng-switch-when="text" layout="column">
+                        <md-input-container flex>
+                            <label data-translate>question.answer</label>
+                            <input name="answer" ng-required="true" ng-model="item.selectedAnswer">
+                            <div ng-messages="answerForm.answer.$error" ng-minlength="1">
+                                <div ng-message-exp="['required', 'minlength']">
+                                    <span translate translate-values="{length: 1}">global.messages.error.min</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+            </ng-form>
+        </md-list-item>
+    </md-list>
+    <div layout="row" flex>
+        <span flex></span>
+        <md-button ng-click="vm.submitAnswer()" class="md-raised md-accent">
+            <md-icon>save</md-icon>
+            <span data-translate>global.buttons.save</span>
+        </md-button>
+    </div>
+</div>

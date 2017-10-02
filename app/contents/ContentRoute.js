@@ -19,7 +19,7 @@
     function getStates() {
         return [
             {
-                state: 'contents',
+                state: 'content',
                 config: {
                     url: '/contents/{id}',
                     parent: 'app',

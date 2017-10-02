@@ -32,7 +32,9 @@
 
         function goToItem(item) {
             if (item.mimeType === AppConstants.DOCUMENT_MIME_TYPE) {
-                $state.go('contents', {id: item.id}, {reload: true});
+                $state.go('content', {id: item.id}, {reload: true});
+            } else {
+                $state.go('question.list', {sheetId: item.id}, {reload: true});
             }
         }
     }

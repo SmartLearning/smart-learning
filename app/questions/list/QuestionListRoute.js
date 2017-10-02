@@ -6,30 +6,30 @@
     'use strict';
 
     angular
-        .module('app.course')
-        .run(runCourse);
+        .module('app.question')
+        .run(runQuestion);
 
-    runCourse.$inject = ['routerHelper'];
+    runQuestion.$inject = ['routerHelper'];
 
     /* @ngInject */
-    function runCourse(routerHelper) {
+    function runQuestion(routerHelper) {
         routerHelper.configureStates(getStates());
     }
 
     function getStates() {
         return [
             {
-                state: 'course.list',
+                state: 'question.list',
                 config: {
                     url: '',
                     data: {
                         authorities: [],
-                        pageTitle: 'course.title.main'
+                        pageTitle: 'question.title.main'
                     },
                     views: {
                         body: {
-                            templateUrl: 'app/courses/list/CourseListView.html',
-                            controller: 'CourseListController',
+                            templateUrl: 'app/questions/list/QuestionListView.html',
+                            controller: 'QuestionListController',
                             controllerAs: 'vm'
                         }
                     }

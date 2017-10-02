@@ -6,36 +6,37 @@
     'use strict';
 
     angular
-        .module('app.course')
-        .run(runCourse);
+        .module('app.question')
+        .run(runQuestion);
 
-    runCourse.$inject = ['routerHelper'];
+    runQuestion.$inject = ['routerHelper'];
 
     /* @ngInject */
-    function runCourse(routerHelper) {
+    function runQuestion(routerHelper) {
         routerHelper.configureStates(getStates());
     }
 
     function getStates() {
         return [
             {
-                state: 'course',
+                state: 'question',
                 config: {
-                    url: '/courses',
+                    url: '/questions/{sheetId}',
                     abstract: true,
                     parent: 'app',
                     data: {
-                        pageTitle: 'course.title'
+                        pageTitle: 'question.title'
                     },
                     views: {
                         'content@': {
-                            templateUrl: 'app/courses/CourseView.html',
-                            controller: 'CourseController',
+                            templateUrl: 'app/questions/QuestionView.html',
+                            controller: 'QuestionController',
                             controllerAs: 'vm'
                         }
                     },
                     resolve: {
-                        language: language
+                        language: language,
+                        sheetId: sheetId
                     }
                 }
             }
@@ -49,7 +50,14 @@
 
     /* @ngInject */
     function language($translate, $translatePartialLoader) {
-        $translatePartialLoader.addPart('course');
+        $translatePartialLoader.addPart('question');
         return $translate.refresh();
+    }
+
+    sheetId.$inject = ['$stateParams'];
+
+    /* @ngInject */
+    function sheetId($stateParams) {
+        return $stateParams.sheetId;
     }
 })(angular);
