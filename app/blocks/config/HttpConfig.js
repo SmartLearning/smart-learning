@@ -17,22 +17,7 @@
     ];
 
     /* @ngInject */
-    function httpConfig($urlRouterProvider, $httpProvider,
-                        httpRequestInterceptorCacheBusterProvider, $urlMatcherFactoryProvider) {
-        //Cache everything except rest api requests
-        httpRequestInterceptorCacheBusterProvider.setMatchlist(
-            [
-                /.*api.*/,
-                /.*protected.*/
-            ], true
-        );
-        //Cache everything except rest api requests
-        httpRequestInterceptorCacheBusterProvider.setMatchlist(
-            [
-                /.*google.*/
-            ], false
-        );
-
+    function httpConfig($urlRouterProvider, $httpProvider, $urlMatcherFactoryProvider) {
         $urlRouterProvider.otherwise('/');
 
         $httpProvider.interceptors.push('errorHandlerInterceptor');
