@@ -24,7 +24,7 @@
             [
                 /.*google.*/,
                 /.*View.html/
-            ], true
+            ], false
         );
 
         $urlRouterProvider.otherwise('/');
