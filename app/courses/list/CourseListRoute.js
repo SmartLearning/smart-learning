@@ -19,7 +19,7 @@
     function getStates() {
         return [
             {
-                state: 'courses.list',
+                state: 'course.list',
                 config: {
                     url: '',
                     data: {

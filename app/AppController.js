@@ -62,7 +62,7 @@
 
         function changePage(item) {
             vm.current = item;
-            $state.go('contents', {id: item.id}, {reload: true});
+            $state.go('content', {id: item.id}, {reload: true});
         }
 
         function listQuestions() {

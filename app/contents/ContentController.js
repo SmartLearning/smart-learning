@@ -24,7 +24,7 @@
         ////////////////////////////////////////
 
         function activate() {
-            changePage('https://docs.google.com/document/d/' + id + '/pub?embedded=true')
+            changePage('https://docs.google.com/document/d/' + id + '/?embedded=true')
         }
 
         function changePage(url) {

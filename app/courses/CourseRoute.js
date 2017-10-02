@@ -19,7 +19,7 @@
     function getStates() {
         return [
             {
-                state: 'courses',
+                state: 'course',
                 config: {
                     url: '/courses',
                     abstract: true,

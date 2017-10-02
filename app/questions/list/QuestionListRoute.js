@@ -19,7 +19,7 @@
     function getStates() {
         return [
             {
-                state: 'questions.list',
+                state: 'question.list',
                 config: {
                     url: '',
                     data: {

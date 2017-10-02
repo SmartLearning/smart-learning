@@ -32,7 +32,7 @@
         }
 
         function goToItem(id) {
-            $state.go('courses.detail', {id: id}, {reload: true});
+            $state.go('course.detail', {id: id}, {reload: true});
         }
 
         function listCourses() {

@@ -19,9 +19,9 @@
     function getStates() {
         return [
             {
-                state: 'questions',
+                state: 'question',
                 config: {
-                    url: '/questions',
+                    url: '/questions/{sheetId}',
                     abstract: true,
                     parent: 'app',
                     data: {
@@ -35,7 +35,8 @@
                         }
                     },
                     resolve: {
-                        language: language
+                        language: language,
+                        sheetId: sheetId
                     }
                 }
             }
@@ -51,5 +52,12 @@
     function language($translate, $translatePartialLoader) {
         $translatePartialLoader.addPart('question');
         return $translate.refresh();
+    }
+
+    sheetId.$inject = ['$stateParams'];
+
+    /* @ngInject */
+    function sheetId($stateParams) {
+        return $stateParams.sheetId;
     }
 })(angular);

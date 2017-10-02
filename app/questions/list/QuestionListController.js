@@ -11,17 +11,17 @@
 
     QuestionListController.$inject = [
         '$state',
-        'AppConstants',
-        'GoogleAPI'
+        'GoogleAPI',
+        'sheetId'
     ];
 
     /* @ngInject */
-    function QuestionListController($state, AppConstants, GoogleAPI) {
+    function QuestionListController($state, GoogleAPI, sheetId) {
         var vm = this;
 
         vm.items = [];
 
-        vm.goToItem = goToItem;
+        vm.submitAnswer = submitAnswer;
 
         activate();
 
@@ -31,23 +31,21 @@
             listQuestions();
         }
 
-        function goToItem(id) {
-            $state.go('questions.detail', {id: id}, {reload: true});
+        function submitAnswer() {
+            // $state.go('question.detail', {id: id}, {reload: true});
+            console.log(vm.items);
         }
 
         function listQuestions() {
-            GoogleAPI.items(AppConstants.ROOT_FOLDER_ID, [AppConstants.FOLDER_MIME_TYPE]).then(onThen);
-
+            GoogleAPI.questions(sheetId).then(onThen);
 
             /////////////////////////////////////////////////////
 
-            function onThen(t) {
-                console.log('data in the final block');
-                console.log(t.files);
-                vm.items = t.files;
+            function onThen(response) {
+                console.log('data in the final block', response);
+                vm.items = response;
             }
         }
-
     }
 
 })(angular);

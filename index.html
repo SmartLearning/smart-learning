@@ -81,13 +81,9 @@
     <div layout="row" layout-align="space-around center">
         <h2 class="md-padding">Content 3</h2>
         <span flex></span>
-        <md-button class="md-raised" ng-click="vm.goTo('courses.list')">
+        <md-button class="md-raised" ng-click="vm.goTo('course.list')">
             <md-icon>list</md-icon>
             <span data-translate>global.menu.courses</span>
-        </md-button>
-        <md-button class="md-raised" ng-click="vm.goTo('questions.list')">
-            <md-icon>question_answer</md-icon>
-            <span data-translate>global.menu.questions</span>
         </md-button>
     </div>
     <div layout="row" flex>
@@ -189,6 +185,7 @@
 <script src="app/courses/CourseModule.js"></script>
 <script src="app/home/HomeModule.js"></script>
 <script src="app/layouts/LayoutModule.js"></script>
+<script src="app/questions/QuestionModule.js"></script>
 <script src="app/blocks/BlocksConstants.js"></script>
 <script src="app/blocks/language/LanguageConstants.js"></script>
 <script src="app/blocks/util/directives/TableConstants.js"></script>
@@ -208,6 +205,9 @@
 <script src="app/courses/list/CourseListRoute.js"></script>
 <script src="app/home/HomeRoute.js"></script>
 <script src="app/layouts/error/ErrorRoute.js"></script>
+<script src="app/questions/detail/QuestionDetailRoute.js"></script>
+<script src="app/questions/list/QuestionListRoute.js"></script>
+<script src="app/questions/QuestionRoute.js"></script>
 <script src="app/blocks/util/services/Base64UtilService.js"></script>
 <script src="app/blocks/util/services/CrudUtilsService.js"></script>
 <script src="app/blocks/util/services/CustomEditDialogService.js"></script>
@@ -260,6 +260,9 @@
 <script src="app/courses/list/CourseListController.js"></script>
 <script src="app/home/HomeController.js"></script>
 <script src="app/layouts/sidebar/SidebarController.js"></script>
+<script src="app/questions/detail/QuestionDetailController.js"></script>
+<script src="app/questions/list/QuestionListController.js"></script>
+<script src="app/questions/QuestionController.js"></script>
 <script src="app/AppConstant.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
