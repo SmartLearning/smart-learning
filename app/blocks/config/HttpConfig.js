@@ -22,9 +22,9 @@
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist(
             [
-                /.*api.*/,
-                /.*protected.*/
-            ], false
+                /.*google.*/,
+                /.*View.html/
+            ], true
         );
 
         $urlRouterProvider.otherwise('/');
